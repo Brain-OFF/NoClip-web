@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Form\SignupType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+
+
 
 class TournoiController extends AbstractController
 {
@@ -17,4 +21,5 @@ class TournoiController extends AbstractController
             'controller_name' => 'TournoiController',
         ]);
     }
+
 }
