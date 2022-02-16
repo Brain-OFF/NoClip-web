@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class UserController extends AbstractController
@@ -40,7 +41,7 @@ class UserController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($Client);
                 $em->flush();
-                return $this->redirectToPath("tournoi");
+                return $this->redirectToPath("home");
             }
             return $this->render("Client/signup.html.twig",array("formSignup"=>$form->createView()));
         }

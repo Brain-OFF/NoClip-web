@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -19,16 +20,24 @@ class Client
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Assert\NotBlank(message="Email is required")
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Assert\NotBlank(message="Username is required")
+     * @Assert\MinLength(limit=6,message= "Votre Username contient moin de  {{ limit }} caractères."))
+     * @Assert\MaxLength(limit=30,message= "Votre Username contient plus de {{ limit }} caractères."))
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Assert\MinLength(limit=6,message= "Votre mot de passe ne contient pas {{ limit }} caractères."))
+     * @Assert\MaxLength(limit=30,message= "Votre mot de passe contient plus que {{ limit }} caractères."))
+     * @Assert\NotBlank(message="Password is required")
      */
     private $password;
 
