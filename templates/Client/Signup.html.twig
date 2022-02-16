@@ -436,18 +436,25 @@
                         <h4 class="nk-widget-title"><span class="text-main-1">SIGN </span> UP</h4>
                         <div class="nk-widget-content">
                             <form action="php/ajax-contact-form.php" class="nk-form nk-form-ajax">
+                                {{ form_start(formSignup,{'attr': {'novalidate': 'novalidate', 'class': 'nk-form nk-form-ajax'}} ) }}
+                                <div class="nk-gap"></div>
+                                <!--- <input class="form-control required" name="message" rows="5" placeholder="Message *">--->
+                                {{ form_widget(formSignup.username, {'attr': {'placeholder': 'Username','class': 'form-control required' }}, )}}
+                                {{ form_errors(formSignup.username) }}
+                                {{ form_widget(formSignup.email, {'attr': {'placeholder': 'Email','class': 'form-control required' }}, )}}
+                                {{ form_errors(formSignup.email) }}
+                                {{ form_widget(formSignup.password, {'attr': {'placeholder': 'Password','class': 'form-control required' }}, )}}
+                                {{ form_errors(formSignup.password) }}
                                 <!--- PASSWORD --->
-                                <div class="row vertical-gap sm-gap">
+                                <!--- <div class="row vertical-gap sm-gap">
                                     <div class="col-md-6">
                                         <input type="email" class="form-control required" name="email" placeholder="Email *">
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control required" name="name" placeholder="Name *">
                                     </div>
-                                </div>
+                                </div>--->
                                 <!--- PASSWORD --->
-                                <div class="nk-gap"></div>
-                                <input class="form-control required" name="message" rows="5" placeholder="Message *">
                                 <div class="nk-gap-1"></div>
                                 <button class="nk-btn nk-btn-rounded nk-btn-color-white">
                                     <span>Send</span>

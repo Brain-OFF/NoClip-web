@@ -7,6 +7,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+
 
 
 class SignupType extends AbstractType
@@ -16,7 +21,16 @@ class SignupType extends AbstractType
         $builder
             ->add('email')
             ->add('username')
-            ->add('password')
+            ->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'required' => true,
+                'constraints' => array(
+                    new NotBlank(),
+                    new Length(array('min' => 6)),
+                ),
+                'first_options'  => ['label'=>' ','attr' => array('placeholder' => 'Passowrd', 'class'=> 'form-control required')],
+                'second_options' => ['label'=>' ','attr' => array('placeholder' => 'Confirm Password', 'class'=> 'form-control required')]
+            ))
             ->add("submit",SubmitType::class)
         ;
     }
