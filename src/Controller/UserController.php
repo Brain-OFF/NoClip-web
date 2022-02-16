@@ -12,31 +12,40 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/homer", name="homer")
      */
     public function index(): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('home/index.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
-    /**
-     * @Route("/signup", name="signup")
-     */
-    public function Singup(Request $request ){
-        $Client= new Client();
-        $form= $this->createForm(SignupType::class,$Client);
-        $Client->setPhoto("img/default_pic.png");
-        $Client->setPoints(0);
-        $form->handleRequest($request);
-        if($form->isSubmitted()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($Client);
-            $em->flush();
-            return $this->redirectToPath("tournoi");
+        /**
+         * @Route("/home", name="home")
+         */
+        public function home(Request $request ){
+
+            return $this->render("home/index.html.twig");
         }
-        return $this->render("Client/Signup.html.twig",array("formSignup"=>$form->createView()));
+        /**
+         * @Route("/signup", name="signup")
+         */
+        public function Singup(Request $request ){
+            $Client= new Client();
+            $form= $this->createForm(SignupType::class,$Client);
+            $Client->setPhoto("img/default_pic.png");
+            $Client->setPoints(0);
+            $form->handleRequest($request);
+            if($form->isSubmitted() && $form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($Client);
+                $em->flush();
+                return $this->redirectToPath("tournoi");
+            }
+            return $this->render("Client/signup.html.twig",array("formSignup"=>$form->createView()));
+        }
     }
 
 
-}
+
+
