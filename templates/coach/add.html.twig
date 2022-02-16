@@ -1,0 +1,75 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    <div >
+        <a href="{{ path('coachlist') }}" class="mdi mdi-keyboard-backspace"  > </a>
+    </div>
+<div class="card-body">
+    <h4  class="card-title">add coach </h4>
+    <div class="table-responsive">
+
+        <table class="table">
+
+
+            <tr>
+
+
+                <td>
+                    {{ form_label(formCoach.name,"name") }}
+                </td>
+                <td>
+                    {{ form_widget(formCoach.name)}}
+                    {{ form_errors(formCoach.name) }}
+                </td>
+
+            </tr>
+            <tr>
+
+
+                <td>
+                    {{ form_label(formCoach.lastname,"lastname") }}
+                </td>
+                <td>
+                    {{ form_widget(formCoach.lastname)}}
+                    {{ form_errors(formCoach.lastname) }}
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    {{ form_label(formCoach.id_coach,"idcoach") }}
+                </td>
+                <td>
+                    {{ form_widget(formCoach.id_coach)}}
+                    {{ form_errors(formCoach.id_coach) }}
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    {{ form_label(formCoach.rank,"rank") }}
+                </td>
+                <td>
+                    {{ form_widget(formCoach.rank)}}
+                    {{ form_errors(formCoach.rank) }}
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    {{ form_label(formCoach.categorie,"categorie") }}
+                </td>
+                <td>
+                    {{ form_widget(formCoach.categorie)}}
+                    {{ form_errors(formCoach.categorie) }}
+                </td>
+            <tr>
+                <td></td>
+                <td>
+                    {{ form_end(formCoach) }}
+                </td>
+            </tr>
+
+        </table>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GamescatController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+    <div class="row vertical-gap">
+        {% for i in games %}
+        <div class="col-lg-4">
+            <div class="nk-feature-1">
+                <div class="nk-feature-icon">
+                    <img src="assets/images/icon-mouse.png" alt="">
+                </div>
+                <div class="nk-feature-cont">
+                    <h3 class="nk-feature-title"><a href="#">{{ i.name }}</a></h3>
+                    <h3 class="nk-feature-title text-main-1"><a href="#">buy</a></h3>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+<div class="example-wrapper">
+    <h1>games cat</h1>
+
+
+
+
+
+
+
+
+
+
+</div>
+{% endblock %}
+{% block footer %}
+{% endblock %}
