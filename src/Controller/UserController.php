@@ -45,7 +45,28 @@ class UserController extends AbstractController
             }
             return $this->render("Client/signup.html.twig",array("formSignup"=>$form->createView()));
         }
+    /**
+     * @Route("/users", name="users")
+     */
+    public function list()
+    {
+        $Clients= $this->getDoctrine()->
+        getRepository(Client::class)->findAll();
+        return $this->render("Client/users.html.twig",
+            array('clients'=>$Clients));
     }
+    /**
+     * @Route("/remove/{id}",name="removeuser")
+     */
+    public function delete($id){
+        $user= $this->getDoctrine()->getRepository(Client::class)->find($id);
+        $em= $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute("users");
+    }
+
+}
 
 
 
