@@ -14,6 +14,7 @@
             <th> last name </th>
             <th> rank </th>
             <th> categorie  </th>
+            <th>  reservations </th>
             <th> update  </th>
             <th> delete  </th>
         </tr>
@@ -26,6 +27,8 @@
             <td> {{ i.lastname }} </td>
             <td> {{ i.rank }} </td>
             <td> {{ i.categorie }}  </td>
+           <td> </td>
+
 
             <td>
                 <a href="{{ path('modifycoach',{'id':i.id}) }}" class="badge badge-outline-warning" >Update</a>

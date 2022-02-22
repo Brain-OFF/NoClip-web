@@ -79,6 +79,9 @@ class CoachController extends AbstractController
     }
 
 
+
+
+
     /* front functions*/
 
     /**
