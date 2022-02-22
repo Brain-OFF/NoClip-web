@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <!-- START: Table -->
+    <div class="container">
+    <h3 class="text-main-1" align="center">reservation</h3>
+    <div class="nk-gap"></div>
+    <table class="nk-table">
+        <thead>
+        <th> idreservation </th>
+        <th> id_coach </th>
+        <th> temps start </th>
+        <th> temps end </th>
+        <th> dispo  </th>
+
+        </thead>
+        <tbody>
+        <tr>
+            {% for i in tabeservation %}
+
+            <td>
+                {{ i.id }}
+            </td>
+            <td> {{ i.coach }} </td>
+            <td> {{ i.tempsstart |  date("F jS \\a\\t g:ia") }} </td>
+            <td> {{ i.tempsend | date("F jS \\a\\t g:ia")  }} </td>
+
+            <td> {{ i.dispo }}  </td>
+
+        </tr>
+
+
+        </tbody>
+        {% endfor %}
+    </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <!-- START: Table -->
+    <div class="container">
+    <h3 class="text-main-1" align="center">coach</h3>
+    <div class="nk-gap"></div>
+    <table class="nk-table">
+        <thead>
+        <th> name </th>
+        <th> last name </th>
+        <th> Id  </th>
+        <th> rank </th>
+        <th> categorie  </th>
+
+        </thead>
+        <tbody>
+        <tr>
+            {% for i in tabcoach %}
+            <td>{{ i.name }} </td>
+            <td> {{ i.lastname }} </td>
+            <td>{{ i.id }} </td>
+            <td> {{ i.rank }} </td>
+            <td> {{ i.categorie }}  </td>
+
+        </tr>
+
+
+        </tbody>
+        {% endfor %}
+    </table>
+    </div>
+{% endblock %}
