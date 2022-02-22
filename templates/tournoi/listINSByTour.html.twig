@@ -1,0 +1,35 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+<div class="card-body">
+    <h4 class="card-title">tournoi </h4>
+    <div class="table-responsive">
+
+        <table class="table">
+            <thead>
+<table class="table">
+    <thead>
+    <tr>
+
+        <th>id</th>
+        <th>Nom_user</th>
+        <th>Email</th>
+        <th>Rank</th>
+
+    </tr>
+    </thead>
+
+    <tr>
+        {% for i in inc %}
+        {% if i.Etat== true %}
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.getUserName() }}</td>
+        <td>{{ i.Email }}</td>
+        <td>{{ i.Rank }}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+        </table>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    <div class="card-body">
+    <h4 class="card-title">inscription</h4>
+    <div class="table-responsive">
+    <div align="center">
+        <a href="{{ path('addIns') }}" class="badge badge-outline-success"  >add</a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>id </th>
+            <th>Nom_user</th>
+            <th>Email</th>
+            <th>Rank</th>
+
+        </tr>
+        </thead>
+
+        <tr>
+            {% for i in tabINS %}
+            {% if i.etat == true %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.getUserName() }}</td>
+            <td>{{ i.Email }}</td>
+            <td>{{ i.Rank }}</td>
+            <td><a href="{{ path('removeINC',{'id':i.id}) }}">Remove</a>
+            </td>
+            <td>
+                <a href="{{ path('updateINC',{'id':i.id}) }}">Update</a>
+            </td>
+
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+{% endblock %}

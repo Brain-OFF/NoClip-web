@@ -1,0 +1,34 @@
+
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <!-- START: Table -->
+    <div class="container">
+        <h3 class="text-main-1" align="center">List tournoit</h3>
+        <div class="nk-gap"></div>
+        <table class="nk-table">
+            <thead>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>cathegorie</th>
+            <th>Discription</th>
+
+            </thead>
+            <tbody>
+            <tr>
+                {% for i in tabT %}
+
+
+                <td>{{ i.nom }}</td>
+                <td>{{ i.Date|date }}</td>
+                <td>{{ i.cathegorie }}</td>
+                <td>{{ i.Discription }}</td>
+
+            </tr>
+
+
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
