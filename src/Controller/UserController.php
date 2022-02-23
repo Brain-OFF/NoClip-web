@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 use App\Entity\Client;
+use App\Entity\User;
 use App\Form\SignupType;
+use App\Form\UpdateUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,20 +52,35 @@ class UserController extends AbstractController
      */
     public function list()
     {
-        $Clients= $this->getDoctrine()->
-        getRepository(Client::class)->findAll();
-        return $this->render("Client/users.html.twig",
-            array('clients'=>$Clients));
+        $Users= $this->getDoctrine()->
+        getRepository(User::class)->findAll();
+        return $this->render("Client/index.html.twig",
+            array('users'=>$Users));
     }
     /**
-     * @Route("/remove/{id}",name="removeuser")
+     * @Route("/deleteuser/{id}",name="deleteuser")
      */
     public function delete($id){
-        $user= $this->getDoctrine()->getRepository(Client::class)->find($id);
+        $user= $this->getDoctrine()->getRepository(User::class)->find($id);
         $em= $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
-        return $this->redirectToRoute("users");
+        return $this->redirectToRoute("/user");
+    }
+
+    /**
+     * @Route("/updateuser/{id}",name="updateuser")
+     */
+    public function update(Request $request,$id){
+        $user= $this->getDoctrine()->getRepository(User::class)->find($id);
+        $form= $this->createForm(UpdateUserType::class,$user);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute("users");
+        }
+        return $this->render("client/modify.html.twig",array("formUser"=>$form->createView()));
     }
 
 }
