@@ -19,6 +19,7 @@ class GamescatRepository extends ServiceEntityRepository
         parent::__construct($registry, Gamescat::class);
     }
 
+
     // /**
     //  * @return Gamescat[] Returns an array of Gamescat objects
     //  */

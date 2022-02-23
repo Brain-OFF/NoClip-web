@@ -12,15 +12,16 @@
         <a href="{{ path('addgames') }}" class="badge badge-outline-success"  >add</a>
     </div>
     <div class="example-wrapper">
-        <h1>games cat</h1>
+        <h1>games </h1>
 
 
-        <table border="5">
+        <table class="table">
             <tr>
                 <td> Id  </td>
                 <td> nom </td>
                 <td> desc  </td>
                 <td> prix  </td>
+                <td> img  </td>
                 <td> delete  </td>
                 <td> update  </td>
             </tr>
@@ -33,8 +34,9 @@
                     </td>
                     <td> {{ i.name }} </td>
 
-                    <td> {{ i.descreption }} </td>
+                    <td > {{ i.descreption }} </td>
                     <td> {{ i.prix }} </td>
+                    <td> {{ i.img }} </td>
                     <td>
                         <a href="{{ path('removegames',{'id':i.id }) }}" class="badge badge-outline-danger" >Remove</a>
 

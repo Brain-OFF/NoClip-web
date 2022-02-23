@@ -7,6 +7,8 @@ namespace App\Controller;
 use App\Entity\Gamescat;
 
 use App\Form\GamesCatType;
+use App\Repository\GamescatRepository;
+use App\Repository\GamesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,7 +71,7 @@ class GamescatController extends AbstractController
 
             $form->handleRequest($request);
 
-        if($form->isSubmitted() ){
+        if($form->isSubmitted() && $form->isValid() ){
             $em = $this->getDoctrine()->getManager();
             $em->persist($gamescat);
             $em->flush();
@@ -94,11 +96,20 @@ class GamescatController extends AbstractController
         $gamescat= $this->getDoctrine()->getRepository(Gamescat::class)->find($id);
         $form= $this->createForm(GamesCatType::class,$gamescat);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid() ){
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute("gamescatlist");
         }
-        return $this->render("gamescat/modify.html.twig",array("formgamescat"=>$form->createView()));
+        return $this->render("gamescat/modify.html.twig",array("formgamescatmodif"=>$form->createView()));
     }
+    /**
+     * @Route("/listTournoisByJeu/{id}", name="listTournoisByJeu")
+     */
+    public function listTournoisByJeu(GamesRepository   $repository,$id)
+    {
+        $games=$repository->listTournoiByJeu($id);
+        return $this->render("games/indexF.html.twig",array("games"=>$games));
+    }
+
 }

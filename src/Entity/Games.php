@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\GamesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=GamesRepository::class)
@@ -19,18 +22,45 @@ class Games
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="name is required")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="desc is required")
      */
     private $descreption;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="prix is required")
+     * @Assert\Type(
+     *     type="double",
+     *     message="the value is not ."
+     * )
      */
     private $prix;
+
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="prix is required")
+     */
+    private $img;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Gamescat::class, inversedBy="Games")
+     */
+    private $cat;
+
+    public function __construct()
+    {
+        $this->cat = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -61,15 +91,58 @@ class Games
         return $this;
     }
 
-    public function getPrix(): ?string
+    public function getPrix(): ?float
     {
         return $this->prix;
     }
 
-    public function setPrix(string $prix): self
+    public function setPrix(float $prix): self
     {
         $this->prix = $prix;
 
         return $this;
     }
+
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(string $img): self
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|gamescat[]
+     */
+    public function getCat(): Collection
+    {
+        return $this->cat;
+    }
+
+    public function addCat(gamescat $cat): self
+    {
+        if (!$this->cat->contains($cat)) {
+            $this->cat[] = $cat;
+        }
+
+        return $this;
+    }
+
+    public function removeCat(gamescat $cat): self
+    {
+        $this->cat->removeElement($cat);
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return(string)$this->getName();
+    }
+
 }

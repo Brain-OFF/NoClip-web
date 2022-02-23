@@ -63,7 +63,7 @@ class GamesController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() ){
+        if($form->isSubmitted() && $form->isValid() ){
             $em = $this->getDoctrine()->getManager();
             $em->persist($games);
             $em->flush();
@@ -88,11 +88,12 @@ class GamesController extends AbstractController
         $games= $this->getDoctrine()->getRepository(Games::class)->find($id);
         $form= $this->createForm(gamesType::class,$games);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute("gameslist");
         }
         return $this->render("games/modify.html.twig",array("formgames"=>$form->createView()));
     }
+
 }

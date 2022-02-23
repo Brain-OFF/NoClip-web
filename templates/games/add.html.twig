@@ -1,13 +1,57 @@
 {% extends 'baseback.html.twig' %}
 {% block body %}
+    {{ form_start(formgames,{'attr':{'novalidate':'novalidate'}}) }}
+    {%  form_theme formgames 'bootstrap_4_horizontal_layout.html.twig' %}
+
     <div >
+
         <a href="{{ path('gameslist') }}" class="mdi mdi-keyboard-backspace"  > </a>
     </div>
 
     <h4  class="card-title">add games </h4>
 
 
-    {{ form(formgames) }}
+    <table class="table">
+        <tr>
+            <td>
+                {{ form_label(formgames.name,"name") }}
+            </td>
+            <td>
+                {{ form_widget(formgames.name) }}
+                {{ form_errors(formgames.name) }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(formgames.descreption,"description") }}
+            </td>
+            <td>
+                {{ form_widget(formgames.descreption) }}
+                {{ form_errors(formgames.descreption) }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(formgames.prix,"prix") }}
+            </td>
+            <td>
+                {{ form_widget(formgames.prix) }}
+                {{ form_errors(formgames.prix) }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(formgames.img,"img") }}
+            </td>
+            <td>
+                {{ form_widget(formgames.img) }}
+                {{ form_errors(formgames.img) }}
+            </td>
+        </tr>
+    </table>
+
+
+    {{ form_end(formgames) }}
 
 
 

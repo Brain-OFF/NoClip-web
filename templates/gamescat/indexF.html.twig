@@ -12,19 +12,17 @@
         <div class="col-lg-4">
             <div class="nk-feature-1">
                 <div class="nk-feature-icon">
-                    <img src="assets/images/icon-mouse.png" alt="">
+                    <img src="{{ asset('images/icon-mouse.png') }}" alt="">
                 </div>
                 <div class="nk-feature-cont">
                     <h3 class="nk-feature-title"><a href="#">{{ i.nom }}</a></h3>
-                    <h3 class="nk-feature-title text-main-1"><a href="#">View Games</a></h3>
+                    <h3 class="nk-feature-title text-main-1"><a href="{{ path('listTournoisByJeu',{'id':i.id},{'attr':{'class':'btn btn-primary'}}) }}">View Games</a></h3>
                 </div>
             </div>
         </div>
 
         {% endfor %}
     </div>
-<div class="example-wrapper">
-    <h1>games cat</h1>
 
 
 
@@ -33,19 +31,8 @@
 
 
 
-        {% for i in gamescat %}
-        <div>
 
 
-
-            <div> {{ i.nom }} </div>
-
-            <div> {{ i.description }} </div>
-
-
-
-        </div>
-        {% endfor %}
 
 </div>
 {% endblock %}

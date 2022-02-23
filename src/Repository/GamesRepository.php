@@ -19,6 +19,17 @@ class GamesRepository extends ServiceEntityRepository
         parent::__construct($registry, Games::class);
     }
 
+    public function listTournoiByJeu($id)
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.cat','c')
+            ->addSelect('c')
+            ->where('c.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Games[] Returns an array of Games objects
     //  */

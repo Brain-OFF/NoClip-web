@@ -3,10 +3,20 @@
 namespace App\Form;
 
 use App\Entity\Games;
+use App\Entity\Gamescat;
+use phpDocumentor\Reflection\PseudoTypes\Numeric_;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DomCrawler\Field\TextareaFormField;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormTypeInterface;
 
 class GamesType extends AbstractType
 {
@@ -14,8 +24,10 @@ class GamesType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('descreption')
+            ->add('descreption', TextareaType::class)
             ->add('prix')
+            ->add('img')
+            ->add('cat')
             ->add("submit",SubmitType::class)
         ;
     }

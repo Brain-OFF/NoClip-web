@@ -9,22 +9,30 @@
 </style>
     <div class="row vertical-gap">
         {% for i in games %}
-        <div class="col-lg-4">
-            <div class="nk-feature-1">
-                <div class="nk-feature-icon">
-                    <img src="assets/images/icon-mouse.png" alt="">
-                </div>
-                <div class="nk-feature-cont">
-                    <h3 class="nk-feature-title"><a href="#">{{ i.name }}</a></h3>
-                    <h3 class="nk-feature-title text-main-1"><a href="#">buy</a></h3>
+
+            <div class="col-lg-6">
+                <div class="nk-product-cat-2">
+                    <a class="nk-product-image" href="store-product.html">
+                        <img src="{{i.img}} " alt="So saying he unbuckled">
+                    </a>
+                    <div class="nk-product-cont">
+                        <h3 class="nk-product-title h5"><a href="store-product.html">{{ i.name }}</a></h3>
+                        <div class="nk-gap-1"></div>
+                        <div class="nk-product-rating" data-rating="4"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i></div>
+                        <div class="nk-gap-1"></div>
+                        {{ i.descreption }}
+                        <div class="nk-gap-2"></div>
+                        <div class="nk-product-price">€ {{ i.prix }}</div>
+                        <div class="nk-gap-1"></div>
+                        <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
         {% endfor %}
     </div>
 <div class="example-wrapper">
-    <h1>games cat</h1>
+    <h1>games</h1>
 
 
 
