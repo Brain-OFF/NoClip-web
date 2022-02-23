@@ -28,15 +28,11 @@ class Client
     /**
      * @ORM\Column(type="string", length=30)
      * @Assert\NotBlank(message="Username is required")
-     * @Assert\MinLength(limit=6,message= "Votre Username contient moin de  {{ limit }} caractères."))
-     * @Assert\MaxLength(limit=30,message= "Votre Username contient plus de {{ limit }} caractères."))
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=30)
-     * @Assert\MinLength(limit=6,message= "Votre mot de passe ne contient pas {{ limit }} caractères."))
-     * @Assert\MaxLength(limit=30,message= "Votre mot de passe contient plus que {{ limit }} caractères."))
      * @Assert\NotBlank(message="Password is required")
      */
     private $password;
