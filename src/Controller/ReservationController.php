@@ -95,4 +95,20 @@ class ReservationController extends AbstractController
         return $this->render("reservation/indexfront.html.twig",
             array('tabeservation'=>$reservation));
     }
+    /**
+     * @Route("/addreservationfront",name="addreservationfront")
+     */
+    public function addfront(Request$request ){
+        $reservation= new Reservation();
+        $form= $this->createForm(ReservationType::class,$reservation);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()   ){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reservation);
+            $em->flush();
+            return $this->redirectToRoute("reservationlistfront");
+        }
+        return $this->render("reservation/addfront.html.twig",array("formReservation"=>$form->createView()));
+    }
+
 }

@@ -27,7 +27,7 @@
                 {{ form_label(formReservation.tempsstart,"tempsstart") }}
             </td>
             <td>
-                {{ form_widget(formReservation.tempsstart)}}
+                {{ form_widget(formReservation.tempsstart,{'attr':{'class': 'input-group date', 'data-provide' : 'datepicker'} })}}
                 {{ form_errors(formReservation.tempsstart) }}
             </td>
         </tr>
@@ -37,7 +37,7 @@
                 {{ form_label(formReservation.tempsend,"tempsend") }}
             </td>
             <td>
-                {{ form_widget(formReservation.tempsend ) }}
+                {{ form_widget(formReservation.tempsend ,{'attr':{'class': 'input-group date', 'data-provide' : 'datepicker'} }) }}
                 {{ form_errors(formReservation.tempsend) }}
             </td>
         </tr>

@@ -19,6 +19,22 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
+
+
+
+    public function listReservationByid($id)
+    {
+        return $this->createQueryBuilder('I')
+            ->join('I.id', 'T')
+            ->addSelect('T')
+            ->where('T.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
     //  */

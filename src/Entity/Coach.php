@@ -33,7 +33,7 @@ class Coach
     private $lastname;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true )
      * @Assert\NotBlank(message="rank is required")
      */
     private $rank;
@@ -85,17 +85,23 @@ class Coach
         return $this;
     }
 
-    public function getRank(): ?int
+    /**
+     * @return mixed
+     */
+    public function getRank()
     {
         return $this->rank;
     }
 
-    public function setRank(int $rank): self
+    /**
+     * @param mixed $rank
+     */
+    public function setRank($rank): void
     {
         $this->rank = $rank;
-
-        return $this;
     }
+
+
 
     public function getCategorie(): ?string
     {

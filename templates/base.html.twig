@@ -195,54 +195,25 @@
         <div class="container">
             <div class="nk-nav-table">
 
-                <a href="index.html" class="nk-nav-logo">
-                    <img src="{{asset('images/logo.png')}}" alt="GoodGames" width="199">
-
+                <a href="index.html" class="nk-nav-logo"> <img src="{{asset('images/logo.png')}}" alt="GoodGames" width="199">
                 </a>
 
                 <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
 
                     <li class=" nk-drop-item">
-                        <a href="{{ path('coachlistfront')}}">
-                            coach
+                        <a href="{{ path('coachlistfront')}}"> Coach  </a>
+                        <ul class="dropdown">
 
-                        </a><ul class="dropdown">
-
-                            <li>
-                                <a href="{{ path('reservationlistfront')}}">
-                                   reservation
-
-                                </a>
-                            </li>
-                            {#
                             <li class=" nk-drop-item">
-                                <a href="forum.html">
-                                    Forum
-
-                                </a><ul class="dropdown">
+                                <a href="{{ path('reservationlistfront')}}"> reservation </a>
+                                <ul class="dropdown">
 
                                     <li>
-                                        <a href="forum.html">
-                                            Forum
-
-                                        </a>
+                                        <a href="{{ path('addreservationfront')}}"> ajouter reservation </a>
                                     </li>
-                                    <li>
-                                        <a href="forum-topics.html">
-                                            Topics
 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="forum-single-topic.html">
-                                            Single Topic
-
-                                        </a>
-                                    </li>
                                 </ul>
-                            </li>  #}
-
-
+                            </li>
 
 
                         </ul>
@@ -300,8 +271,7 @@
                         </a>
                     </li>
                     <li class=" nk-drop-item">
-                        <a href="{{ path('tournoi')}}
-">
+                        <a href="tournaments.html">
                             Tournaments
 
                         </a><ul class="dropdown">

@@ -24,6 +24,7 @@ class Reservation
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank(message="tempsstart is required")
      * @Assert\DateTime(message = "The date '{{ YYYY-MM-DD hh-mm-ss }}' is not a valid")
+     * @Assert\GreaterThan("+2 hours ")
      * @Assert\Expression("this.getTempsstart() < this.getTempsend()",message="La date fin ne doit pas être antérieure à la date début")
      */
     private $tempsstart;
@@ -32,8 +33,8 @@ class Reservation
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank(message="tempsend is required")
      * @Assert\DateTime(message = "The date '{{ YYYY-MM-DD hh-mm-ss }}' is not a valid")
+     * @Assert\GreaterThan("+3 hours")
      * @Assert\Expression("this.getTempsstart() < this.getTempsend()",message="La date fin ne doit pas être antérieure à la date début")
-
      */
     private $tempsend;
 
@@ -102,6 +103,9 @@ class Reservation
         return $this;
     }
 
-
+    public function __toString()
+    {
+        return ($this->getId()+(string)$this->getTempsstart()+(string)$this->getTempsend()+$this->getDispo());
+    }
 
 }
