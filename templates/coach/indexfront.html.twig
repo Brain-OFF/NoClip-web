@@ -20,12 +20,12 @@
         <tbody>
         <tr>
             {% for i in tabcoach %}
-            <td>{{ i.name }} </td>
-            <td> {{ i.lastname }} </td>
-            <td>{{ i.id }} </td>
-            <td> {{ i.rank }} </td>
-            <td> {{ i.categorie }}  </td>
-            <td>  </td>
+            <td align="center" >{{ i.name }} </td>
+            <td align="center" > {{ i.lastname }} </td>
+            <td align="center" >{{ i.id }} </td>
+            <td align="center" > {{ i.rank }} </td>
+            <td align="center" > {{ i.categorie }}  </td>
+            <td align="center" >  <a href="{{ path('listreservationdecoach',{'id':i.id}) }}" class="nk-btn nk-btn-rounded nk-btn-color-main-1" >reservation</a>  </td>
 
 
         </tr>

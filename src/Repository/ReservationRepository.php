@@ -25,7 +25,7 @@ class ReservationRepository extends ServiceEntityRepository
     public function listReservationByid($id)
     {
         return $this->createQueryBuilder('I')
-            ->join('I.id', 'T')
+            ->join('I.coach', 'T')
             ->addSelect('T')
             ->where('T.id=:id')
             ->setParameter('id',$id)

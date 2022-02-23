@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,6 +110,16 @@ class ReservationController extends AbstractController
             return $this->redirectToRoute("reservationlistfront");
         }
         return $this->render("reservation/addfront.html.twig",array("formReservation"=>$form->createView()));
+    }
+
+
+    /**
+     * @Route("/listreservationdecoach/{id}",name="listreservationdecoach")
+     */
+    public function listreservationdecoach($id)
+    {
+        $inc= $this->getDoctrine()->getRepository(Reservation::class)->listReservationByid($id);
+        return $this->render("coach/listreservation.html.twig",array('inc'=>$inc));
     }
 
 }
