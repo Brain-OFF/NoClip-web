@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    {{ form_start(fo,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+    <div class="card-body">
+        <h4  class="card-title">add Commande </h4>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+
+
+                    <td>
+                        {{ form_label(fo.nom,"nom") }}
+                    </td>
+                    <td>
+                        {{ form_widget(fo.nom)}}
+                        {{ form_errors(fo.nom) }}
+                    </td>
+
+                </tr>
+                <tr>
+
+
+                    <td>
+                        {{ form_label(fo.prenom,"prenom") }}
+                    </td>
+                    <td>
+                        {{ form_widget(fo.prenom)}}
+                        {{ form_errors(fo.prenom) }}
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        {{ form_label(fo.email,"email") }}
+                    </td>
+                    <td>
+                        {{ form_widget(fo.email)}}
+                        {{ form_errors(fo.email) }}
+                    </td>
+                </tr>
+                <tr>
+
+
+                    <td>
+                        {{ form_label(fo.adresse,"adresse") }}
+                    </td>
+                    <td>
+                        {{ form_widget(fo.adresse)}}
+                        {{ form_errors(fo.adresse) }}
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        {{ form_label(fo.numtelephone,"numtelephone") }}
+                    </td>
+                    <td>
+                        {{ form_widget(fo.numtelephone)}}
+                        {{ form_errors(fo.numtelephone) }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        {{ form_end(fo) }}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+
+
+
+
+

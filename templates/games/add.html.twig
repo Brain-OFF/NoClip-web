@@ -1,0 +1,15 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    <div >
+        <a href="{{ path('gameslist') }}" class="mdi mdi-keyboard-backspace"  > </a>
+    </div>
+
+    <h4  class="card-title">add games </h4>
+
+
+    {{ form(formgames) }}
+
+
+
+
+{% endblock %}
