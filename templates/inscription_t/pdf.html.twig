@@ -1,0 +1,27 @@
+ <table class="table">
+        <thead>
+        <tr>
+
+            <th>id </th>
+            <th>Nom_user</th>
+            <th>Email</th>
+            <th>Rank</th>
+
+
+        </tr>
+        </thead>
+
+        <tr>
+            {% for i in tabINS %}
+            {% if i.etat == true %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.getUserName() }}</td>
+            <td>{{ i.Email }}</td>
+            <td>{{ i.Rank }}</td>
+
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+

@@ -6,6 +6,7 @@ use App\Entity\inscriptionT;
 use App\Entity\Tournoi;
 use App\Form\InscriptionTType;
 use App\Form\TournoiType;
+use App\Repository\InscriptionTRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -13,6 +14,8 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mime\Address;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 
@@ -72,6 +75,39 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         return $this->render("inscription_t/AffichINS.html.twig",
             array('tabINS'=>$T));
     }
+    /**
+     * @Route("/showpdf",name="showpdf")
+     */
+    public function showpdf()
+    {
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $T= $this->getDoctrine()->
+        getRepository(inscriptionT::class)->findAll();
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('inscription_t/pdf.html.twig',
+            ['tabINS'=>$T,]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+
+        }
+
     /**
      * @Route("/removeINC/{id}",name="removeINC")
      */

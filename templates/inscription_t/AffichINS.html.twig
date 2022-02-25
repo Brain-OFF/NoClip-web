@@ -15,6 +15,9 @@
             <th>Nom_user</th>
             <th>Email</th>
             <th>Rank</th>
+            <th>delete</th>
+            <th>Update</th>
+
 
         </tr>
         </thead>
@@ -37,5 +40,6 @@
         {% endif %}
         {% endfor %}
     </table>
+    <a href="{{ path('showpdf') }}">pdf</a>
 
 {% endblock %}
