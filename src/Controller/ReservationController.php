@@ -36,6 +36,16 @@ class ReservationController extends AbstractController
     }
 
     /**
+     * @Route("/reservationlisttrie",name="reservationlisttrie")
+     */
+    public function listtrie()
+    {
+        $reservation= $this->getDoctrine()->
+        getRepository(Reservation::class)->orderByDate();
+        return $this->render("reservation/indextrie.html.twig",
+            array('tabeservation'=>$reservation));
+    }
+    /**
      * @Route("/addreservation",name="addreservation")
      */
     public function add(Request$request ){
@@ -96,6 +106,18 @@ class ReservationController extends AbstractController
         return $this->render("reservation/indexfront.html.twig",
             array('tabeservation'=>$reservation));
     }
+
+    /**
+     * @Route("/reservationlistfronttrie",name="reservationlistfronttrie")
+     */
+    public function listfronttrie()
+    {
+        $reservation= $this->getDoctrine()->
+        getRepository(Reservation::class)->orderByDate();
+        return $this->render("reservation/indexfronttrie.html.twig",
+            array('tabeservation'=>$reservation));
+    }
+
     /**
      * @Route("/addreservationfront",name="addreservationfront")
      */
@@ -118,8 +140,9 @@ class ReservationController extends AbstractController
      */
     public function listreservationdecoach($id)
     {
-        $inc= $this->getDoctrine()->getRepository(Reservation::class)->listReservationByid($id);
+        $inc= $this->getDoctrine()->getRepository(Reservation::class)->listReservationByidtrier($id);
         return $this->render("coach/listreservation.html.twig",array('inc'=>$inc));
     }
+
 
 }

@@ -20,6 +20,18 @@ class CoachRepository extends ServiceEntityRepository
     }
 
 
+
+
+
+    public function searchCathegorie($nom)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%')
+            ->getQuery()
+            ->execute();
+    }
+
     // /**
     //  * @return Coach[] Returns an array of Coach objects
     //  */

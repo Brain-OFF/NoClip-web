@@ -5,6 +5,9 @@
     <div class="container">
         <h3 class="text-main-1" align="center">reservation</h3>
         <div class="nk-gap"></div>
+        <div >
+            <a href="{{ path('reservationlistfronttrie') }}" class="nk-btn nk-btn-rounded nk-btn-color-main-1" > trie  </a>
+        </div>
         <table class="nk-table">
             <thead>
             <th> idreservation </th>
@@ -16,14 +19,14 @@
             </thead>
             <tbody>
             <tr>
-                {% for i in inc %}
+                {% for i in tabeservation %}
 
                 <td>
                     {{ i.id }}
                 </td>
                 <td> {{ i.coach }} </td>
-                <td> {{ i.tempsstart |  date("F jS Y \\a\\t g:ia") }} </td>
-                <td> {{ i.tempsend | date("F jS     Y \\a\\t g:ia")  }} </td>
+                <td> {{ i.tempsstart |  date("F jS  Y \\a\\t g:ia") }} </td>
+                <td> {{ i.tempsend | date("F jS  Y \\a\\t g:ia")  }} </td>
 
                 <td> {{ i.dispo }}  </td>
 

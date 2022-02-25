@@ -32,8 +32,25 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function orderByDate()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.tempsstart', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-
+    public function listReservationByidtrier($id)
+    {
+        return $this->createQueryBuilder('I')
+            ->join('I.coach', 'T')
+            ->addSelect('T')
+            ->where('T.id=:id')
+            ->setParameter('id',$id)
+            ->orderBy('I.tempsstart', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
