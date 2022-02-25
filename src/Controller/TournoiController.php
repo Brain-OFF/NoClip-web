@@ -79,6 +79,7 @@ class TournoiController extends AbstractController
         return $this->render("tournoi/AffichT.html.twig", array('tabT'=>$list,"formSearch" => $formSearch->createView()));;
     }
 
+
     /**
      * @Route("/showTr",name="showTr")
      */
@@ -117,12 +118,17 @@ class TournoiController extends AbstractController
     /**
      * @Route("/showTT",name="showTT")
      */
-    public function showf()
+    public function showf(Request $request,TournoiRepository $T)
     {
-        $T= $this->getDoctrine()->
-        getRepository(Tournoi::class)->findAll();
-        return $this->render("tournoi/AffichTT.html.twig",
-            array('tabT'=>$T));
+        $list = $T->findAll();
+        $formSearch = $this->createForm(SearchTournoiType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $nom = $formSearch->getData();
+            $TSearch = $T->searchCathegorie($nom);
+            return $this->render("tournoi/searchcath2.html.twig", array("cath" => $TSearch,'tabT' => $list,"formSearch" => $formSearch->createView()));
+        }
+        return $this->render("tournoi/AffichTT.html.twig", array('tabT'=>$list,"formSearch" => $formSearch->createView()));;
     }
 
 }

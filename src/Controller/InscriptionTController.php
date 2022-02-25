@@ -29,7 +29,7 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         //->priority(Email::PRIORITY_HIGH)
         ->subject('Test')
         ->text('Sending emails is fun again!')
-        ->html('<p>See Twig integration for better HTML integration!</p>');
+        ->html('<p>You have been registered successfully!</p>');
 
     $mailer->send($email);
 
