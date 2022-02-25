@@ -4,17 +4,22 @@ namespace App\Controller;
 
 use App\Entity\inscriptionT;
 use App\Entity\Tournoi;
+use App\Form\SearchTournoiType;
 use App\Form\TournoiType;
 use App\Repository\InscriptionTRepository;
+use App\Repository\TournoiRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 class TournoiController extends AbstractController
 {
+
     /**
          * @Route("/tournoi", name="tournoi")
      */
@@ -61,23 +66,30 @@ class TournoiController extends AbstractController
     /**
      * @Route("/showT",name="showT")
      */
-    public function show()
+    public function show(TournoiRepository $T,Request $request)
     {
-        $T= $this->getDoctrine()->
-        getRepository(Tournoi::class)->findAll();
-        return $this->render("tournoi/AffichT.html.twig",
-            array('tabT'=>$T));
+        $list = $T->findAll();
+        $formSearch = $this->createForm(SearchTournoiType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $nom = $formSearch->getData();
+            $TSearch = $T->searchCathegorie($nom);
+            return $this->render("tournoi/searchcath.html.twig", array("cath" => $TSearch,'tabT' => $list,"formSearch" => $formSearch->createView()));
+        }
+        return $this->render("tournoi/AffichT.html.twig", array('tabT'=>$list,"formSearch" => $formSearch->createView()));;
     }
+
     /**
-     * @Route("/showTT",name="showTT")
+     * @Route("/showTr",name="showTr")
      */
-    public function showf()
+    public function showTr(TournoiRepository $T)
     {
-        $T= $this->getDoctrine()->
-        getRepository(Tournoi::class)->findAll();
-        return $this->render("tournoi/AffichTT.html.twig",
-            array('tabT'=>$T));
+        $TriDate =$T->orderByDate();
+        return $this->render("tournoi/AffichTri.html.twig", array("TriDate"=>$TriDate));
     }
+
+
+
     /**
      * @Route("/remove/{id}",name="removeT")
      */
@@ -101,6 +113,16 @@ class TournoiController extends AbstractController
             return $this->redirectToRoute("showT");
         }
         return $this->render("tournoi/update.html.twig",array("formT"=>$form->createView()));
+    }
+    /**
+     * @Route("/showTT",name="showTT")
+     */
+    public function showf()
+    {
+        $T= $this->getDoctrine()->
+        getRepository(Tournoi::class)->findAll();
+        return $this->render("tournoi/AffichTT.html.twig",
+            array('tabT'=>$T));
     }
 
 }

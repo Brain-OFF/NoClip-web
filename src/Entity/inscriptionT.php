@@ -31,6 +31,9 @@ class inscriptionT
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="write email")
+     *  * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      */
     private $email;
 

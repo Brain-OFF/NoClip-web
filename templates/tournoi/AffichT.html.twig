@@ -6,6 +6,16 @@
     <div class="table-responsive">
     <div align="center">
         <a href="{{ path('addT') }}" class="badge badge-outline-success"  >add</a>
+        <br>
+        <br>
+       <div>
+        {{ form_start(formSearch,{'attr': {'novalidate': 'novalidate'}} ) }}
+        {{ form_widget(formSearch.nom,{'class':'form-control'},)}}
+        {{ form_widget(formSearch.Search, {'attr': {'placeholder': 'REGISTER','class':'btn btn-primary' }})}}
+        {{ form_end(formSearch) }}
+       </div>
+
+
     </div>
     <table class="table">
         <thead>
@@ -45,6 +55,9 @@
 
 
         {% endfor %}
+
     </table>
+    <a href="{{ path('showTr') }}" class="badge badge-outline-success"  >Tri par date</a>
+
 
 {% endblock %}

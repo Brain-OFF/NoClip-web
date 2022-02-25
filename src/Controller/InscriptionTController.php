@@ -8,13 +8,32 @@ use App\Form\InscriptionTType;
 use App\Form\TournoiType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mime\Address;
 
 
 
 class InscriptionTController extends AbstractController
 {
+public function sendEmail(MailerInterface $mailer,String $mail)
+{
+    $email = (new Email())
+        ->from(new Address('svnoclip91@gmail.com', 'sv_noclip'))
+        ->to($mail)
+        //->cc('cc@example.com')
+        //->bcc('bcc@example.com')
+        //->replyTo('fabien@example.com')
+        //->priority(Email::PRIORITY_HIGH)
+        ->subject('Test')
+        ->text('Sending emails is fun again!')
+        ->html('<p>See Twig integration for better HTML integration!</p>');
+
+    $mailer->send($email);
+
+}
     /**
      * @Route("/inscription/t", name="inscription_t")
      */
@@ -27,7 +46,7 @@ class InscriptionTController extends AbstractController
   /**
      * @Route("/addIns", name="addIns")
      */
-    public function add(Request $request)
+    public function add(Request $request,MailerInterface $mailer)
     {
         $ins = new inscriptionT();
         $form = $this->createForm(InscriptionTType::class, $ins);
@@ -36,6 +55,7 @@ class InscriptionTController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($ins);
             $em->flush();
+            $this->sendEmail($mailer,$ins->getEmail());
             return $this->redirectToRoute("showTT");
 
         }

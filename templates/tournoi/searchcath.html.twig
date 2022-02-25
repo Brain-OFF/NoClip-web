@@ -1,0 +1,53 @@
+
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    <div class="card-body">
+    <h4 class="card-title">tournoi </h4>
+    <div class="table-responsive">
+    <div align="center">
+        <a href="{{ path('addT') }}" class="badge badge-outline-success"  >add</a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>id </th>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>categorie</th>
+            <th>Discription</th>
+            <th>remove</th>
+            <th>update</th>
+            <th>listINSByTour</th>
+
+        </tr>
+        </thead>
+
+        <tr>
+            {% for i in cath %}
+
+            <td>{{ i.id }}</td>
+            <td>{{ i.nom }}</td>
+            <td>{{ i.Date|date }}</td>
+            <td>{{ i.cathegorie }}</td>
+            <td>{{ i.Discription }}</td>
+            <td><a href="{{ path('removeT',{'id':i.id}) }}">Remove</a>
+            </td>
+            <td>
+                <a href="{{ path('update',{'id':i.id}) }}">Update</a>
+            </td>
+            <td>
+                <a href="{{ path('listINSByTour',{'id':i.id}) }}">listINSByTour</a>
+            </td>
+
+
+        </tr>
+
+
+        {% endfor %}
+
+    </table>
+    <a href="{{ path('showTr') }}" class="badge badge-outline-success"  >Tri par date</a>
+
+
+{% endblock %}

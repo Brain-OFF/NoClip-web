@@ -31,7 +31,9 @@ class Tournoi
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank(message="date is required")
-     * @Assert\DateTime(message = "The date '{{ YYYY-MM-DD hh-mm-ss }}
+     *  @Assert\DateTime(message = "The date '{{ YYYY-MM-DD hh-mm-ss }}'")
+     * @Assert\GreaterThan("+2 hours")
+     * @Assert\Type("\DateTime")
      */
 
     private $Date;
