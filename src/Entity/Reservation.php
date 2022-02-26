@@ -103,9 +103,6 @@ class Reservation
         return $this;
     }
 
-    public function __toString()
-    {
-        return ($this->getId()+(string)$this->getTempsstart()+(string)$this->getTempsend()+$this->getDispo());
-    }
+
 
 }

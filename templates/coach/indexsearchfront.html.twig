@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <!-- START: Table -->
+    <div class="container">
+        <h3 class="text-main-1" align="center">coach</h3>
+        <div class="nk-gap"></div>
+        {{ form_start(formSearch,{'attr': {'novalidate': 'novalidate'}} ) }}
+        {{ form_widget(formSearch.name,{'class':'form-control'},)}}
+        {{ form_widget(formSearch.search, {'attr': {'placeholder': 'REGISTER','class':'btn btn-primary' }})}}
+        {{ form_end(formSearch) }}
+        <table class="nk-table">
+            <thead>
+            <th> name </th>
+            <th> last name </th>
+            <th> Id  </th>
+            <th> rank </th>
+            <th> categorie  </th>
+
+            <th> list des reservation</th>
+
+
+            </thead>
+            <tbody>
+            <tr>
+                {% for i in cath %}
+                <td align="center" >{{ i.name }} </td>
+                <td align="center" > {{ i.lastname }} </td>
+                <td align="center" >{{ i.id }} </td>
+                <td align="center" > {{ i.rank }} </td>
+                <td align="center" > {{ i.categorie }}  </td>
+                <td align="center" >  <a href="{{ path('listreservationdecoach',{'id':i.id}) }}" class="nk-btn nk-btn-rounded nk-btn-color-main-1" >reservation</a>  </td>
+
+
+            </tr>
+
+
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

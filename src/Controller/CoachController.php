@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Form\CoachType;
+use App\Form\SearchType;
 use App\Repository\CoachRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,12 +30,17 @@ class CoachController extends AbstractController
     /**
      * @Route("/coachlist",name="coachlist")
      */
-    public function list()
+    public function list(CoachRepository $C, Request $request)
     {
-        $classrooms= $this->getDoctrine()->
-        getRepository(Coach::class)->findAll();
-        return $this->render("coach/index.html.twig",
-            array('tabcoach'=>$classrooms));
+        $list= $C->findAll();
+        $formSearch=$this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if($formSearch->isSubmitted() ){
+           $name = $formSearch->getData();
+           $TSearch = $C->searchCathegorie($name);
+            return $this->render("coach/indexsearch.html.twig", array('tabcoach'=>$list , "cath"=>$TSearch , "formSearch"=>$formSearch->createView()));
+        }
+        return $this->render("coach/index.html.twig", array('tabcoach'=>$list, "formSearch"=>$formSearch->createView()));
     }
 
     /**
@@ -97,12 +103,18 @@ class CoachController extends AbstractController
     /**
      * @Route("/coachlistfront",name="coachlistfront")
      */
-    public function coachlistfront()
+    public function coachlistfront(CoachRepository $C, Request $request)
     {
-        $coach= $this->getDoctrine()->
-        getRepository(Coach::class)->findAll();
+        $coach= $C->findAll();
+        $formSearch=$this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if($formSearch->isSubmitted() ){
+            $name = $formSearch->getData();
+            $TSearch = $C->searchCathegorie($name);
+            return $this->render("coach/indexsearchfront.html.twig", array('tabcoach'=>$coach , "cath"=>$TSearch , "formSearch"=>$formSearch->createView()));
+        }
         return $this->render("coach/indexfront.html.twig",
-            array('tabcoach'=>$coach));
+            array('tabcoach'=>$coach , "formSearch"=>$formSearch->createView() ));
     }
 
 

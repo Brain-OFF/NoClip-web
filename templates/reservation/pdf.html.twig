@@ -1,0 +1,28 @@
+<table class="table">
+    <thead>
+    <tr>
+
+        <th>id </th>
+        <th>time start</th>
+        <th>time end</th>
+        <th>dispo</th>
+        <th>coach name</th>
+
+
+    </tr>
+    </thead>
+
+    <tr>
+        {% for i in tabINS %}
+        {% if i.dispo == 1 %}
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.tempsstart |  date("F jS  Y \\a\\t g:ia") }}</td>
+        <td>{{ i.tempsend |  date("F jS  Y \\a\\t g:ia") }}</td>
+        <td>{{ i.getDispo()}}</td>
+        <td>{{ i.getCoach() }}</td>
+
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>

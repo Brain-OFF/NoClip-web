@@ -23,7 +23,7 @@ class CoachRepository extends ServiceEntityRepository
 
 
 
-    public function searchCathegorie($nom)
+    public function searchCathegorie($name)
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.name LIKE :name')

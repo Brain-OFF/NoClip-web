@@ -4,7 +4,7 @@
     <h4 class="card-title">coach </h4>
     <div class="table-responsive">
     <div align="center">
-    <a href="{{ path('addcoach') }}" class="badge badge-outline-success"  >add</a>
+        <a href="{{ path('addcoach') }}" class="badge badge-outline-success"  >add</a>
     </div>
 
     {{ form_start(formSearch,{'attr': {'novalidate': 'novalidate'}} ) }}
@@ -28,13 +28,13 @@
         </thead>
         <tbody>
         <tr>
-            {% for i in tabcoach %}
+            {% for i in cath %}
             <td>{{ i.id }} </td>
             <td>{{ i.name }} </td>
             <td> {{ i.lastname }} </td>
             <td> {{ i.rank }} </td>
             <td> {{ i.categorie }}  </td>
-           <td>  </td>
+            <td>  </td>
 
 
             <td>

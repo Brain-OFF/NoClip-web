@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\CoachRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class ReservationController extends AbstractController
 {
@@ -144,5 +147,38 @@ class ReservationController extends AbstractController
         return $this->render("coach/listreservation.html.twig",array('inc'=>$inc));
     }
 
+
+
+    /**
+     * @Route("/showpdf",name="showpdf")
+     */
+    public function showpdf(ReservationRepository $R)
+    {
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $T= $R->findAll();
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('reservation/pdf.html.twig',
+            ['tabINS'=>$T,]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+
+    }
 
 }
