@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -71,11 +72,17 @@ class UserController extends AbstractController
     /**
      * @Route("/updateuser/{id}",name="updateuser")
      */
-    public function update(Request $request,$id){
+    public function update(Request $request,$id,UserPasswordEncoderInterface $userPasswordEncoder){
         $user= $this->getDoctrine()->getRepository(User::class)->find($id);
         $form= $this->createForm(UpdateUserType::class,$user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute("users");

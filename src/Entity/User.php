@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -18,11 +19,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups ("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups ("post:read")
      */
     private $username;
 
@@ -30,11 +33,13 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=60)
      * @Assert\NotBlank(message="Email is required")
      * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
+     * @Groups ("post:read")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups ("post:read")
      */
 
     private $roles = [];
@@ -42,26 +47,31 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups ("post:read")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=50000, nullable=true)
+     * @Groups ("post:read")
      */
     private $photo;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups ("post:read")
      */
     private $points;
 
     /**
      * @ORM\Column(type="string", length=400, nullable=true)
+     * @Groups ("post:read")
      */
     private $Bio;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups ("post:read")
      */
     private $isVerified = false;
 
