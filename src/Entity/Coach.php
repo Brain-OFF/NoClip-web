@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=CoachRepository::class)
@@ -17,35 +19,41 @@ class Coach
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("coach")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="name is required")
+     * @Groups("coach")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="last name is required")
+     * @Groups("coach")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer", nullable=true )
      * @Assert\NotBlank(message="rank is required")
+     * @Groups("coach")
      */
     private $rank;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="categorie is required")
+     * @Groups("coach")
      */
     private $categorie;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="coach")
+     * @Groups("coach")
      */
     private $reservations;
 
