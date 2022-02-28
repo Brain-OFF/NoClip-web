@@ -105,5 +105,38 @@ class MobileController extends AbstractController
         //return $this->render('mobile/loginjson.html.twig',['data'=>$jsonContent]);
         return new Response(json_encode($jsonContent));
     }
+    /**
+     * @Route("/updateusermobile/{id}",name="updateusermobile")
+     */
+    public function update(Request $request,$id,UserPasswordEncoderInterface $userPasswordEncoder,NormalizerInterface $normalizer){
+        $user= $this->getDoctrine()->getRepository(User::class)->find($id);
+        $user->setPoints($request->get("points"));
+        $user->setBio($request->get("bio"));
+        $user->setEmail($request->get("email"));
+        $user->setUsername($request->get("username"));
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $request->get("password")));
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        $jsonContent = $normalizer->normalize($user,'json',['groups'=>'post:read']);
+
+        return new Response(json_encode($jsonContent));
+
+    }
+    /**
+     * @Route("/deusersmobile/", name="delusersmobile")
+     */
+    public function deluser(Request $request,NormalizerInterface $normalizer,$id):Response
+    {
+        $repository=$this->getDoctrine()->getManager();
+        $id=$request->get("id");
+        $user=$repository->getRepository()->find($id);
+        $repository->remove($user);
+        $repository->flush();
+        $jsonContent = $normalizer->normalize($user,'json',['groups'=>'post:read']);
+        return new Response(json_encode("User deleted Successfully ".$jsonContent));
+    }
 
 }
