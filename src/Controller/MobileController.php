@@ -23,6 +23,9 @@ class MobileController extends AbstractController
     {
         $this->emailVerifier = $emailVerifier;
     }
+
+
+
     /**
      * @Route("/mobile", name="mobile")
      */
@@ -32,6 +35,10 @@ class MobileController extends AbstractController
             'controller_name' => 'MobileController',
         ]);
     }
+
+
+
+
     /**
      * @Route("/loginmobile", name="loginmobile")
      */
@@ -52,6 +59,7 @@ class MobileController extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
+
     /**
      * @Route("/getusermobile/{id}", name="getusersmobile")
      */
@@ -62,6 +70,9 @@ class MobileController extends AbstractController
         $jsonContent = $normalizer->normalize($users,'json',['groups'=>'post:read']);
         return new Response(json_encode($jsonContent));
     }
+
+
+
     /**
      * @Route("/addusermobile", name="addusermobile")
      */
@@ -93,6 +104,8 @@ class MobileController extends AbstractController
         $jsonContent = $normalizer->normalize($user,'json',['groups'=>'post:read']);
         return new Response(json_encode($jsonContent));
     }
+
+
     /**
      * @Route("/getusersmobile", name="getusersmobile")
      */
@@ -105,10 +118,13 @@ class MobileController extends AbstractController
         //return $this->render('mobile/loginjson.html.twig',['data'=>$jsonContent]);
         return new Response(json_encode($jsonContent));
     }
+
+
     /**
-     * @Route("/updateusermobile/{id}",name="updateusermobile")
+     * @Route("/updateusermobile/", name="updateusermobile")
      */
-    public function update(Request $request,$id,UserPasswordEncoderInterface $userPasswordEncoder,NormalizerInterface $normalizer){
+    public function update(Request $request,UserPasswordEncoderInterface $userPasswordEncoder,NormalizerInterface $normalizer){
+        $id=($request->get("id"));
         $user= $this->getDoctrine()->getRepository(User::class)->find($id);
         $user->setPoints($request->get("points"));
         $user->setBio($request->get("bio"));
@@ -125,18 +141,20 @@ class MobileController extends AbstractController
         return new Response(json_encode($jsonContent));
 
     }
+
+
     /**
-     * @Route("/deusersmobile/", name="delusersmobile")
+     * @Route("/deusersmobile", name="delusersmobile")
      */
-    public function deluser(Request $request,NormalizerInterface $normalizer,$id):Response
-    {
+     public function deleteusermobile(Request $request,NormalizerInterface $normalizer):Response
+     {
         $repository=$this->getDoctrine()->getManager();
         $id=$request->get("id");
-        $user=$repository->getRepository()->find($id);
+        $user=$repository->getRepository(User::class)->find($id);
         $repository->remove($user);
         $repository->flush();
         $jsonContent = $normalizer->normalize($user,'json',['groups'=>'post:read']);
-        return new Response(json_encode("User deleted Successfully ".$jsonContent));
-    }
+        return new Response(json_encode("User deleted Successfully "));
+     }
 
 }
