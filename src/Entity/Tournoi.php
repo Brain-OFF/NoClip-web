@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\inscriptionT;
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=TournoiRepository::class)
  */
@@ -18,12 +19,14 @@ class Tournoi
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Username is required")
+     * @Groups("post:read")
      */
     private $nom;
 
@@ -34,6 +37,7 @@ class Tournoi
      *  @Assert\DateTime(message = "The date '{{ YYYY-MM-DD hh-mm-ss }}'")
      * @Assert\GreaterThan("+2 hours")
      * @Assert\Type("\DateTime")
+     * @Groups("post:read")
      */
 
     private $Date;
@@ -41,17 +45,20 @@ class Tournoi
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="cathegorie is required")
+     * @Groups("post:read")
      */
     private $cathegorie;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Discription is required")
+     * @Groups("post:read")
      */
     private $Discription;
 
     /**
      * @ORM\OneToMany(targetEntity=inscriptionT::class, mappedBy="tournoi", orphanRemoval=true,cascade={"remove"})
+     * @Groups("post:read")
      */
     private $inscriptions;
 
