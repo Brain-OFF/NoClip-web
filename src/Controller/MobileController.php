@@ -48,4 +48,36 @@ class MobileController extends AbstractController
         $em->flush();
         $jsonContent = $normalizer->normalize($T,'json',['groups'=>'read']);
         return new Response(json_encode($jsonContent));
-    }}
+    }
+    /**
+     * @Route("/updatemobile",name="updatemobile")
+     */
+    public function update(Request $request,NormalizerInterface $normalizer){
+        $id = $request->get("id");
+        $T= $this->getDoctrine()->getRepository(Tournoi::class)->find($id);
+        $T->setNom($request->get("nom"));
+        $T->setDiscription($request->get("discription"));
+        $T->setCathegorie($request->get("cathegorie"));
+        $T->setDate(new \DateTime($request->get("date")));
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        $jsonContent = $normalizer->normalize($T,'json',['groups'=>'post:read']);
+
+        return new Response(json_encode($jsonContent));
+
+    }
+    /**
+     * @Route("/deleteT", name="deleteT")
+     */
+    public function delT(Request $request,NormalizerInterface $normalizer):Response
+    {
+        $id = $request->get("id");
+        $em= $this->getDoctrine()->getManager();
+        $T=$em->getRepository(Tournoi::class)->find($id);
+        $em->remove($T);
+        $em->flush();
+        $jsonContent = $normalizer->normalize($T,'json',['groups'=>'post:read']);
+        return new Response("User deleted Successfully ".json_encode($jsonContent));
+    }
+
+}
