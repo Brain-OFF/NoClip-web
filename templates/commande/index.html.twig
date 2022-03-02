@@ -4,8 +4,16 @@
 
 {% block body %}
     <h1 align="center">Les Commandes</h1>
+
+    <a href="{{path('TrierParDateDESC') }}" class="btn btn-warning"><i class="align-middle" ></i>trier par date</a>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <table class="table">
         <thead>
+
         <tr>
 
             <td >Nom</td>
@@ -13,13 +21,16 @@
             <td>Email</td>
             <td>Numerotelephone</td>
             <td>Adresse</td>
+            <td>Produits</td>
             <td>Total</td>
+            <td>Date</td>
             <td>delete</td>
             <td>update</td>
         </tr>
         </thead>
         <tbody>
         {% for command in commandes %}
+
             <tr>
 
 
@@ -29,13 +40,20 @@
 
                 <td>{{ command.numtelephone }}</td>
                 <td>{{ command.adresse }}</td>
-                <td>{{ command.totalCost }}</td>
+
+
                 <td>
-                    {{ include('commande/_delete_form.html.twig') }}
-
-
+                    {% set foo = '' %}
+                    {% for p in command.listP %}
+                        {{   p.name ~ ':' ~ command.Quantite[loop.index-1]  ~ foo ~'/' }}
+                    {% endfor %}
 
                 </td>
+                <td>{{ command.totalCost }}</td>
+
+                <td>{{ command.dateCommande ? command.dateCommande|date('Y-m-d ') : '' }}</td>
+                <td>{{ include('commande/_delete_form.html.twig') }}</td>
+
                 <td>
                 <a href="{{ path('modifiercommandeback',{'id':command.id}) }}" class="btn btn-warning">update</a>
                 </td>

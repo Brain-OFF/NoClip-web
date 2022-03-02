@@ -18,8 +18,7 @@ class CommandeUPType extends AbstractType
             ->add('adresse')
             ->add('numtelephone')
             ->add('email')
-            ->add('produit')
-            ->add('quantite')
+            ->add('Quantite')
             ->add("submit",SubmitType::class)
         ;
     }
