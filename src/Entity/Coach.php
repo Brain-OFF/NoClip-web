@@ -40,6 +40,11 @@ class Coach
     /**
      * @ORM\Column(type="integer", nullable=true )
      * @Assert\NotBlank(message="rank is required")
+     * @Assert\Range(
+     *      min = 0 ,
+     *      max = 100 ,
+     *      notInRangeMessage = "You must be between lvl {{ min }} and {{ max }} lvl ",
+     * )
      * @Groups("coach")
      */
     private $rank;
@@ -52,7 +57,7 @@ class Coach
     private $categorie;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="coach")
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="coach" , orphanRemoval=true,cascade={"remove"})
      * @Groups("coach")
      */
     private $reservations;

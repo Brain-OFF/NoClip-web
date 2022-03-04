@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Repository\CoachRepository;
-use ContainerAto38xC\EntityManager_9a5be93;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,12 +28,13 @@ class MobilecoachreservationController extends AbstractController
     /**
      * @Route("/listcoachmobile", name="listcoachmobile")
      */
-    public  function getCoach(CoachRepository $C , SerializerInterface $serializerInterface)
+
+    public function getCoach(Request $request,NormalizerInterface $normalizer , CoachRepository $C ):Response
     {
-        $coach=$C->findAll();
-        $json = $serializerInterface->serialize($coach,'json',['groups'=>'coach']);
-        dump($json) ;
-        die;
+        $repository=$this->getDoctrine()->getRepository(Coach::class);
+        $coachs=$repository->findAll();
+        $jsonContent = $normalizer->normalize($coachs,'json',['groups'=>'coach']);
+        return new Response(json_encode($jsonContent));
     }
 
     /**
