@@ -32,6 +32,13 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function listReservationByDispo()
+    {
+        return $this->createQueryBuilder('I')
+            ->where('I.dispo = 1')
+            ->getQuery()
+            ->getResult();
+    }
     public function orderByDate()
     {
         return $this->createQueryBuilder('s')

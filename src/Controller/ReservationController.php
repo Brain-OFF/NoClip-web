@@ -106,7 +106,7 @@ class ReservationController extends AbstractController
     public function listfront()
     {
         $reservation= $this->getDoctrine()->
-        getRepository(Reservation::class)->findAll();
+        getRepository(Reservation::class)->listReservationByDispo();
         return $this->render("reservation/indexfront.html.twig",
             array('tabeservation'=>$reservation));
     }
@@ -179,6 +179,7 @@ class ReservationController extends AbstractController
         $dompdf->stream("mypdf.pdf", [
             "Attachment" => true
         ]);
+
 
     }
 
