@@ -59,6 +59,15 @@ class ReservationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    public function findStudentsByEmail()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager
+            ->createQuery('SELECT p FROM App\Entity\Student p ORDER BY p.email ASC');
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
     //  */

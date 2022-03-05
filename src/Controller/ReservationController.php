@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Form\ReservationfrontType;
 use App\Form\ReservationType;
 use App\Repository\CoachRepository;
 use App\Repository\ReservationRepository;
@@ -127,7 +128,7 @@ class ReservationController extends AbstractController
      */
     public function addfront(Request$request ){
         $reservation= new Reservation();
-        $form= $this->createForm(ReservationType::class,$reservation);
+        $form= $this->createForm(ReservationfrontType::class,$reservation);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()   ){
             $em = $this->getDoctrine()->getManager();
