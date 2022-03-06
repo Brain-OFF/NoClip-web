@@ -46,6 +46,9 @@
 
         {% endfor %}
     </table>
+    <div class="navigation">
+        {{ knp_pagination_render(tabeservation) }}
+    </div>
     <a href="{{ path('showpdf') }}">pdf</a>
 
 {% endblock %}

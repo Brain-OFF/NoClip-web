@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -60,12 +62,26 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
 
-    public function findStudentsByEmail()
+    /**
+     * @return Query
+     */
+
+    public function findAllVisibleQuery(): Query
     {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager
-            ->createQuery('SELECT p FROM App\Entity\Student p ORDER BY p.email ASC');
-        return $query->getResult();
+        return $this->createQueryBuilder('I')
+            ->getQuery();
+
+    }
+    /**
+     * @return Query
+     */
+
+    public function findAllVisibleQuerybydispo(): Query
+    {
+        return $this->createQueryBuilder('I')
+            ->where('I.dispo = 1')
+           ->getQuery();
+
     }
 
     // /**

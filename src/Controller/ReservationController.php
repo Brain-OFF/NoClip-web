@@ -7,6 +7,7 @@ use App\Form\ReservationfrontType;
 use App\Form\ReservationType;
 use App\Repository\CoachRepository;
 use App\Repository\ReservationRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +32,12 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reservationlist",name="reservationlist")
      */
-    public function list()
+    public function list(PaginatorInterface $paginator , Request $request)
     {
-        $reservation= $this->getDoctrine()->
-        getRepository(Reservation::class)->findAll();
+        $reservation= $paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->findAllVisibleQuery()
+        , $request->query->getInt('page', 1),12
+
+        );
         return $this->render("reservation/index.html.twig",
             array('tabeservation'=>$reservation));
     }
@@ -56,7 +59,7 @@ class ReservationController extends AbstractController
         $reservation= new Reservation();
         $form= $this->createForm(ReservationType::class,$reservation);
         $form->handleRequest($request);
-        $id = $form->getData($id);
+        $id = $form->getData();
         if($form->isSubmitted() && $form->isValid()   ){
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
@@ -104,10 +107,12 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reservationlistfront",name="reservationlistfront")
      */
-    public function listfront()
+    public function listfront(PaginatorInterface $paginator , Request $request)
     {
-        $reservation= $this->getDoctrine()->
-        getRepository(Reservation::class)->listReservationByDispo();
+        $reservation= $paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->findAllVisibleQuerybydispo()
+            , $request->query->getInt('page', 1),12
+
+        );
         return $this->render("reservation/indexfront.html.twig",
             array('tabeservation'=>$reservation));
     }
