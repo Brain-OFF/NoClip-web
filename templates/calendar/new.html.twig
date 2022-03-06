@@ -1,0 +1,15 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}New Calendar{% endblock %}
+
+{% block body %}
+
+    <h1>Create new Calendar</h1>
+<div class="card-body">
+
+    <div class="table-responsive">
+    {{ include('calendar/_form.html.twig') }}
+
+    <a href="{{ path('calendar_index') }}">back to list</a>
+    </div></div>
+{% endblock %}

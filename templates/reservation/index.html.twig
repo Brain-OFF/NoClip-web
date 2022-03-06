@@ -3,6 +3,7 @@
     <div class="card-body">
     <h4 class="card-title">reservation </h4>
     <div class="table-responsive">
+
     <div align="center">
         <a href="{{ path('addreservation') }}" class="badge badge-outline-success"  >add</a>
     </div>
@@ -50,5 +51,7 @@
         {{ knp_pagination_render(tabeservation) }}
     </div>
     <a href="{{ path('showpdf') }}">pdf</a>
+
+
 
 {% endblock %}

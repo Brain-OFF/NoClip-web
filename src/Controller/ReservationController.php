@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Form\ReservationfrontType;
 use App\Form\ReservationType;
+use App\Repository\CalendarRepository;
 use App\Repository\CoachRepository;
 use App\Repository\ReservationRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -20,13 +21,28 @@ class ReservationController extends AbstractController
 // back template
 
     /**
-     * @Route("/reservationback", name="reservationback")
+     * @Route("/fullcalendar", name="fullcalendar")
      */
-    public function reservationback(): Response
+    public function reservationback(CalendarRepository $calendar)
     {
-        return $this->render('reservation/index.html.twig', [
-            'controller_name' => 'ReservationController',
-        ]);
+        $rdvs = [];
+        $events = $calendar->findAll();
+        foreach ($events as $event)
+        {
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'start' => $event->getStart()->format('Y-m-d H:i:s'),
+                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+                'title' => $event->getTitle(),
+                'description' => $event->getDescription(),
+                'backgroundColor' => $event->getBackgroundColor(),
+                'borderColor' => $event->getBorderColor(),
+                'textColor' => $event->getTextColor(),
+                'allDay' => $event->getAllDay(),
+            ];
+        }
+        $data = json_encode($rdvs);
+        return $this->render('reservation/fullcalendrier.html.twig', compact('data'));
     }
 
     /**

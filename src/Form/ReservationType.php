@@ -16,8 +16,8 @@ class ReservationType extends AbstractType
     {
         $builder
             ->add('coach')
-            ->add('tempsstart' , DateTimeType::class)
-            ->add('tempsend', DateTimeType::class)
+            ->add('tempsstart' , DateTimeType::class,['date_widget'=>'single_text','time_widget'=>'single_text'])
+            ->add('tempsend', DateTimeType::class,['date_widget'=>'single_text','time_widget'=>'single_text'])
             ->add('dispo')
             ->add("submit",SubmitType::class);
         ;

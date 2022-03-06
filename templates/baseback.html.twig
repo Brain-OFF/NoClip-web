@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Corona Admin</title>
-    <!-- plugins:css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+    {% block stylesheet %}
+    {% endblock  %}
     <link rel="stylesheet" href="{{asset('assets/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendors/css/vendor.bundle.base.css')}}">
     <!-- endinject -->
@@ -20,6 +22,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <!-- End layout styles -->
+
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" />
 </head>
 <body>
@@ -102,8 +105,10 @@
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="reservationlist">Reservation</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="coachlist">Coach</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="../reservationlist">Reservation</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="../coachlist">Coach</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/calendar">calendar</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="../fullcalendar">view calender</a></li>
 
                     </ul>
                 </div>
@@ -432,8 +437,11 @@
     </div>
     <!-- page-body-wrapper ends -->
 </div>
-<!-- container-scroller -->
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
 <!-- plugins:js -->
+{% block js %}
+{% endblock %}
 <script src="{{asset('assets/vendors/js/vendor.bundle.base.js')}}"></script>
 <!-- endinject -->
 <!-- Plugin js for this page -->
@@ -454,5 +462,6 @@
 <!-- Custom js for this page -->
 <script src="{{asset('assets/js/dashboard.js')}}"></script>
 <!-- End custom js for this page -->
+
 </body>
 </html>
