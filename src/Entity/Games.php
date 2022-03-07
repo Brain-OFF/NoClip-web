@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=GamesRepository::class)
  */
@@ -17,18 +17,21 @@ class Games
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="name is required")
+     * @Groups("post:read")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="desc is required")
+     * @Groups("post:read")
      */
     private $descreption;
 
@@ -39,6 +42,7 @@ class Games
      *     type="double",
      *     message="the value is not ."
      * )
+     * @Groups("post:read")
      */
     private $prix;
 
@@ -47,6 +51,7 @@ class Games
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="prix is required")
+     * @Groups("post:read")
      */
     private $img;
 
@@ -55,9 +60,16 @@ class Games
      */
     private $cat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Promos::class, inversedBy="games")
+     */
+    private $promos;
+
+
     public function __construct()
     {
         $this->cat = new ArrayCollection();
+        ;
     }
 
 
@@ -143,6 +155,21 @@ class Games
     public function __toString()
     {
         return(string)$this->getName();
+
     }
+
+    public function getPromos(): ?Promos
+    {
+        return $this->promos;
+    }
+
+    public function setPromos(?Promos $promos): self
+    {
+        $this->promos = $promos;
+
+        return $this;
+    }
+
+
 
 }

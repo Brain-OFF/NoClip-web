@@ -28,6 +28,7 @@ class GamesType extends AbstractType
             ->add('prix')
             ->add('img')
             ->add('cat')
+            ->add('promos')
             ->add("submit",SubmitType::class)
         ;
     }

@@ -104,11 +104,11 @@ class GamescatController extends AbstractController
         return $this->render("gamescat/modify.html.twig",array("formgamescatmodif"=>$form->createView()));
     }
     /**
-     * @Route("/listTournoisByJeu/{id}", name="listTournoisByJeu")
+     * @Route("/listgamesbycat/{id}", name="listgamesbycat")
      */
-    public function listTournoisByJeu(GamesRepository   $repository,$id)
+    public function listgamesbycat(GamesRepository   $repository,$id)
     {
-        $games=$repository->listTournoiByJeu($id);
+        $games=$repository->listgamebycat($id);
         return $this->render("games/indexF.html.twig",array("games"=>$games));
     }
 

@@ -3,11 +3,13 @@
 namespace App\Controller;
 use App\Entity\Games;
 use App\Form\GamesType;
+use App\Repository\GamesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Entity\Promos;
+use App\Repository\PromosRepository;
 class GamesController extends AbstractController
 {
 
@@ -48,10 +50,12 @@ class GamesController extends AbstractController
 
     public function listF()
     {
+        $promos=$this->getDoctrine()->
+        getRepository(Promos::class)->findAll();
         $classroom= $this->getDoctrine()->
         getRepository(Games::class)->findAll();
         return $this->render("games/indexF.html.twig",
-            array('games'=>$classroom));
+            array('games'=>$classroom,'promos'=>$promos));
     }
 
     /**
