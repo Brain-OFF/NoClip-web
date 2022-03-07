@@ -28,7 +28,7 @@ class InscriptionTType extends AbstractType
             'platinum' => 'platinum',
             'diamond' => 'diamond',
             'Master' => 'Master',
-            'grand' => 'master' ]
+            'grand' => 'grand' ]
             ])
             ->add('tournoi')
 ->add("add",SubmitType::class)

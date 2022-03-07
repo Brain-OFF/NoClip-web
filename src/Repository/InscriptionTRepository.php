@@ -58,5 +58,15 @@ class InscriptionTRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function RRank($Rank){
+        return $this->createQueryBuilder('I')
+               ->where('I.Rank=:Rank')
+               ->setParameter('Rank',$Rank)
+                ->getQuery()
+                ->getResult();
+
+
+    }
+
 
 }

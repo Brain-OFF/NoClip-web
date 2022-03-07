@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\inscriptionT;
 use App\Entity\Tournoi;
 use App\Form\InscriptionTType;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Form\TournoiType;
 use App\Repository\InscriptionTRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,9 +15,11 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mime\Address;
+use Doctrine\ORM\EntityManagerInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart ;
 
 
 class InscriptionTController extends AbstractController
@@ -133,7 +136,87 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         }
         return $this->render("Inscription_t/updateins.html.twig",array("formINS"=>$form->createView()));
     }
+    public function __construct( EntityManagerInterface $entityManager)
+    {
 
+        $this->entityManager = $entityManager;
+    }
+
+    private function getData(): array
+    {
+        /**
+         * @var $user inscriptionT[]
+         */
+        $list = [];
+        $users = $this->entityManager->getRepository(inscriptionT::class)->findAll();
+
+        foreach ($users as $user) {
+            $list[] = [
+                $user->getUserName(),
+                $user->getEtat(),
+                $user->getRank(),
+                $user->getTournoi()
+
+            ];
+        }
+        return $list;
+    }
+
+    /**
+     * @Route("/export",  name="export")
+     */
+    public function export()
+    {
+        $spreadsheet = new Spreadsheet();
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setTitle('User List');
+
+        $sheet->getCell('A1')->setValue('Username');
+        $sheet->getCell('B1')->setValue('Etat');
+        $sheet->getCell('C1')->setValue('Rank');
+        $sheet->getCell('C1')->setValue('Tournoi');
+
+
+        // Increase row cursor after header write
+        $sheet->fromArray($this->getData(),null, 'A2', true);
+
+
+        $writer = new Xlsx($spreadsheet);
+
+        $writer->save('helloworld.xlsx');
+
+        return $this->redirectToRoute("showINC");
+    }
+    /**
+     * @Route("/stat",  name="stat")
+     */
+    public function stat()
+    {
+        $pieChart = new PieChart();
+        $Ts= $this->getDoctrine()->getRepository(inscriptionT::class)->findAll();
+        $data = [['Rank','Nombre de Rank']];
+        $Ranks= ['bronze','silver','gold','platinum','Master','grand','diamond'];
+        $i=-1;
+       foreach ($Ts as $T)
+           {
+               foreach ($Ranks as $rank)
+                if((string)$rank==$T->getRank()) {
+                    $data[] = array($T->getRank(),$i=$i+1);
+                }
+           }
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            $data
+        );
+        return $this->render('Inscription_t/stat.html.twig', array(
+                'piechart' => $pieChart,
+            )
+
+        );
+
+    }
 
 
 

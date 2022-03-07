@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\Tournoi;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Tournoi|null find($id, $lockMode = null, $lockVersion = null)
@@ -62,4 +65,5 @@ class TournoiRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+
 }

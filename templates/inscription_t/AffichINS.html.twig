@@ -15,6 +15,8 @@
             <th>Nom_user</th>
             <th>Email</th>
             <th>Rank</th>
+            <td>tournoi</td>
+
             <th>delete</th>
             <th>Update</th>
 
@@ -30,6 +32,8 @@
             <td>{{ i.getUserName() }}</td>
             <td>{{ i.Email }}</td>
             <td>{{ i.Rank }}</td>
+            <td>{{ i.tournoi }}</td>
+
             <td><a href="{{ path('removeINC',{'id':i.id}) }}">Remove</a>
             </td>
             <td>
@@ -41,5 +45,7 @@
         {% endfor %}
     </table>
     <a href="{{ path('showpdf') }}">pdf</a>
+    <a href="{{ path('export') }}">excel</a>
+
 
 {% endblock %}
