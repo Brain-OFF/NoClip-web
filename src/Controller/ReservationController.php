@@ -9,6 +9,7 @@ use App\Repository\CalendarRepository;
 use App\Repository\CoachRepository;
 use App\Repository\ReservationRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +49,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reservationlist",name="reservationlist")
      */
-    public function list(PaginatorInterface $paginator , Request $request)
+    public function list(PaginatorInterface $paginator , Request $request )
     {
         $reservation= $paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->findAllVisibleQuery()
         , $request->query->getInt('page', 1),12
@@ -71,7 +72,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/addreservation",name="addreservation")
      */
-    public function add(Request$request ){
+    public function add(Request$request , FlashyNotifier $flash ){
         $reservation= new Reservation();
         $form= $this->createForm(ReservationType::class,$reservation);
         $form->handleRequest($request);
@@ -80,6 +81,7 @@ class ReservationController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
+            $this->addFlash('info','added successfully!');
             return $this->redirectToRoute("reservationlist");
         }
         return $this->render("reservation/add.html.twig",array("formReservation"=>$form->createView()));
@@ -92,6 +94,7 @@ class ReservationController extends AbstractController
         $em= $this->getDoctrine()->getManager();
         $em->remove($reservation);
         $em->flush();
+        $this->addFlash('info2','deleted successfully!');
         return $this->redirectToRoute("reservationlist");
     }
     /**
@@ -104,6 +107,7 @@ class ReservationController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+            $this->addFlash('info3','modify successfully!');
             return $this->redirectToRoute("reservationlist");
         }
         return $this->render("reservation/modify.html.twig",array("formReservation"=>$form->createView()));
@@ -155,6 +159,11 @@ class ReservationController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
+
+            $this->addFlash(
+                'info',
+                'added successfully!'
+            );
             return $this->redirectToRoute("reservationlistfront");
         }
         return $this->render("reservation/addfront.html.twig",array("formReservation"=>$form->createView()));

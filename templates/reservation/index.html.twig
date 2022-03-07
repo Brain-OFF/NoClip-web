@@ -1,7 +1,23 @@
 {% extends 'baseback.html.twig' %}
 {% block body %}
+
     <div class="card-body">
     <h4 class="card-title">reservation </h4>
+{% for message in app.flashes('info') %}
+    <div class="alert alert-success" >
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% for message in app.flashes('info2') %}
+        <div class="alert alert-danger" >
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('info3') %}
+        <div class="alert alert-warning" >
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="table-responsive">
 
     <div align="center">
