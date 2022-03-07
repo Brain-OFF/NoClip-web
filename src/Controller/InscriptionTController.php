@@ -198,14 +198,21 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         $Ts= $this->getDoctrine()->getRepository(inscriptionT::class)->findAll();
         $data = [['Rank','Nombre de Rank']];
         $Ranks= ['bronze','silver','gold','platinum','Master','grand','diamond'];
-        $i=-1;
-       foreach ($Ts as $T)
+        $R=[];
+        $j=0;
+        foreach ($Ranks as $rank)
+        {$j=0;
+            foreach ($Ts as $T)
            {
-               foreach ($Ranks as $rank)
                 if((string)$rank==$T->getRank()) {
-                    $data[] = array($T->getRank(),$i=$i+1);
+                    $j++;
                 }
-           }
+
+                }
+            $data[] = array((string)$rank,$j,);
+
+        }
+
         $pieChart = new PieChart();
         $pieChart->getData()->setArrayToDataTable(
             $data
