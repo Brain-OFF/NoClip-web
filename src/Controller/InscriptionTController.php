@@ -187,7 +187,7 @@ public function sendEmail(MailerInterface $mailer,String $mail)
 
         $writer->save('helloworld.xlsx');
 
-        return $this->redirectToRoute("showINC");
+        return $this->render("Inscription_t/excel_page.html.twig");
     }
     /**
      * @Route("/stat",  name="stat")
