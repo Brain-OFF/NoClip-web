@@ -24,7 +24,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/fullcalendar", name="fullcalendar")
      */
-    public function reservationback(CalendarRepository $calendar)
+    public function reservationback(ReservationRepository $calendar)
     {
         $rdvs = [];
         $events = $calendar->findAll();
@@ -32,14 +32,9 @@ class ReservationController extends AbstractController
         {
             $rdvs[] = [
                 'id' => $event->getId(),
-                'start' => $event->getStart()->format('Y-m-d H:i:s'),
-                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
-                'title' => $event->getTitle(),
-                'description' => $event->getDescription(),
-                'backgroundColor' => $event->getBackgroundColor(),
-                'borderColor' => $event->getBorderColor(),
-                'textColor' => $event->getTextColor(),
-                'allDay' => $event->getAllDay(),
+                'title' => $event->getCoach()->__toString(),
+                'start' => $event->getTempsstart()->format('Y-m-d H:i:s'),
+                'end' => $event->getTempsend()->format('Y-m-d H:i:s'),
             ];
         }
         $data = json_encode($rdvs);
@@ -52,7 +47,7 @@ class ReservationController extends AbstractController
     public function list(PaginatorInterface $paginator , Request $request )
     {
         $reservation= $paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->findAllVisibleQuery()
-        , $request->query->getInt('page', 1),12
+        , $request->query->getInt('page', 1),4
 
         );
         return $this->render("reservation/index.html.twig",
