@@ -64,6 +64,7 @@ class TournoiController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($T);
             $em->flush();
+            $this->addFlash('info','added successfully!');
             return $this->redirectToRoute("showT");
         }
         return $this->render("tournoi/AddTT.html.twig", array("formT" => $form->createView()));
@@ -110,6 +111,7 @@ class TournoiController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($T);
         $em->flush();
+        $this->addFlash('info','remove successfully!');
         return $this->redirectToRoute("showT");
     }
 

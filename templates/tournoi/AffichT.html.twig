@@ -3,6 +3,11 @@
 {% block body %}
     <div class="card-body">
     <h4 class="card-title">tournoi </h4>
+    {% for message in app.flashes('info') %}
+        <div class="alert alert-success" >
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="table-responsive">
     <div align="center">
         <a href="{{ path('addT') }}" class="badge badge-outline-success"  >add</a>
@@ -60,6 +65,8 @@
     <br>
     <a href="{{ path('showTr') }}" class="badge badge-outline-success"  >Tri par date</a>
     <a href="{{ path('statT') }}" class="badge badge-outline-success"  >Statistique</a>
-
+<br>
+    <br>
+    <br>
   {{ knp_pagination_render(tabT) }}
 {% endblock %}
