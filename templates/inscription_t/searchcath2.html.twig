@@ -4,21 +4,18 @@
     <div class="card-body">
     <h4 class="card-title">inscription</h4>
     {% for message in app.flashes('info') %}
-    <div class="alert alert-success" >
-        {{ message }}
-    </div>
+        <div class="alert alert-success" >
+            {{ message }}
+        </div>
     {% endfor %}
-
     <div class="table-responsive">
     <div align="center">
         <a href="{{ path('addIns') }}" class="badge badge-outline-success"  >add</a>
     </div>
-    <div>
-        {{ form_start(formsearchI,{'attr': {'novalidate': 'novalidate'}} ) }}
-        {{ form_widget(formsearchI.user_name,{'class':'form-control'},)}}
-        {{ form_widget(formsearchI.search, {'attr': {'placeholder': 'REGISTER','class':'btn btn-primary' }})}}
-        {{ form_end(formsearchI) }}
-    </div>
+    {{ form_start(formsearchI,{'attr': {'novalidate': 'novalidate'}} ) }}
+    {{ form_widget(formsearchI.user_name,{'class':'form-control'},)}}
+    {{ form_widget(formsearchI.search, {'attr': {'placeholder': 'REGISTER','class':'btn btn-primary' }})}}
+    {{ form_end(formsearchI) }}
     <table class="table">
         <thead>
         <tr>
@@ -37,7 +34,7 @@
         </thead>
 
         <tr>
-            {% for i in tabINS %}
+            {% for i in cath %}
             {% if i.etat == true %}
         <tr>
             <td>{{ i.id }}</td>

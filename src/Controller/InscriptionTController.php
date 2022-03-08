@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\inscriptionT;
 use App\Entity\Tournoi;
+use App\Form\InscriptionsType;
 use App\Form\InscriptionTType;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Form\TournoiType;
@@ -71,12 +72,19 @@ public function sendEmail(MailerInterface $mailer,String $mail)
     /**
      * @Route("/showINS",name="showINC")
      */
-    public function show()
+    public function show(Request $request , inscriptionTRepository $T)
     {
-        $T= $this->getDoctrine()->
-        getRepository(inscriptionT::class)->findAll();
+        $list=$T->findAll() ;
+        $formsearchI = $this->createForm(InscriptionsType::class);
+        $formsearchI->handleRequest($request);
+        if ($formsearchI->isSubmitted()) {
+            $user_name = $formsearchI->getData();
+            $TSearch = $T->search($user_name);
+            return $this->render("inscription_t/searchcath2.html.twig",
+                array("cath" => $TSearch, 'tabINS' => $T, "formsearchI" => $formsearchI->createView()));
+        }
         return $this->render("inscription_t/AffichINS.html.twig",
-            array('tabINS'=>$T));
+            array('tabINS'=>$T,"formsearchI" => $formsearchI->createView()));
     }
     /**
      * @Route("/showpdf",name="showpdf")
@@ -228,7 +236,41 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         );
 
     }
+    /**
+     * @Route("/statTI",  name="statTI")
+     */
+    public function statTI()
+    {
+        $pieChart = new PieChart();
+        $Ts= $this->getDoctrine()->getRepository(inscriptionT::class)->findAll();
+        $data = [['Rank','Nombre de Rank']];
+        $Ranks= ['bronze','silver','gold','platinum','Master','grand','diamond'];
+        $R=[];
+        $j=0;
+        foreach ($Ranks as $rank)
+        {$j=0;
+            foreach ($Ts as $T)
+            {
+                if((string)$rank==$T->getRank()) {
+                    $j++;
+                }
 
+            }
+            $data[] = array((string)$rank,$j,);
+
+        }
+
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            $data
+        );
+        return $this->render('Inscription_t/statTI.html.twig', array(
+                'piechart' => $pieChart,
+            )
+
+        );
+
+    }
 
 
 }

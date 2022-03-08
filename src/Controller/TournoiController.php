@@ -156,7 +156,7 @@ class TournoiController extends AbstractController
     {
         $pieChartT= new PieChart();
         $Ts= $this->getDoctrine()->getRepository(Tournoi::class)->findAll();
-        $data = [['Rank','Nombre de Rank']];
+        $data = [['cathegorie','Nombre de cathegorie']];
         $Types= ['RPG','MMORPG','MOBA','RTS','Battle Royale','Beat Them All','survival Horror'];
         $R=[];
         $j=0;
@@ -178,6 +178,42 @@ class TournoiController extends AbstractController
             $data
         );
         return $this->render('tournoi/statT.html.twig', array(
+                'piechart' => $pieChart,
+            )
+
+        );
+
+    }
+    /**
+     * @Route("/statTT",  name="statTT")
+     */
+    public function stat2()
+    {
+        $pieChartT= new PieChart();
+        $Ts= $this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+        $data = [['cathegorie','Nombre de cathegorie']];
+        $Types= ['RPG','MMORPG','MOBA','RTS','Battle Royale','Beat Them All','survival Horror'];
+        $R=[];
+        $j=0;
+        foreach ($Types as $rank)
+        {$j=0;
+            foreach ($Ts as $T)
+            {
+                if((string)$rank==$T->getCathegorie()) {
+                    $j++;
+                }
+
+            }
+            $data[] = array((string)$rank,$j,);
+
+        }
+
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            $data
+        );
+
+        return $this->render('tournoi/statf.html.twig', array(
                 'piechart' => $pieChart,
             )
 
