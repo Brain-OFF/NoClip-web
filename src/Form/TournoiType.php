@@ -17,11 +17,8 @@ class TournoiType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('Date', DateTimeType::class, [
-                'placeholder' => [
-                    'year' => '2022', 'month' => 'Mars', 'day' => '22', 'hour'=>'00h'
-                ],
-            ])
+            ->add('Date', DateTimeType::class, ['date_widget'=>'single_text','time_widget'=>'single_text'])
+
             ->add('cathegorie',ChoiceType::class,[
                 'choices'  => [
                     'RPG' => 'RPG',
