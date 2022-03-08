@@ -9,6 +9,7 @@
         {{ form_widget(formSearch.name,{'class':'form-control'},)}}
         {{ form_widget(formSearch.search, {'attr': {'placeholder': 'REGISTER','class':'btn btn-primary' }})}}
         {{ form_end(formSearch) }}
+
     <table class="nk-table">
         <thead>
         <th> name </th>
@@ -38,5 +39,8 @@
         </tbody>
         {% endfor %}
     </table>
+        <div class="navigation">
+            {{ knp_pagination_render(tabcoach) }}
+        </div>
     </div>
 {% endblock %}

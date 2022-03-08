@@ -40,6 +40,25 @@ class ReservationController extends AbstractController
         $data = json_encode($rdvs);
         return $this->render('reservation/fullcalendrier.html.twig', compact('data'));
     }
+    /**
+     * @Route("/fullcalendarfront", name="fullcalendarfront")
+     */
+    public function reservationfront(ReservationRepository $calendar)
+    {
+        $rdvs = [];
+        $events = $calendar->findAll();
+        foreach ($events as $event)
+        {
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'title' => $event->getCoach()->__toString(),
+                'start' => $event->getTempsstart()->format('Y-m-d H:i:s'),
+                'end' => $event->getTempsend()->format('Y-m-d H:i:s'),
+            ];
+        }
+        $data = json_encode($rdvs);
+        return $this->render('reservation/fullcalendarfront.html.twig', compact('data'));
+    }
 
     /**
      * @Route("/reservationlist",name="reservationlist")
@@ -57,10 +76,10 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reservationlisttrie",name="reservationlisttrie")
      */
-    public function listtrie()
+    public function listtrie(PaginatorInterface $paginator , Request $request)
     {
-        $reservation= $this->getDoctrine()->
-        getRepository(Reservation::class)->orderByDate();
+        $reservation= $paginator->paginate($this->getDoctrine()->
+        getRepository(Reservation::class)->orderByDate() , $request->query->getInt('page', 1),4);
         return $this->render("reservation/indextrie.html.twig",
             array('tabeservation'=>$reservation));
     }
@@ -124,8 +143,7 @@ class ReservationController extends AbstractController
      */
     public function listfront(PaginatorInterface $paginator , Request $request)
     {
-        $reservation= $paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->findAllVisibleQuerybydispo()
-            , $request->query->getInt('page', 1),12
+        $reservation= $paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->findAllVisibleQuerybydispo(), $request->query->getInt('page', 1),4
 
         );
         return $this->render("reservation/indexfront.html.twig",
@@ -135,10 +153,10 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reservationlistfronttrie",name="reservationlistfronttrie")
      */
-    public function listfronttrie()
+    public function listfronttrie(Request $request , PaginatorInterface $paginator)
     {
-        $reservation= $this->getDoctrine()->
-        getRepository(Reservation::class)->orderByDate();
+        $reservation=$paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->orderByDate(), $request->query->getInt('page', 1),4
+        );
         return $this->render("reservation/indexfronttrie.html.twig",
             array('tabeservation'=>$reservation));
     }
@@ -155,10 +173,7 @@ class ReservationController extends AbstractController
             $em->persist($reservation);
             $em->flush();
 
-            $this->addFlash(
-                'info',
-                'added successfully!'
-            );
+            $this->addFlash('info','added successfully!');
             return $this->redirectToRoute("reservationlistfront");
         }
         return $this->render("reservation/addfront.html.twig",array("formReservation"=>$form->createView()));
@@ -168,9 +183,9 @@ class ReservationController extends AbstractController
     /**
      * @Route("/listreservationdecoach/{id}",name="listreservationdecoach")
      */
-    public function listreservationdecoach($id)
+    public function listreservationdecoach($id , Request $request , PaginatorInterface $paginator)
     {
-        $inc= $this->getDoctrine()->getRepository(Reservation::class)->listReservationByidtrier($id);
+        $inc= $paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->listReservationByidtrier($id), $request->query->getInt('page', 1),4 );
         return $this->render("coach/listreservation.html.twig",array('inc'=>$inc));
     }
 

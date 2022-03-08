@@ -8,6 +8,11 @@
         <div >
             <a href="{{ path('reservationlistfronttrie') }}" class="nk-btn nk-btn-rounded nk-btn-color-main-1"  > trie  </a>
         </div>
+        {% for message in app.flashes('info') %}
+            <div class="alert alert-success" >
+                {{ message }}
+            </div>
+        {% endfor %}
     <table class="nk-table">
         <thead>
         <th> idreservation </th>
