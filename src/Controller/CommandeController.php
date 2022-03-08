@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Form\CommandeType;
 use App\Form\CommandeUPType;
+use App\Form\SearchCommandeType;
 use App\Repository\CommandeRepository;
 use App\Repository\GamesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -15,9 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email ;
+use Knp\Component\Pager\PaginatorInterface;
+
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPaginationInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 class CommandeController extends AbstractController
 {
+
 
     public function sendEmail(MailerInterface $mailer,String $mail)
     {
@@ -37,13 +43,14 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/", name="commande_index", methods={"GET"})
+     * @Route("/index", name="commande_index", methods={"GET"})
      */
-    public function index(CommandeRepository $commandeRepository): Response
+    public function index(CommandeRepository $commandeRepository,Request $request): Response
     {
 
-        return $this->render('commande/index.html.twig', [
+        return $this->render('commande/.html.twig', [
             'commandes' => $commandeRepository->findAll(),
+
         ]);
     }
     /**
@@ -51,12 +58,26 @@ class CommandeController extends AbstractController
      */
 
 
-    public function list()
+    public function list(CommandeRepository $commandeRepository,Request $request, PaginatorInterface $paginator)
     {
-        $Commandes= $this->getDoctrine()->
+
+        $commande = new Commande();
+        $formSearch = $this->createForm(SearchCommandeType::class);
+        $formSearch->handleRequest($request);
+
+
+        if ($formSearch->isSubmitted()){
+            $term=$formSearch->getData();
+            $allcommande=$commandeRepository->search($term);
+            return $this->render("commande/search.html.twig",
+                array("commandes"=>$allcommande,"formSearch"=>$formSearch->createView()));
+        }
+
+        $commande= $this->getDoctrine()->
         getRepository(Commande::class)->findAll();
+
         return $this->render("commande/index.html.twig",
-            array('commandes'=>$Commandes));
+            array("commandes"=>$commande,"formSearch"=>$formSearch->createView()));
     }
 
 
@@ -137,7 +158,8 @@ class CommandeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->flush();
-            return $this->redirectToRoute('commandelist');
+
+            return $this->redirectToRoute('modifiercommandeback');
 
         }
 
@@ -173,8 +195,20 @@ class CommandeController extends AbstractController
         ]);
     }
 
-
-
-
+    /**
+     * @Route("/showTT",name="showTT")
+     */
+    public function search(Request $request, CommandeRepository $T)
+    {
+        $list = $T->findAll();
+        $formSearch = $this->createForm(SearchCommandeType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $nom = $formSearch->getData();
+            $commande = $T->search($nom);
+            return $this->render("commande/search.html.twig", array("cath" => $commande, 'tabT' => $list, "formSearch" => $formSearch->createView()));
+        }
+        return $this->render("commande/index.html.twig",  array("tabT"=>$list,"formSearch"=>$formSearch->createView()));
+    }
 
 }
