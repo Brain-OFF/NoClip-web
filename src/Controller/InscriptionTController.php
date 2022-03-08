@@ -119,6 +119,8 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         $em= $this->getDoctrine()->getManager();
         $em->remove($INC);
         $em->flush();
+        $this->addFlash('info','remove successfully!');
+
         return $this->redirectToRoute("showINC");
     }
 
@@ -132,6 +134,8 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         if($form->isSubmitted()){
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+            $this->addFlash('info','update successfully!');
+
             return $this->redirectToRoute("showINC");
         }
         return $this->render("Inscription_t/updateins.html.twig",array("formINS"=>$form->createView()));

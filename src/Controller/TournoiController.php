@@ -126,6 +126,8 @@ class TournoiController extends AbstractController
         if ($form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+            $this->addFlash('info','upadate successfully!');
+
             return $this->redirectToRoute("showT");
         }
         return $this->render("tournoi/update.html.twig", array("formT" => $form->createView()));

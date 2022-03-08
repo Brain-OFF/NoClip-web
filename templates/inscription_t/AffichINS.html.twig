@@ -3,6 +3,11 @@
 {% block body %}
     <div class="card-body">
     <h4 class="card-title">inscription</h4>
+    {% for message in app.flashes('info') %}
+    <div class="alert alert-success" >
+        {{ message }}
+    </div>
+    {% endfor %}
     <div class="table-responsive">
     <div align="center">
         <a href="{{ path('addIns') }}" class="badge badge-outline-success"  >add</a>
