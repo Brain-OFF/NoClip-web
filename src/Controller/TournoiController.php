@@ -8,6 +8,7 @@ use App\Form\SearchTournoiType;
 use App\Form\TournoiType;
 use App\Repository\InscriptionTRepository;
 use App\Repository\TournoiRepository;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -144,5 +145,39 @@ class TournoiController extends AbstractController
         return $this->render("tournoi/AffichTT.html.twig", array('tabT' => $list, "formSearch" => $formSearch->createView()));;
     }
 
+    /**
+     * @Route("/statT",  name="statT")
+     */
+    public function stat1()
+    {
+        $pieChartT= new PieChart();
+        $Ts= $this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+        $data = [['Rank','Nombre de Rank']];
+        $Types= ['RPG','MMORPG','MOBA','RTS','Battle Royale','Beat Them All','survival Horror'];
+        $R=[];
+        $j=0;
+        foreach ($Types as $rank)
+        {$j=0;
+            foreach ($Ts as $T)
+            {
+                if((string)$rank==$T->getCathegorie()) {
+                    $j++;
+                }
 
+            }
+            $data[] = array((string)$rank,$j,);
+
+        }
+
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            $data
+        );
+        return $this->render('tournoi/statT.html.twig', array(
+                'piechart' => $pieChart,
+            )
+
+        );
+
+    }
 }
