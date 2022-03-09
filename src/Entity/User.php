@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -15,6 +16,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class User implements UserInterface
 {
+
+
+    /**
+    * @Recaptcha\IsTrue
+    */
+    public $recaptcha;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -30,7 +37,7 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank(message="Email is required")
      * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      * @Groups ("post:read")
@@ -74,6 +81,11 @@ class User implements UserInterface
      * @Groups ("post:read")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\Column(type="string", length=300, nullable=true)
+     */
+    private $Reset_Token;
 
     public function getId(): ?int
     {
@@ -206,6 +218,18 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->Reset_Token;
+    }
+
+    public function setResetToken( $Reset_Token): self
+    {
+        $this->Reset_Token = $Reset_Token;
 
         return $this;
     }

@@ -15,8 +15,10 @@
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
+
         {{ form_row(registrationForm.agreeTerms) }}
+    {{ form_row(registrationForm.recaptcha) }}
         <br>
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-lg btn-danger">Register</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

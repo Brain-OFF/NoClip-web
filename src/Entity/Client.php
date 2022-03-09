@@ -5,12 +5,17 @@ namespace App\Entity;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
  */
 class Client
 {
+    /**
+     * @Recaptcha\IsTrue
+     */
+    public $recaptcha;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

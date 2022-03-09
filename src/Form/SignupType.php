@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Client;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,6 +32,7 @@ class SignupType extends AbstractType
                 'first_options'  => ['label'=>' ','attr' => array('placeholder' => 'Passowrd', 'class'=> 'form-control required')],
                 'second_options' => ['label'=>' ','attr' => array('placeholder' => 'Confirm Password', 'class'=> 'form-control required')]
             ))
+            ->add('recaptcha', EWZRecaptchaType::class)
             ->add("submit",SubmitType::class)
         ;
     }

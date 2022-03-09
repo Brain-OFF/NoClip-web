@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
      */
     public function logout(): void
     {
-        $this->redirectToRoute("home");
+        $this->redirectToRoute("/home");
     }
 
 
