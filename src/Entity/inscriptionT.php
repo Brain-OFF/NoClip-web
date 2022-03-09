@@ -57,6 +57,12 @@ class inscriptionT
      */
     private $tournoi;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
 
     public function getUserName(): ?string
     {
@@ -126,5 +132,17 @@ class inscriptionT
     public function __toString()
     {
         return(string)$this->getUserName();
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

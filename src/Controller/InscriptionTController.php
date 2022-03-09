@@ -55,10 +55,14 @@ public function sendEmail(MailerInterface $mailer,String $mail)
      */
     public function add(Request $request,MailerInterface $mailer)
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
         $ins = new inscriptionT();
         $form = $this->createForm(InscriptionTType::class, $ins);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $ins->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($ins);
             $em->flush();
