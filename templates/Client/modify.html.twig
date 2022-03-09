@@ -1,0 +1,79 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+{{ form_start(formUser,{'attr': {'novalidate': 'novalidate'}} ) }}
+    <div >
+        <a href="{{ path('users') }}" class="mdi mdi-keyboard-backspace"  > </a>
+    </div>
+<div class="card-body">
+    <h4  class="card-title">add coach </h4>
+    <div class="table-responsive">
+
+        <table class="table">
+
+
+            <tr>
+
+
+                <td>
+                    {{ form_label(formUser.username,"username") }}
+                </td>
+                <td>
+                    {{ form_widget(formUser.username,{'attr': {'placeholder' : 'Username', 'class': 'form-control required'}})}}
+                    {{ form_errors(formUser.username) }}
+                </td>
+
+            </tr>
+            <tr>
+
+
+                <td>
+                    {{ form_label(formUser.email,"email") }}
+                </td>
+                <td>
+                    {{ form_widget(formUser.email,{'attr': {'placeholder' : 'Email', 'class': 'form-control required'}})}}
+                    {{ form_errors(formUser.email) }}
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    {{ form_label(formUser.points,"points") }}
+                </td>
+                <td>
+                    {{ form_widget(formUser.points,{'attr': {'placeholder' : 'Points', 'class': 'form-control required'}})}}
+                    {{ form_errors(formUser.points) }}
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    {{ form_label(formUser.password,"Password") }}
+                </td>
+                <td>
+                    {{ form_widget(formUser.password)}}
+                    {{ form_errors(formUser.password) }}
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    {{ form_label(formUser.bio,"Bio") }}
+                </td>
+                <td>
+                    {{ form_widget(formUser.bio,{'attr': {'placeholder' : 'Bio', 'class': 'form-control required'}})}}
+                    {{ form_errors(formUser.bio) }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form_widget(formUser.submit,{'attr': {'class': 'badge badge-outline-info'}})}}
+                </td>
+
+                <td>
+                    {{ form_end(formUser) }}
+                </td>
+            </tr>
+
+        </table>
+{% endblock %}
