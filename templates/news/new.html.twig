@@ -1,0 +1,96 @@
+{#  {% extends 'base_back.html.twig' %}
+
+{% block title %}New News{% endblock %}
+
+{% block body %}
+    <h1>Create new News</h1>
+
+    {{ include('news/_form.html.twig') }}
+
+    <a href="{{ path('news_index') }}">back to list</a>
+{% endblock %}
+{% block footer %}
+{% endblock %}#}
+
+
+
+{% extends 'base_back.html.twig' %}
+{% block body %}
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+<div >
+    <a href="{{ path('news_index') }}" class="mdi mdi-keyboard-backspace"  > </a>
+</div>
+<div class="card-body">
+    <h4  class="card-title">add News </h4>
+    <div class="table-responsive">
+
+        <table class="table">
+
+
+            <tr>
+
+
+                <td>
+                    {{ form_label(form.Titre,"Titre") }}
+                </td>
+                <td>
+                    {{ form_widget(form.Titre)}}
+                    {{ form_errors(form.Titre) }}
+                </td>
+
+            </tr>
+            <tr>
+
+
+                <td>
+                    {{ form_label(form.Text,"Text") }}
+                </td>
+                <td>
+                    {{ form_widget(form.Text)}}
+                    {{ form_errors(form.Text) }}
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    {{ form_label(form.jeu,"jeu") }}
+                </td>
+                <td>
+                    {{ form_widget(form.jeu)}}
+                    {{ form_errors(form.jeu) }}
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    {{ form_label(form.Date,"Date") }}
+                </td>
+                <td>
+                    {{ form_widget(form.Date)}}
+                    {{ form_errors(form.Date) }}
+                </td>
+            </tr>
+
+            <tr>
+            <tr>
+
+
+                <td>
+                    {{ form_label(form.Categorie,"Categorie") }}
+                </td>
+                <td>
+                    {{ form_widget(form.Categorie)}}
+                    {{ form_errors(form.Categorie) }}
+                </td>
+            </tr>
+                <td></td>
+                <td>
+                    {{ form_end(form) }}
+                </td>
+            </tr>
+
+        </table>
+        <a href="{{ path('news_show', {'id': news.id}) }}" class="btn btn-warning">show liste game <i class="bi bi-cart-x"></i></a>
+
+        {% endblock %}

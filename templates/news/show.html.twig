@@ -1,0 +1,105 @@
+
+
+
+
+
+
+
+
+
+
+
+{% extends 'base_front.html.twig' %}{% block body %}
+
+    <!-- START: Table -->
+    <div class="container">
+        <h3 class="text-main-1" align="center">News</h3>
+        <div class="nk-gap"></div>
+        <table class="nk-table">
+
+            <thead>
+
+
+                <th>Categorie</th>
+                <th>image</th>
+
+                <th>Titre</th>
+                <th>Text</th>
+                <th>Jeu</th>
+                <th>Date</th>
+                <th>vote</th>
+
+
+
+
+            </thead>
+            <tbody>
+            <tr>
+                {% for news in news %}
+
+                <td >
+
+                    {{ news.categorie}}
+                </td>
+
+                <td>{% for image in news.image %}
+                        <img src="{{ asset ('/uploads/' ~ image.name ) }}"
+
+                         class="align-center"    alt="image" width="50">
+                    {% endfor %}
+                </td>
+
+
+                <td>{{ news.Titre }}</td>
+                <td>{{ news.Text }}</td>
+                <td>{{ news.jeu }}</td>
+                <td>{{ news.Date ? news.Date|date('Y-m-d') : '' }}</td>
+
+                <td>
+
+
+                    <!DOCTYPE html>
+                    <html lang="en" >
+                    <head>
+                        <neta charset="UTF-8">
+                            <title>Like & Dislike</title>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesone/5.15.3/css/all.nin.css">
+                            <link rel="stylesheet" href="style.css">
+                            <head>
+                    <body>
+
+                    <div class="wrapper">
+                        <div class="radio_group">
+                            <input type="radio" name="like">
+                            <Label for="like">
+                                <i class="fas fa-thumbs-up"></i>
+                            </Label>
+
+                        </div>
+                        <div class="radio_group">
+                            <input type="radio" name="like">
+                            <Label for="like">
+                                <i class="fas fa-thumbs-down"></i>
+                            </Label>
+                        </div>
+                    </div>
+                    </body>
+
+
+
+
+
+
+
+
+
+                </td>
+
+            </tr>
+
+
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
