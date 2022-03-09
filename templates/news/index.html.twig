@@ -1,0 +1,63 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}News index{% endblock %}
+
+{% block body %}
+    <h1>Liste News</h1>
+
+    <table class="table">
+
+        <thead>
+        <a href="{{path('TrierParDateDESC') }}" class="btn btn-warning"><i class="align-middle" ></i>trier par date</a>
+
+            <tr>
+                 <th>Categorie</th>
+
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Text</th>
+                <th>Jeu</th>
+                <th>Date</th>
+                <th>Actions</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for news in news %}
+            <tr>
+
+
+                 <td>{{ news.categorie}}</td>
+
+                <td>{{ news.id }}</td>
+                <td>{{ news.Titre }}</td>
+                <td>{{ news.Text }}</td>
+                <td>{{ news.jeu }}</td>
+                <td>{{ news.Date ? news.Date|date('Y-m-d') : '' }}</td>
+
+                <td>{% for image in news.image %}
+                        <img src="{{ asset ('/uploads/' ~ image.name ) }}"
+
+                             alt="image" width="150">
+                    {% endfor %}
+                </td>
+
+                <td>
+                    <a href="{{ path('news_show', {'id': news.id}) }}" class="btn btn-warning">show <i class="bi bi-cart-x"></i></a>
+                    <a href="{{ path('news_edit', {'id': news.id}) }}" class="btn btn-warning" >edit<i class="bi bi-cart-x"></i></a>
+                  {#  <a href="{{ path('news_delete', {'id': news.id}) }}" class="btn btn-warning">delete <i class="bi bi-cart-x"></i> </a>#}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('news_new') }}">Create new</a>
+{% endblock %}
+
+
