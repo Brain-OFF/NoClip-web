@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
 use App\Entity\Games;
-use App\Entity\Products;
 use App\Repository\GamesRepository;
-use App\Repository\ProductsRepository;
 use http\Params;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

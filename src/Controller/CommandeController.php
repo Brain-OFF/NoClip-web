@@ -119,9 +119,6 @@ class CommandeController extends AbstractController
 
                 $commande->addListP($panierwithData [$i]['product']);
                 $Quantite[$i]=($panierwithData [$i]['quantity']);
-
-
-
             }
 
             $this->addFlash('success', 'votre commande a été Ajouter !!');
