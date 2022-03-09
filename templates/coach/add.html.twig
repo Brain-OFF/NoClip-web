@@ -56,6 +56,17 @@
                 </td>
             </tr>
             <tr>
+
+
+                <td>
+                    {{ form_label(formCoach.user,"User") }}
+                </td>
+                <td>
+                    {{ form_widget(formCoach.user)}}
+                    {{ form_errors(formCoach.user) }}
+                </td>
+            </tr>
+            <tr>
                 <td></td>
                 <td>
                     {{ form_end(formCoach) }}

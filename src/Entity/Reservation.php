@@ -51,6 +51,11 @@ class Reservation
      */
     private $coach;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,6 +116,18 @@ class Reservation
     public function __toStringdispo()
     {
         return(string)$this->getDispo();
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
 

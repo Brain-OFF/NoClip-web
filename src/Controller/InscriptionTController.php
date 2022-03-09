@@ -34,8 +34,8 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         //->bcc('bcc@example.com')
         //->replyTo('fabien@example.com')
         //->priority(Email::PRIORITY_HIGH)
-        ->subject('Test')
-        ->text('Sending emails is fun again!')
+        ->subject('Inscription Acceptée')
+        ->text('Une Nouvelle inscription a été ajoutée')
         ->html('<p>You have been registered successfully!</p>');
 
     $mailer->send($email);

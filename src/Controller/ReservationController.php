@@ -104,6 +104,7 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
         $id = $form->getData();
         if($form->isSubmitted() && $form->isValid()   ){
+            $reservation->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();

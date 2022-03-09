@@ -17,6 +17,7 @@ class CoachType extends AbstractType
             ->add('lastname')
             ->add('rank')
             ->add('categorie')
+            ->add('user')
             ->add("submit",SubmitType::class);
         ;
     }

@@ -94,9 +94,20 @@ class User implements UserInterface
      */
     private $inscriptionTs;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Coach::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $coach;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="user")
+     */
+    private $reservations;
+
     public function __construct()
     {
         $this->inscriptionTs = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -275,4 +286,57 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getCoach(): ?Coach
+    {
+        return $this->coach;
+    }
+
+    public function setCoach(Coach $coach): self
+    {
+        // set the owning side of the relation if necessary
+        if ($coach->getUser() !== $this) {
+            $coach->setUser($this);
+        }
+
+        $this->coach = $coach;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString():String
+    {
+        return(string) "Name: ".$this->getUsername()." ID: ".$this->getId();
+    }
+
 }
