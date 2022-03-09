@@ -1,0 +1,36 @@
+
+
+
+    <h4 align="center" class="card-title">reservation </h4>
+
+<table class="table" border="1" align="center"  >
+    <thead>
+    <tr>
+
+        <th bgcolor="red">id </th>
+        <th  bgcolor="red">time start</th>
+        <th  bgcolor="red">time end</th>
+        <th bgcolor="red">dispo</th>
+        <th  bgcolor="red">coach name</th>
+
+
+    </tr>
+    </thead>
+
+    <tr>
+        {% for i in tabINS %}
+        {% if i.dispo == 1 %}
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.tempsstart |  date("F jS  Y \\a\\t g:ia") }}</td>
+        <td>{{ i.tempsend |  date("F jS  Y \\a\\t g:ia") }}</td>
+        <td>{{ i.getDispo()}}</td>
+        <td>{{ i.getCoach() }}</td>
+
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+
+
+

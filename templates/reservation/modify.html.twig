@@ -1,0 +1,63 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    {{ form_start(formReservation,{'attr': {'novalidate': 'novalidate'}} ) }}
+    <div >
+        <a href="{{ path('reservationlist') }}" class="mdi mdi-keyboard-backspace"  > </a>
+    </div>
+    <div class="card-body">
+    <h4  class="card-title">modify reservation </h4>
+    <div class="table-responsive">
+
+    <table class="table">
+
+        <tr>
+
+
+            <td>
+                {{ form_label(formReservation.coach,"coach") }}
+            </td>
+            <td>
+                {{ form_widget(formReservation.coach)}}
+                {{ form_errors(formReservation.coach) }}
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                {{ form_label(formReservation.tempsstart,"tempsstart") }}
+            </td>
+            <td>
+                {{ form_widget(formReservation.tempsstart,{'attr':{'class': 'input-group date', 'data-provide' : 'datepicker'} })}}
+                {{ form_errors(formReservation.tempsstart) }}
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                {{ form_label(formReservation.tempsend,"tempsend") }}
+            </td>
+            <td>
+                {{ form_widget(formReservation.tempsend ,{'attr':{'class': 'input-group date', 'data-provide' : 'datepicker'} }) }}
+                {{ form_errors(formReservation.tempsend) }}
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                {{ form_label(formReservation.dispo,"dispo") }}
+            </td>
+            <td>
+                {{ form_widget(formReservation.dispo)}}
+                {{ form_errors(formReservation.dispo) }}
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td>
+                {{ form_end(formReservation) }}
+            </td>
+        </tr>
+
+    </table>
+{% endblock %}

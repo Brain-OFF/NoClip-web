@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <!-- START: Table -->
+    <div class="container">
+    <h3 class="text-main-1" align="center">reservation</h3>
+    <div class="nk-gap"></div>
+        <div >
+            <a href="{{ path('reservationlistfronttrie') }}" class="nk-btn nk-btn-rounded nk-btn-color-main-1"  > trie  </a>
+        </div>
+        {% for message in app.flashes('info') %}
+            <div class="alert alert-success" >
+                {{ message }}
+            </div>
+        {% endfor %}
+    <table class="nk-table">
+        <thead>
+        <th> idreservation </th>
+        <th> nom coach </th>
+        <th> temps start </th>
+        <th> temps end </th>
+
+
+        </thead>
+        <tbody>
+        <tr>
+            {% for i in tabeservation %}
+
+            <td>
+                {{ i.id }}
+            </td>
+            <td> {{ i.coach }} </td>
+            <td> {{ i.tempsstart |  date("F jS  Y \\a\\t g:ia") }} </td>
+            <td> {{ i.tempsend | date("F jS  Y \\a\\t g:ia")  }} </td>
+
+
+
+        </tr>
+
+
+        </tbody>
+        {% endfor %}
+    </table>
+        <div class="navigation">
+            {{ knp_pagination_render(tabeservation) }}
+        </div>
+    </div>
+{% endblock %}

@@ -58,10 +58,11 @@ class inscriptionT
     private $tournoi;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="inscriptionTs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
 
 
     public function getUserName(): ?string
@@ -145,4 +146,6 @@ class inscriptionT
 
         return $this;
     }
+
+
 }

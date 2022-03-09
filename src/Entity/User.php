@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -86,6 +88,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=300, nullable=true)
      */
     private $Reset_Token;
+
+    /**
+     * @ORM\OneToMany(targetEntity=inscriptionT::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $inscriptionTs;
+
+    public function __construct()
+    {
+        $this->inscriptionTs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -230,6 +242,36 @@ class User implements UserInterface
     public function setResetToken( $Reset_Token): self
     {
         $this->Reset_Token = $Reset_Token;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InscriptionT[]
+     */
+    public function getInscriptionTs(): Collection
+    {
+        return $this->inscriptionTs;
+    }
+
+    public function addInscriptionT(InscriptionT $inscriptionT): self
+    {
+        if (!$this->inscriptionTs->contains($inscriptionT)) {
+            $this->inscriptionTs[] = $inscriptionT;
+            $inscriptionT->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscriptionT(InscriptionT $inscriptionT): self
+    {
+        if ($this->inscriptionTs->removeElement($inscriptionT)) {
+            // set the owning side to null (unless already changed)
+            if ($inscriptionT->getUser() === $this) {
+                $inscriptionT->setUser(null);
+            }
+        }
 
         return $this;
     }
