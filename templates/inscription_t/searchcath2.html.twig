@@ -37,11 +37,11 @@
             {% for i in cath %}
             {% if i.etat == true %}
         <tr>
-            <td>{{ i.id }}</td>
+            <td>{{ i.getId() }}</td>
             <td>{{ i.getUserName() }}</td>
-            <td>{{ i.Email }}</td>
-            <td>{{ i.Rank }}</td>
-            <td>{{ i.tournoi }}</td>
+            <td>{{ i.getEmail() }}</td>
+            <td>{{ i.getRank() }}</td>
+            <td>{{ i.getTournoi() }}</td>
 
             <td><a href="{{ path('removeINC',{'id':i.id}) }}">Remove</a>
             </td>

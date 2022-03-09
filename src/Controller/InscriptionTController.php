@@ -75,17 +75,17 @@ public function sendEmail(MailerInterface $mailer,String $mail)
      */
     public function show(Request $request , inscriptionTRepository $T)
     {
-        $list=$T->findAll() ;
+        $list=$T->findAll();
         $formsearchI = $this->createForm(InscriptionsType::class);
         $formsearchI->handleRequest($request);
         if ($formsearchI->isSubmitted()) {
             $user_name = $formsearchI->getData();
             $TSearch = $T->search($user_name);
             return $this->render("inscription_t/searchcath2.html.twig",
-                array("cath" => $TSearch, 'tabINS' => $T, "formsearchI" => $formsearchI->createView()));
+                array("cath" => $TSearch, 'tabINS' => $list, "formsearchI" => $formsearchI->createView()));
         }
         return $this->render("inscription_t/AffichINS.html.twig",
-            array('tabINS'=>$T,"formsearchI" => $formsearchI->createView()));
+            array('tabINS'=>$list,"formsearchI" => $formsearchI->createView()));
     }
     /**
      * @Route("/showpdf",name="showpdf")
@@ -149,6 +149,7 @@ public function sendEmail(MailerInterface $mailer,String $mail)
         }
         return $this->render("Inscription_t/updateins.html.twig",array("formINS"=>$form->createView()));
     }
+
     public function __construct( EntityManagerInterface $entityManager)
     {
 

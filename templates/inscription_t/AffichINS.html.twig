@@ -3,12 +3,6 @@
 {% block body %}
     <div class="card-body">
     <h4 class="card-title">inscription</h4>
-    {% for message in app.flashes('info') %}
-    <div class="alert alert-success" >
-        {{ message }}
-    </div>
-    {% endfor %}
-
     <div class="table-responsive">
     <div align="center">
         <a href="{{ path('addIns') }}" class="badge badge-outline-success"  >add</a>
@@ -28,11 +22,8 @@
             <th>Email</th>
             <th>Rank</th>
             <td>tournoi</td>
-
             <th>delete</th>
             <th>Update</th>
-
-
         </tr>
         </thead>
 
@@ -40,11 +31,11 @@
             {% for i in tabINS %}
             {% if i.etat == true %}
         <tr>
-            <td>{{ i.id }}</td>
+            <td>{{ i.getId() }}</td>
             <td>{{ i.getUserName() }}</td>
-            <td>{{ i.Email }}</td>
-            <td>{{ i.Rank }}</td>
-            <td>{{ i.tournoi }}</td>
+            <td>{{ i.getEmail() }}</td>
+            <td>{{ i.getRank() }}</td>
+            <td>{{ i.getTournoi() }}</td>
 
             <td><a href="{{ path('removeINC',{'id':i.id}) }}">Remove</a>
             </td>

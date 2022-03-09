@@ -62,19 +62,11 @@ class InscriptionTRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.user_name LIKE :user_name')
-            ->setParameter('nom', '%'.$user_name.'%')
+            ->setParameter('user_name', '%'.$user_name.'%')
             ->getQuery()
             ->execute();
     }
-    public function RRank($Rank){
-        return $this->createQueryBuilder('I')
-               ->where('I.Rank=:Rank')
-               ->setParameter('Rank',$Rank)
-                ->getQuery()
-                ->getResult();
 
-
-    }
 
 
 }
