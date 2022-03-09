@@ -213,7 +213,7 @@ class TournoiController extends AbstractController
             $data
         );
 
-        return $this->render('tournoi/statf.html.twig', array(
+        return $this->render('tournoi/stat  f.html.twig', array(
                 'piechart' => $pieChart,
             )
 

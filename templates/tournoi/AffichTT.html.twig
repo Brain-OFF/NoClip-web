@@ -4,7 +4,14 @@
 
     <!-- START: Table -->
     <div class="container">
+
         <h3 class="text-main-1" align="center">List tournoit</h3>
+        <br>
+        {% for message in app.flashes('info') %}
+            <div class="alert alert-success" >
+                {{ message }}
+            </div>
+        {% endfor %}
         <br>
         <div>
             {{ form_start(formSearch,{'attr': {'novalidate': 'novalidate'}} ) }}

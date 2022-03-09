@@ -62,6 +62,7 @@ public function sendEmail(MailerInterface $mailer,String $mail)
             $em = $this->getDoctrine()->getManager();
             $em->persist($ins);
             $em->flush();
+            $this->addFlash('info','add successfully!');
             $this->sendEmail($mailer,$ins->getEmail());
             return $this->redirectToRoute("showTT");
 
