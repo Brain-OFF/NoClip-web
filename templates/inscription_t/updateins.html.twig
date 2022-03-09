@@ -1,0 +1,73 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+<div class="card-body">
+    <h4 class="card-title">inscrit </h4>
+    <div class="table-responsive"></div>
+    {{ form_start(formINS,{'attr': {'novalidate': 'novalidate'}} ) }}
+    <table class="nk-table">
+        {% if formINS is rootform %}
+            {{ form_errors(formINS) }}
+        {% endif %}
+        <tr>
+            <td>
+                {{ form_label(formINS.user_name,"user_name") }}
+            </td>
+            <td>
+                {{ form_widget(formINS.user_name,  {'attr': {'placeholder': 'Username','class': 'form-control required' }} )}}
+                {{ form_errors(formINS.user_name) }}
+                {{ form_errors(formINS) }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(formINS.email,"email") }}
+            </td>
+            <td>
+                {{ form_widget(formINS.email,  {'attr': {'placeholder': 'Email','class': 'form-control required' }})}}
+                {{ form_errors(formINS.email)  }}
+                {{ form_errors(formINS) }}
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(formINS.Rank,"Rank") }}
+            </td>
+            <td>
+                {{ form_widget(formINS.Rank,{'attr': {'class': 'btn btn-danger dropdown-toggle' }})}}
+                {{ form_errors(formINS.Rank) }}
+                {{ form_errors(formINS) }}
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(formINS.tournoi,"tournoi") }}
+            </td>
+            <td>
+                {{ form_widget(formINS.tournoi,{'attr': {'class': 'btn btn-danger dropdown-toggle' }})}}
+                {{ form_errors(formINS.tournoi) }}
+                {{ form_errors(formINS) }}
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(formINS.etat,"I ACCEPT ALL TERMS",  {'attr': {'placeholder': 'check','class': 'form-control required' }}) }}
+            </td>
+            <td>
+                {{ form_widget(formINS.etat,  {'attr': {'class': 'form-check-input filled-in' }})}}
+                {{ form_errors(formINS.etat) }}
+                {{ form_errors(formINS) }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ form_widget(formINS.add, {'attr': {'placeholder': 'REGISTER','class': 'nk-btn nk-btn-rounded nk-btn-color-white' }}, )}}</td>
+            <td>
+                {{ form_end(formINS) }}
+            </td>
+        </tr>
+
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <!-- START: Table -->
+    <div class="container">
+        <h3 class="text-main-1" align="center">List tournoit</h3>
+        <br>
+        <div>
+            {{ form_start(formSearch,{'attr': {'novalidate': 'novalidate'}} ) }}
+            {{ form_widget(formSearch.nom,{'class':'form-control'},)}}
+            {{ form_widget(formSearch.Search, {'attr': {'placeholder': 'REGISTER','class':'badge badge-outline-success' }})}}
+            {{ form_end(formSearch) }}
+        </div>
+        <br>
+        <div class="nk-gap"></div>
+        <table class="nk-table">
+            <thead>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>cathegorie</th>
+            <th>Discription</th>
+
+            </thead>
+            <tbody>
+            <tr>
+                {% for i in cath %}
+
+
+                <td>{{ i.nom }}</td>
+                <td>{{ i.Date|date }}</td>
+                <td>{{ i.cathegorie }}</td>
+                <td>{{ i.Discription }}</td>
+
+            </tr>
+
+
+            </tbody>
+            {% endfor %}
+        </table>
+        <br>
+        <a href="{{ path('showTT') }}" class="btn btn-danger">Back</a>
+
+    </div>
+{% endblock %}

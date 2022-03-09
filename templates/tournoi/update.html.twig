@@ -1,0 +1,61 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    <div class="card-body">
+        <h4 class="card-title">tournoi </h4>
+        <table class="table">
+            <tr class="table-responsive">
+                {{ form_start(formT,{'attr': {'novalidate': 'novalidate'}} ) }}
+                <div class="nk-gap"></div>
+                {% if formT is rootform %}
+                    {{ form_errors(formT) }}
+                {% endif %}
+            <tr>
+                <td>
+                    {{ form_label(formT.nom,"nom") }}
+                </td>
+                <td>
+                    {{ form_widget(formT.nom,  {'attr': {'placeholder': 'Name Tournoi','class': 'form-control required' }} )}}
+                    {{ form_errors(formT.nom) }}
+                    {{ form_errors(formT) }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form_label(formT.Date,"Date") }}
+                </td>
+                <td>
+                    {{ form_widget(formT.Date,{'attr': {'class': 'form-control required' }})}}
+                    {{ form_errors(formT.Date) }}
+                    {{ form_errors(formT) }}
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form_label(formT.cathegorie,"cathegorie",  {'attr': {'placeholder': 'cathegorie','class': 'form-control required' }}) }}
+                </td>
+                <td>
+                    {{ form_widget(formT.cathegorie,  {'attr': {'placeholder': 'cathegorie','class': 'form-control required' }})}}
+                    {{ form_errors(formT.cathegorie) }}
+                    {{ form_errors(formT) }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form_label(formT.Discription,"Discription",  {'attr': {'placeholder': 'Discription','class': 'form-control required' }}) }}
+                </td>
+                <td>
+                    {{ form_widget(formT.Discription,  {'attr': {'placeholder': 'Discription','class': 'form-control required' }})}}
+                    {{ form_errors(formT.Discription) }}
+                    {{ form_errors(formT) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_widget(formT.add, {'attr': {'placeholder': 'REGISTER','class': 'nk-btn nk-btn-rounded nk-btn-color-white' }}, )}}</td>
+                <td>
+                    {{ form_end(formT) }}
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

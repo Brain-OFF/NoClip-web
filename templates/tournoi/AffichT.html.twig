@@ -1,0 +1,72 @@
+
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    <div class="card-body">
+    <h4 class="card-title">tournoi </h4>
+    {% for message in app.flashes('info') %}
+        <div class="alert alert-success" >
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="table-responsive">
+    <div align="center">
+        <a href="{{ path('addT') }}" class="badge badge-outline-success"  >add</a>
+        <br>
+        <br>
+       <div>
+        {{ form_start(formSearch,{'attr': {'novalidate': 'novalidate'}} ) }}
+        {{ form_widget(formSearch.nom,{'class':'form-control'},)}}
+        {{ form_widget(formSearch.Search, {'attr': {'placeholder': 'REGISTER','class':'btn btn-primary' }})}}
+        {{ form_end(formSearch) }}
+       </div>
+
+
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>id </th>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>categorie</th>
+            <th>Discription</th>
+            <th>remove</th>
+            <th>update</th>
+            <th>listINSByTour</th>
+
+        </tr>
+        </thead>
+
+        <tr>
+            {% for i in tabT %}
+
+            <td>{{ i.id }}</td>
+            <td>{{ i.nom }}</td>
+            <td>{{ i.Date|date }}</td>
+            <td>{{ i.cathegorie }}</td>
+            <td>{{ i.Discription }}</td>
+            <td><a href="{{ path('removeT',{'id':i.id}) }}">Remove</a>
+            </td>
+            <td>
+                <a href="{{ path('update',{'id':i.id}) }}">Update</a>
+            </td>
+            <td>
+            <a href="{{ path('listINSByTour',{'id':i.id}) }}">listINSByTour</a>
+            </td>
+
+
+        </tr>
+
+
+        {% endfor %}
+
+    </table>
+    <br>
+    <a href="{{ path('showTr') }}" class="badge badge-outline-success"  >Tri par date</a>
+    <a href="{{ path('statT') }}" class="badge badge-outline-success"  >Statistique</a>
+<br>
+    <br>
+    <br>
+  {{ knp_pagination_render(tabT) }}
+{% endblock %}
