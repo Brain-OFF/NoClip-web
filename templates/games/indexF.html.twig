@@ -10,6 +10,7 @@
     <div class="row vertical-gap">
         {% for i in games %}
         {% for j in promos  %}
+
 {% if (j.id==i.promos.id) %}
             <div class="col-lg-6">
                 <div class="nk-product-cat-2">
@@ -19,7 +20,30 @@
                     <div class="nk-product-cont">
                         <h3 class="nk-product-title h5"><a href="store-product.html">{{ i.name }}</a></h3>
                         <div class="nk-gap-1"></div>
-                        <div class="nk-product-rating" data-rating="4"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i></div>
+                        <div class="nk-product-rating" data-rating="4">
+            {% if rating is empty %}
+                <a> <a href="{{ path('addrating1', {'id': i.id}) }}"> <i class="far fa-star" ></i></a>
+                            <a href="{{ path('addrating2', {'id': i.id}) }}">  <i class="far fa-star" ></i> </a>
+                                    <a  href="{{ path('addrating3', {'id': i.id}) }}"> </i> <i class="far fa-star"></i></a>
+                                <a href="{{ path('addrating4', {'id': i.id}) }}">  <i class="far fa-star" ></i></a>
+                                    <a href="{{ path('addrating5', {'id': i.id}) }}"> <i class="far fa-star" ></i></a>
+            {% else %}
+                            {% for k in rating  %}
+                           {% if i.id==k.idgame.id %}
+                               {% for d in k.note  %}
+
+                            <i class="fa fa-star"></i>
+                                {% endfor %}
+                           {% else %}
+                               <i class="far fa-star"></i>
+                               <i class="far fa-star"></i> <i class="far fa-star"></i>
+                               <i class="far fa-star"></i> <i class="far fa-star"></i>
+                           {% endif %}
+                            {% endfor %}
+
+
+            {% endif %}
+                        </div>
                         <div class="nk-gap-1"></div>
                         {{ i.descreption }}
                         <div class="nk-gap-2"></div>
@@ -52,6 +76,7 @@
                 </div>
             </div>
         {% endif %}
+
         {% endfor %}
         {% endfor %}
     </div>

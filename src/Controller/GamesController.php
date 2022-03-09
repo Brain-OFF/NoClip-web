@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 use App\Entity\Games;
+use App\Entity\Rating;
 use App\Form\GamesType;
 use App\Repository\GamesRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,12 +38,18 @@ class GamesController extends AbstractController
     /**
      * @Route("/gameslist",name="gameslist")
      */
-    public function list()
+    public function list(Request $request, PaginatorInterface $paginator)
     {
-        $classrooms= $this->getDoctrine()->
-        getRepository(games::class)->findAll();
-        return $this->render("games/index.html.twig",
-            array('games'=>$classrooms));
+        $donnees = $this->getDoctrine()->getRepository(games:: class)->findAll();
+        $articles = $paginator->paginate($donnees,$request->query->getInt('page', 1),4
+
+
+        );
+        return $this->render('games/index.html.twig', [
+                'articles'=>$articles, 1]);
+
+
+
     }
 
     /**
@@ -50,12 +58,14 @@ class GamesController extends AbstractController
 
     public function listF()
     {
+        $rating=$this->getDoctrine()->
+        getRepository(Rating::class)->findAll();
         $promos=$this->getDoctrine()->
         getRepository(Promos::class)->findAll();
         $classroom= $this->getDoctrine()->
         getRepository(Games::class)->findAll();
         return $this->render("games/indexF.html.twig",
-            array('games'=>$classroom,'promos'=>$promos));
+            array('games'=>$classroom,'promos'=>$promos,'rating'=>$rating));
     }
     /**
      * @Route("/showfav",name="showfav")

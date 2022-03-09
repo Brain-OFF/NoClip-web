@@ -10,6 +10,7 @@ use App\Entity\Promos;
 use App\Form\GamesCatType;
 use App\Repository\GamescatRepository;
 use App\Repository\GamesRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,12 +44,17 @@ class GamescatController extends AbstractController
     /**
      * @Route("/gamescatlist",name="gamescatlist")
      */
-    public function list()
+    public function list(Request $request, PaginatorInterface $paginator)
     {
-        $classrooms= $this->getDoctrine()->
-        getRepository(Gamescat::class)->findAll();
-        return $this->render("gamescat/index.html.twig",
-            array('gamescat'=>$classrooms));
+        $donnees = $this->getDoctrine()->getRepository(Gamescat :: class)->findAll();
+        $articles = $paginator->paginate($donnees,$request->query->getInt('page', 1),4
+
+
+        );
+        return $this->render('gamescat/index.html.twig', [
+                'articles'=>$articles, 1]);
+
+
     }
 
     /**
@@ -57,6 +63,8 @@ class GamescatController extends AbstractController
 
     public function listF()
     {
+
+
         $classroom= $this->getDoctrine()->
         getRepository(Gamescat::class)->findAll();
         return $this->render("gamescat/indexF.html.twig",

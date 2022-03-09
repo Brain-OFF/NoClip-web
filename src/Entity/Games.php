@@ -70,11 +70,17 @@ class Games
      */
     private $favoris;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="idgame")
+     */
+    private $ratings;
+
 
     public function __construct()
     {
         $this->cat = new ArrayCollection();
         $this->favoris = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
 
@@ -195,6 +201,36 @@ class Games
     public function removeFavori(User $favori): self
     {
         $this->favoris->removeElement($favori);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rating>
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setIdgame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getIdgame() === $this) {
+                $rating->setIdgame(null);
+            }
+        }
 
         return $this;
     }

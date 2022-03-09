@@ -504,6 +504,9 @@
     "symfony/stopwatch": {
         "version": "v4.4.27"
     },
+    "symfony/templating": {
+        "version": "v4.4.37"
+    },
     "symfony/translation": {
         "version": "3.3",
         "recipe": {
