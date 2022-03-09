@@ -1,0 +1,38 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    <div class="card-body">
+    <h4 class="card-title">Users </h4>
+    <div class="table-responsive">
+    <div align="center">
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th> Id  </th>
+            <th> Username </th>
+            <th> Email </th>
+            <th> Points  </th>
+            <th>  Bio </th>
+            <th> Is Verified  </th>
+            <th> Modify  </th>
+            <th> Delete  </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for i in users %}
+            <td>{{ i.id }} </td>
+            <td>{{ i.username }} </td>
+            <td> {{ i.email }} </td>
+            <td> {{ i.points }} </td>
+            <td> {{ i.bio }}  </td>
+            <td> {{ i.isverified }}  </td>
+           <td><a href="{{ path('updateuser',{'id':i.id}) }}" class="badge badge-outline-warning" >Update</a> </td>
+            <td> <a href="{{ path('deleteuser',{'id':i.id }) }}" class="badge badge-outline-danger" >Remove</a></td>
+        </tr>
+
+
+        {% endfor %}
+    </table>
+
+{% endblock %}
