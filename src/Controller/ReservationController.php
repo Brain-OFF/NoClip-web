@@ -36,12 +36,15 @@ class ReservationController extends AbstractController
         $events = $calendar->findAll();
         foreach ($events as $event)
         {
-            $rdvs[] = [
-                'id' => $event->getId(),
-                'title' => $event->getCoach()->__toString(),
-                'start' => $event->getTempsstart()->format('Y-m-d H:i:s'),
-                'end' => $event->getTempsend()->format('Y-m-d H:i:s'),
-            ];
+
+                $rdvs[] = [
+                    'id' => $event->getId(),
+                    'discription' => $event->getDispo(),
+                    'title' => $event->getCoach()->__toString(),
+                    'start' => $event->getTempsstart()->format('Y-m-d H:i:s'),
+                    'end' => $event->getTempsend()->format('Y-m-d H:i:s'),
+                ];
+
         }
         $data = json_encode($rdvs);
         return $this->render('reservation/fullcalendrier.html.twig', compact('data'));
@@ -55,12 +58,15 @@ class ReservationController extends AbstractController
         $events = $calendar->findAll();
         foreach ($events as $event)
         {
+            if($event->getDispo() == true)
+            {
             $rdvs[] = [
                 'id' => $event->getId(),
                 'title' => $event->getCoach()->__toString(),
                 'start' => $event->getTempsstart()->format('Y-m-d H:i:s'),
                 'end' => $event->getTempsend()->format('Y-m-d H:i:s'),
             ];
+            }
         }
         $data = json_encode($rdvs);
         return $this->render('reservation/fullcalendarfront.html.twig', compact('data'));

@@ -108,6 +108,10 @@ class Reservation
     {
         return(string)$this->getCoach();
     }
+    public function __toStringdispo()
+    {
+        return(string)$this->getDispo();
+    }
 
 
 }
