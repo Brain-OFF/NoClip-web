@@ -16,6 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Doctrine\ORM\EntityManagerInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+
+
 
 class ReservationController extends AbstractController
 {
@@ -222,6 +228,64 @@ class ReservationController extends AbstractController
         ]);
 
 
+    }
+
+
+    public function __construct( EntityManagerInterface $entityManager)
+    {
+
+        $this->entityManager = $entityManager;
+    }
+
+    private function getData(): array
+    {
+        /**
+         * @var $user Reservation[]
+         */
+        $list = [];
+        $users = $this->entityManager->getRepository(Reservation::class)->findAll();
+
+        foreach ($users as $user) {
+            $list[] = [
+                $user->getId(),
+                $user->getTempsstart(),
+                $user->getTempsend(),
+                $user->getDispo(),
+                $user->getCoach()
+
+            ];
+        }
+        return $list;
+    }
+
+    /**
+     * @Route("/export",  name="export")
+     */
+    public function export()
+    {
+        $spreadsheet = new Spreadsheet();
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setTitle('User List');
+
+        $sheet->getCell('A1')->setValue('id');
+        $sheet->getCell('B1')->setValue('tempsstart');
+        $sheet->getCell('C1')->setValue('tempsend');
+        $sheet->getCell('C1')->setValue('dispo');
+        $sheet->getCell('C2')->setValue('coach');
+
+
+        // Increase row cursor after header write
+        $sheet->fromArray($this->getData(),null, 'A2', true);
+
+
+        $writer = new Xlsx($spreadsheet);
+
+        $writer->save('helloworld.xlsx');
+
+        $this->addFlash('info4','excel file is in public !');
+        return $this->redirectToRoute("reservationlist");
     }
 
 }

@@ -17,6 +17,7 @@
         "knplabs/knp-paginator-bundle": "^5.8",
         "mercuryseries/flashy-bundle": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.2",
+        "phpoffice/phpspreadsheet": "^1.22",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",

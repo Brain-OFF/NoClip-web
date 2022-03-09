@@ -3,21 +3,29 @@
     <div class="card-body">
     <h4 class="card-title">coach </h4>
     <div class="table-responsive">
+
+
+
     {% for message in app.flashes('info') %}
         <div class="alert alert-success" >
             {{ message }}
         </div>
     {% endfor %}
+
     {% for message in app.flashes('info2') %}
         <div class="alert alert-danger" >
             {{ message }}
         </div>
     {% endfor %}
+
     {% for message in app.flashes('info3') %}
         <div class="alert alert-warning" >
             {{ message }}
         </div>
     {% endfor %}
+
+
+
     <div align="center">
     <a href="{{ path('addcoach') }}" class="badge badge-outline-success"  >add</a>
     </div>
