@@ -110,6 +110,6 @@ class CartController extends AbstractController
     {
         $session->remove("panier");
 
-        return $this->redirectToRoute("panier");
+        return $this->redirectToRoute("gameslistF");
     }
 }

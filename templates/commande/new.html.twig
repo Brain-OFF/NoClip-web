@@ -10,6 +10,7 @@
             <th>Prix</th>
             <th>Quantité</th>
             <th>Total</th>
+            <th>QR</th>
 
         </tr>
         </thead>
@@ -33,6 +34,7 @@
             <td colspan="3">Total</td>
             <td class="text-end">{{ total }} €</td>
             <td>
+                <img src="{{ qr_code_path('le prix totale de votre commande est :'~total ) }}" />
 
             </td>
         </tr>

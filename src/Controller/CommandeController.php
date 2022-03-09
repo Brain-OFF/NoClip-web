@@ -18,6 +18,15 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email ;
 use Knp\Component\Pager\PaginatorInterface;
+use Endroid\QrCodeBundle\Response\QrCodeResponse;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
 
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPaginationInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
@@ -125,14 +134,34 @@ class CommandeController extends AbstractController
             $entityManager->persist($commande);
             $entityManager->flush();
             $this->sendEmail($mailer,$commande->getEmail());
+            $panier = $session->get('panier', []);
+            $session->clear();
             return $this->redirectToRoute('commandelist');
         }
+        $writer = new PngWriter();
+// Create QR code
+        $qrCode = QrCode::create('commande')
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(100)
+            ->setMargin(5)
+            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
 
+// Create generic logo
+        $logo = Logo::create('C:\xampp\htdocs\NoClip-web-coach_reservation\public\assets\logo.png')
+            ->setResizeToWidth(50);
 
+// Create generic label
+        $label = Label::create('Label')
+            ->setTextColor(new Color(255, 0, 0));
+
+        $qr = $writer->write($qrCode, $logo, $label);
 
 
         return $this->render('commande/new.html.twig',
-            ['commande' => $commande,'panierwithData' => $panierwithData,'total'=>$total,'form'=>$form->createView()]);
+            ['commande' => $commande,'panierwithData' => $panierwithData,'total'=>$total,'qr'=>$qr,'form'=>$form->createView()]);
     }
 
 
@@ -159,7 +188,7 @@ class CommandeController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('modifiercommandeback');
+            return $this->redirectToRoute('commandelist');
 
         }
 
@@ -180,7 +209,7 @@ class CommandeController extends AbstractController
             $this->addFlash('success', ' Commande Anuuler !!');
         }
 
-        return $this->redirectToRoute('commande_index');
+        return $this->redirectToRoute('commandelist');
     }
     /**
      * @Route("/TrierParDateDESC", name="TrierParDateDESC")

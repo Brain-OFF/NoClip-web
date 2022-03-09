@@ -36,11 +36,7 @@
                 </a>
             </td>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="5" class="text-center">Votre panier est vide</td>
-        </tr>
-    {% endfor %}
+
     </tbody>
     <tfoot>
     <tr  style="color: beige">
@@ -52,17 +48,22 @@
             </a>
         </td>
     </tr>
+
+    <td>
+        <a  href="{{path('commande_new')}}" class="btn btn-success" >
+            FINALISER VOTRE COMMANDE<i class="bi bi-cart-x"></i>
+        </a>
+    </td>
+    {% else %}
+        <tr>
+            <td colspan="5" class="text-center">Votre panier est vide</td>
+        </tr>
+    {% endfor %}
     <td>
         <a href="{{path("gameslistF")}}" class="btn btn-warning">
             POURSUIVRE VOS ACHATS<i class="bi bi-cart-x"></i>
         </a>
     </td>
-    <td>
-        <a  href="{{path('commande_new')}}" class="btn btn-success">
-            FINALISER VOTRE COMMANDE<i class="bi bi-cart-x"></i>
-        </a>
-    </td>
-
     </tfoot>
 </table>
 
