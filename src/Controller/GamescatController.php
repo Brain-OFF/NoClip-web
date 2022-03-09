@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Gamescat;
 
+use App\Entity\Promos;
 use App\Form\GamesCatType;
 use App\Repository\GamescatRepository;
 use App\Repository\GamesRepository;
@@ -109,7 +110,9 @@ class GamescatController extends AbstractController
     public function listgamesbycat(GamesRepository   $repository,$id)
     {
         $games=$repository->listgamebycat($id);
-        return $this->render("games/indexF.html.twig",array("games"=>$games));
+        $promos= $this->getDoctrine()->
+        getRepository(Promos::class)->findAll();
+        return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos));
     }
 
 }

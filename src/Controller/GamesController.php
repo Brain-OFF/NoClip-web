@@ -57,6 +57,19 @@ class GamesController extends AbstractController
         return $this->render("games/indexF.html.twig",
             array('games'=>$classroom,'promos'=>$promos));
     }
+    /**
+     * @Route("/showfav",name="showfav")
+     */
+
+    public function showfav()
+    {
+        $promos=$this->getDoctrine()->
+        getRepository(Promos::class)->findAll();
+        $classroom= $this->getDoctrine()->
+        getRepository(Games::class)->findAll();
+        return $this->render("games/indexF.html.twig",
+            array('games'=>$classroom,'promos'=>$promos));
+    }
 
     /**
      * @Route("/addgames",name="addgames")
@@ -89,7 +102,7 @@ class GamesController extends AbstractController
      * @Route("/modifygames/{id}",name="modifygames")
      */
     public function update(Request $request,$id){
-        $games= $this->getDoctrine()->getRepository(Games::class)->find($id);
+        $games=$this->getDoctrine()->getRepository(Games::class)->find($id);
         $form= $this->createForm(gamesType::class,$games);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -98,6 +111,32 @@ class GamesController extends AbstractController
             return $this->redirectToRoute("gameslist");
         }
         return $this->render("games/modify.html.twig",array("formgames"=>$form->createView()));
+    }
+    /**
+     * @Route("/addtofav/{id}",name="addtofav")
+     */
+    public function addtofav(Games $games){
+        $games->addFavori($this->getUser());
+
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($games);
+            $em->flush();
+            return $this->redirectToRoute("gameslistF");
+
+    }
+    /**
+     * @Route("/rmfav/{id}",name="rmfav")
+     */
+    public function rmfav(Games $games){
+        $games->removeFavori($this->getUser());
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($games);
+        $em->flush();
+        return $this->redirectToRoute("gameslistF");
+
     }
 
 }

@@ -29,6 +29,16 @@ class GamesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function listgamebyuser($id)
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.favoris','c')
+            ->addSelect('c')
+            ->where('c.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
     public function listdate()
     {
         return $this->createQueryBuilder('s')
