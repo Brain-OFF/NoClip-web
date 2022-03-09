@@ -115,6 +115,70 @@
               <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
               </span>
+                    <span class="menu-title">News</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('news_new') }}" >add News</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('news_show') }}" >liste News</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('news_index') }}">modifier News</a></li>
+
+
+
+
+
+                    </ul>
+                </div>
+            </li>
+
+
+
+
+
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+                    <span class="menu-title">categorie</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('categorie_new') }}"> add categorie </a></li>
+
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('categorie_index') }}"> index categorie </a></li>
+
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+                    <span class="menu-title">calandrier news</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('app_calendar_new') }}"> add une date de news </a></li>
+
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('app_calendar_index') }}"> index date news </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('app_main') }}"> afficher la calandrier </a></li>
+
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
                     <span class="menu-title">Tournois</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -126,6 +190,7 @@
                     </ul>
                 </div>
             </li>
+
             <li class="nav-item menu-items">
                 <a class="nav-link" href="pages/forms/basic_elements.html">
               <span class="menu-icon">

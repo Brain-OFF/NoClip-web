@@ -82,9 +82,15 @@ class News
      */
     private $dislike_count;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="Article")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->image = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
 
@@ -215,6 +221,36 @@ class News
     public function setDislikeCount(?int $dislike_count): self
     {
         $this->dislike_count = $dislike_count;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getArticle() === $this) {
+                $like->setArticle(null);
+            }
+        }
 
         return $this;
     }

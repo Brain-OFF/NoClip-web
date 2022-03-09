@@ -104,10 +104,16 @@ class User implements UserInterface
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="User")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->inscriptionTs = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -337,6 +343,36 @@ class User implements UserInterface
     public function __toString():String
     {
         return(string) "Name: ".$this->getUsername()." ID: ".$this->getId();
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 }

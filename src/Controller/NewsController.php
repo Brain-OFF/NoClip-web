@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Images;
+use App\Entity\Like;
 use App\Entity\News;
 use App\Form\NewsType;
 use App\Repository\NewsRepository;
@@ -76,8 +77,77 @@ class NewsController extends AbstractController
     {
         $news= $this->getDoctrine()->
         getRepository(news::class)->findAll();
+
         return $this->render("news/show.html.twig",
-            array('news'=>$news));
+            ['news'=>$news,'liked'=>$this->getUser()->getLikes()]);
+    }
+    /**
+     * @Route("/like/{id}", name="like", )
+     */
+    public function like($id)
+    {
+        $article=$this->getDoctrine()->getRepository(news::class)->find($id);
+        $Like= $this->getDoctrine()->getRepository(Like::class)->search_like($this->getUser(),$article);
+        if (!$Like)
+        {
+            $L=new Like();
+            $L->setUser($this->getUser());
+            $L->setArticle($article);
+            $L->setStatus("L");
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($L);
+            $em->flush();
+        }
+        else
+        {
+            if ($Like->getStatus()=="L")
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($Like);
+                $em->flush();
+            }
+            else
+            {
+                $Like->setStatus("L");
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+            }
+        }
+        return $this->redirectToRoute('news_show');
+    }
+    /**
+     * @Route("/dislike/{id}", name="dislike", )
+     */
+    public function dislike($id)
+    {
+        $article=$this->getDoctrine()->getRepository(news::class)->find($id);
+        $Like= $this->getDoctrine()->getRepository(Like::class)->search_like($this->getUser(),$article);
+        if (!$Like)
+        {
+            $L=new Like();
+            $L->setUser($this->getUser());
+            $L->setArticle($article);
+            $L->setStatus("D");
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($L);
+            $em->flush();
+        }
+        else
+        {
+            if ($Like->getStatus()=="D")
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($Like);
+                $em->flush();
+            }
+            else
+            {
+                $Like->setStatus("D");
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+            }
+        }
+        return $this->redirectToRoute('news_show');
     }
 
 
@@ -126,6 +196,7 @@ class NewsController extends AbstractController
             'news' => $new,
         ]);
     }
+
 
 
 
