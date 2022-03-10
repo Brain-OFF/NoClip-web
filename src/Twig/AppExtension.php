@@ -2,6 +2,7 @@
 // src/Twig/AppExtension.php
 namespace App\Twig;
 
+use App\Entity\Games;
 use App\Entity\Like;
 use App\Entity\News;
 use App\Repository\LikeRepository;
@@ -33,5 +34,6 @@ class AppExtension extends AbstractExtension
         }
         return $L-$D;
     }
+
 
 }
