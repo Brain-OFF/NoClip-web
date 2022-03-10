@@ -65,8 +65,6 @@ class CommandeController extends AbstractController
     /**
      * @Route("/commandelist",name="commandelist")
      */
-
-
     public function list(CommandeRepository $commandeRepository,Request $request, PaginatorInterface $paginator)
     {
 

@@ -52,19 +52,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('recaptcha', EWZRecaptchaType::class, array(
-                'attr'        => array(
-                    'options' => array(
-                        'theme' => 'light',
-                        'type'  => 'image',
-                        'size'  => 'normal'
-                    )
-                ),
-                'mapped'      => false,
-                'constraints' => array(
-                    new RecaptchaTrue()
-                )))
-        ;
+            ->add('recaptcha', EWZRecaptchaType::class,
+                ['mapped' => false]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

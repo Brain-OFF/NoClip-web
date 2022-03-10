@@ -38,10 +38,8 @@ class CommandeRepository extends ServiceEntityRepository
     }
     public function listgamebyuser($id)
     {
-        return $this->createQueryBuilder('s')
-            ->join('s.favoris','c')
-            ->addSelect('c')
-            ->where('c.id=:id')
+        return $this->createQueryBuilder('c')
+            ->where('c.user=:id')
             ->setParameter('id',$id)
             ->getQuery()
             ->getResult();
