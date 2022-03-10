@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+    <h1>Categorie index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Id : </td>
+            <td>{{ users.id }}</td>
+        </tr>
+        <tr>
+            <td>Username : </td>
+            <td>{{ users.Username }}</td>
+        </tr>
+        <tr>
+            <td>Email : </td>
+            <td> {{ users.Email }}</td>
+        </tr>
+        <tr>
+            <td>Bio : </td>
+            <td>{{ users.Bio }}</td>
+        </tr>
+        <tr>
+            <td>Points : </td>
+            <td>{{ users.Points }}</td>
+        </tr>
+        <tr>
+            <td>Points : </td>
+            <td><a type="button" class="btn btn-outline-danger" href="{{ path('editprofile',{'id':users.id}) }}">Edit</a></td>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+{% endblock %}

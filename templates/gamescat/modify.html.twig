@@ -1,0 +1,34 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    {{ form_start(formgamescatmodif,{'attr':{'novalidate':'novalidate'}}) }}
+    <div >
+        <a href="{{ path('gamescatlist') }}" class="mdi mdi-keyboard-backspace"  > </a>
+    </div>
+
+    <h4  class="card-title">update gamescat </h4>
+
+    <table class="table">
+        <tr>
+            <td>
+                {{ form_label(formgamescatmodif.nom,"nom") }}
+            </td>
+            <td>
+                {{ form_widget(formgamescatmodif.nom) }}
+                {{ form_errors(formgamescatmodif.nom) }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(formgamescatmodif.description,"description") }}
+            </td>
+            <td>
+                {{ form_widget(formgamescatmodif.description) }}
+                {{ form_errors(formgamescatmodif.description) }}
+            </td>
+        </tr>
+    </table>
+
+
+    {{ form_end(formgamescatmodif) }}
+
+{% endblock %}

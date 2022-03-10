@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 use App\Entity\Client;
+use App\Entity\Promos;
 use App\Entity\User;
 use App\Form\EmailPassForgottenType;
 use App\Form\PassType;
 use App\Form\SignupType;
 use App\Form\UpdateUserType;
+use App\Repository\GamesRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -63,6 +65,16 @@ class UserController extends AbstractController
         $Users= $this->getDoctrine()->
         getRepository(User::class)->findAll();
         return $this->render("Client/index.html.twig",
+            array('users'=>$Users));
+    }
+    /**
+     * @Route("/profile", name="Profile")
+     */
+    public function profile()
+    {
+        $Users= $this->getDoctrine()->
+        getRepository(User::class)->find($this->getUser()->getId());
+        return $this->render("user/profile.html.twig",
             array('users'=>$Users));
     }
     /**
@@ -161,6 +173,16 @@ class UserController extends AbstractController
         }
         return $this->render ('user/passforgotten.html.twig', ['form' => $form->createView(),'Message'=>"Entrez Votre Nouveau mot de passe!"]);
 
+    }
+    /**
+     * @Route("/listgamesbyuser/{id}", name="listgamesbyuser")
+     */
+    public function listgamesbyuser(GamesRepository   $repository,$id)
+    {
+        $games=$repository->listgamebyuser($id);
+        $promos= $this->getDoctrine()->
+        getRepository(Promos::class)->findAll();
+        return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos));
     }
 
 
