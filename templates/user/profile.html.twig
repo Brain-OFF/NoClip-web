@@ -28,6 +28,10 @@
             <td>{{ users.Points }}</td>
         </tr>
         <tr>
+            <td>Picture : </td>
+            <td><img src="{{users.image}} " ></td>
+        </tr>
+        <tr>
             <td>Points : </td>
             <td><a type="button" class="btn btn-outline-danger" href="{{ path('editprofile',{'id':users.id}) }}">Edit</a></td>
         </tr>

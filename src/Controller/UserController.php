@@ -5,6 +5,7 @@ use App\Entity\Client;
 use App\Entity\Promos;
 use App\Entity\User;
 use App\Form\EmailPassForgottenType;
+use App\Form\ModifyuserType;
 use App\Form\PassType;
 use App\Form\SignupType;
 use App\Form\UpdateUserType;
@@ -72,10 +73,52 @@ class UserController extends AbstractController
      */
     public function profile()
     {
+        if (!$this->getUser())
+            return $this->redirectToRoute("home");
         $Users= $this->getDoctrine()->
         getRepository(User::class)->find($this->getUser()->getId());
         return $this->render("user/profile.html.twig",
             array('users'=>$Users));
+    }
+    /**
+     * @Route("/editprofile", name="editprofile")
+     */
+    public function profileedit(Request $request,UserPasswordEncoderInterface $userPasswordEncoder)
+    {
+        if (!$this->getUser())
+            return $this->redirectToRoute("home");
+        $user= $this->getDoctrine()->getRepository(User::class)->findbyusername($this->getUser()->getUsername());
+        $user->setImage("");
+        $form= $this->createForm(ModifyuserType::class,$user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $image= $form['image']->getData();
+            try {
+                if(!is_dir("images_users")){
+                    mkdir("images_users");
+                }
+                $filename=$image->getFileName();
+                move_uploaded_file($image,"images_users/".$image->getFileName());
+
+                rename("images_users/".$image->getFileName() , "images_users/".$user->getId().$user->getUsername().".".$image->getClientOriginalExtension());
+
+            }
+            catch (IOExceptionInterface $e) {
+                echo "Erreur Profil existant ou erreur upload image ".$e->getPath();
+            }
+            $user->setImage("images_users/".$user->getId().$user->getUsername().".".$image->getClientOriginalExtension ());
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute("Profile");
+        }
+        return $this->render("user/editprofile.html.twig",array("formUser"=>$form->createView()));
     }
     /**
      * @Route("/deleteuser/{id}",name="deleteuser")
@@ -93,6 +136,7 @@ class UserController extends AbstractController
      */
     public function update(Request $request,$id,UserPasswordEncoderInterface $userPasswordEncoder){
         $user= $this->getDoctrine()->getRepository(User::class)->find($id);
+        $user->setImage("");
         $form= $this->createForm(UpdateUserType::class,$user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -102,6 +146,21 @@ class UserController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+            $image= $form['image']->getData();
+            try {
+                if(!is_dir("images_users")){
+                    mkdir("images_users");
+                }
+                $filename=$image->getFileName();
+                move_uploaded_file($image,"images_users/".$image->getFileName());
+
+                rename("images_users/".$image->getFileName() , "images_users/".$user->getId().$user->getUsername().".".$image->getClientOriginalExtension());
+
+            }
+            catch (IOExceptionInterface $e) {
+                echo "Erreur Profil existant ou erreur upload image ".$e->getPath();
+            }
+            $user->setImage("images_users/".$user->getId().$user->getUsername().".".$image->getClientOriginalExtension ());
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute("users");

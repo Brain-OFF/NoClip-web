@@ -109,6 +109,16 @@ class User implements UserInterface
      */
     private $likes;
 
+    /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $Image;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $Status;
+
     public function __construct()
     {
         $this->inscriptionTs = new ArrayCollection();
@@ -371,6 +381,30 @@ class User implements UserInterface
                 $like->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->Image;
+    }
+
+    public function setImage(?string $Image): self
+    {
+        $this->Image = $Image;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->Status;
+    }
+
+    public function setStatus(?string $Status): self
+    {
+        $this->Status = $Status;
 
         return $this;
     }

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modify Profile{% endblock %}
+
+{% block body %}
+    <table class="table">
+        {{ form_start(formUser) }}
+
+        <tr>
+
+
+            <td>
+                {{ form_label(formUser.username,"username") }}
+            </td>
+            <td>
+                {{ form_widget(formUser.username,{'attr': {'placeholder' : 'Username', 'class': 'form-control required'}})}}
+                {{ form_errors(formUser.username) }}
+            </td>
+
+        </tr>
+        <tr>
+
+
+            <td>
+                {{ form_label(formUser.email,"email") }}
+            </td>
+            <td>
+                {{ form_widget(formUser.email,{'attr': {'placeholder' : 'Email', 'class': 'form-control required'}})}}
+                {{ form_errors(formUser.email) }}
+            </td>
+        </tr>
+        <tr>
+
+
+            <td>
+                {{ form_label(formUser.image,"Image") }}
+            </td>
+            <td>
+                {{ form_widget(formUser.image)}}
+                {{ form_errors(formUser.image) }}
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                {{ form_label(formUser.password,"Password") }}
+            </td>
+            <td>
+                {{ form_widget(formUser.password)}}
+                {{ form_errors(formUser.password) }}
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                {{ form_label(formUser.bio,"Bio") }}
+            </td>
+            <td>
+                {{ form_widget(formUser.bio,{'attr': {'placeholder' : 'Bio', 'class': 'form-control required'}})}}
+                {{ form_errors(formUser.bio) }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+
+            <td>
+                {{ form_end(formUser) }}
+            </td>
+        </tr>
+
+    </table>
+
+
+{% endblock %}

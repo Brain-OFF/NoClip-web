@@ -66,6 +66,16 @@
                 </td>
             </tr>
             <tr>
+
+                <td>
+                    {{ form_label(formUser.status,"Status") }}
+                </td>
+                <td>
+                    {{ form_widget(formUser.status)}}
+                    {{ form_errors(formUser.status) }}
+                </td>
+            </tr>
+            <tr>
                 <td>
                     {{ form_widget(formUser.submit,{'attr': {'class': 'badge badge-outline-info'}})}}
                 </td>
