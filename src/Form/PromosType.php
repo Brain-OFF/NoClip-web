@@ -15,7 +15,6 @@ class PromosType extends AbstractType
         $builder
             ->add('name')
             ->add('datefin')
-
             ->add("submit",SubmitType::class)
         ;
     }

@@ -196,7 +196,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="commande_delete", methods={"POST"})
+     * @Route("deletecommande/{id}", name="commande_delete", methods={"POST"})
      */
     public function delete(Request $request, Commande $commande): Response
     {
@@ -210,7 +210,7 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('commandelist');
     }
     /**
-     * @Route("/TrierParDateDESC", name="TrierParDateDESC")
+     * @Route("/TrierParDateDESCCommandes", name="TrierParDateDESCCommandes")
      */
     public function TrierParDate(Request $request): Response
     {
@@ -223,7 +223,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/showTT",name="showTT")
+     * @Route("/showCommandesTT",name="showTTCommandes")
      */
     public function search(Request $request, CommandeRepository $T)
     {

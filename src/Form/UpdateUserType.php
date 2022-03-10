@@ -42,9 +42,9 @@ class UpdateUserType extends AbstractType
             ->add('points')
             ->add('status',ChoiceType::class,[
                 'choices'  => [
-                    'Admin' => 'RPG',
-                    'Author' => 'MMORPG',
-                    'User' => 'MOBA'
+                    'Admin' => 'admin',
+                    'Author' => 'author',
+                    'User' => 'user'
                 ],
             ])
             ->add('bio')

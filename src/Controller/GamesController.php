@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Entity\Games;
 use App\Entity\Rating;
 use App\Form\GamesType;
+use App\Form\SearchCommandeType;
+use App\Repository\CommandeRepository;
 use App\Repository\GamesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,6 +43,8 @@ class GamesController extends AbstractController
      */
     public function list(Request $request, PaginatorInterface $paginator)
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $donnees = $this->getDoctrine()->getRepository(games:: class)->findAll();
         $articles = $paginator->paginate($donnees,$request->query->getInt('page', 1),4
 
@@ -74,6 +78,8 @@ class GamesController extends AbstractController
 
     public function showfav()
     {
+        if (!$this->getUser())
+            return $this->redirectToRoute("app_login");
         $promos=$this->getDoctrine()->
         getRepository(Promos::class)->findAll();
         $classroom= $this->getDoctrine()->
@@ -86,6 +92,8 @@ class GamesController extends AbstractController
      * @Route("/addgames",name="addgames")
      */
     public function add(Request$request ){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $games= new Games();
         $form= $this->createForm(GamesType::class,$games);
 
@@ -119,6 +127,8 @@ class GamesController extends AbstractController
      * @Route("/removegames/{id}",name="removegames")
      */
     public function delete($id){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $games= $this->getDoctrine()->getRepository(Games::class)->find($id);
         $em= $this->getDoctrine()->getManager();
         $em->remove($games);
@@ -129,6 +139,8 @@ class GamesController extends AbstractController
      * @Route("/modifygames/{id}",name="modifygames")
      */
     public function update(Request $request,$id){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $games=$this->getDoctrine()->getRepository(Games::class)->find($id);
         $form= $this->createForm(gamesType::class,$games);
         $games->setImage("");
@@ -159,6 +171,8 @@ class GamesController extends AbstractController
      * @Route("/addtofav/{id}",name="addtofav")
      */
     public function addtofav(Games $games){
+        if (!$this->getUser())
+            return $this->redirectToRoute("app_login");
         $games->addFavori($this->getUser());
 
 
@@ -172,6 +186,8 @@ class GamesController extends AbstractController
      * @Route("/rmfav/{id}",name="rmfav")
      */
     public function rmfav(Games $games){
+        if (!$this->getUser())
+            return $this->redirectToRoute("app_login");
         $games->removeFavori($this->getUser());
 
 
@@ -181,5 +197,6 @@ class GamesController extends AbstractController
         return $this->redirectToRoute("gameslistF");
 
     }
+
 
 }

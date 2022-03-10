@@ -32,6 +32,8 @@ class ReservationController extends AbstractController
      */
     public function reservationback(ReservationRepository $calendar)
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $rdvs = [];
         $events = $calendar->findAll();
         foreach ($events as $event)
@@ -54,6 +56,8 @@ class ReservationController extends AbstractController
      */
     public function reservationfront(ReservationRepository $calendar)
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $rdvs = [];
         $events = $calendar->findAll();
         foreach ($events as $event)
@@ -77,6 +81,8 @@ class ReservationController extends AbstractController
      */
     public function list(PaginatorInterface $paginator , Request $request )
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $reservation= $paginator->paginate($this->getDoctrine()->getRepository(Reservation::class)->findAllVisibleQuery()
         , $request->query->getInt('page', 1),4
 
@@ -90,6 +96,8 @@ class ReservationController extends AbstractController
      */
     public function listtrie(PaginatorInterface $paginator , Request $request)
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $reservation= $paginator->paginate($this->getDoctrine()->
         getRepository(Reservation::class)->orderByDate() , $request->query->getInt('page', 1),4);
         return $this->render("reservation/indextrie.html.twig",
@@ -99,6 +107,8 @@ class ReservationController extends AbstractController
      * @Route("/addreservation",name="addreservation")
      */
     public function add(Request$request , FlashyNotifier $flash ){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $reservation= new Reservation();
         $form= $this->createForm(ReservationType::class,$reservation);
         $form->handleRequest($request);
@@ -117,6 +127,8 @@ class ReservationController extends AbstractController
      * @Route("/removereservation/{id}",name="removereservation")
      */
     public function delete($id){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $reservation= $this->getDoctrine()->getRepository(Reservation::class)->find($id);
         $em= $this->getDoctrine()->getManager();
         $em->remove($reservation);
@@ -128,6 +140,8 @@ class ReservationController extends AbstractController
      * @Route("/modifyreservation/{id}",name="modifyreservation")
      */
     public function update(Request $request,$id){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $reservation= $this->getDoctrine()->getRepository(Reservation::class)->find($id);
         $form= $this->createForm(ReservationType::class,$reservation);
         $form->handleRequest($request);

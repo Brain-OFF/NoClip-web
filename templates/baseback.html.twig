@@ -85,12 +85,54 @@
                 <span class="nav-link">Navigation</span>
             </li>
             <li class="nav-item menu-items">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ path('backend') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
                     <span class="menu-title">Dashboard</span>
                 </a>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="{{ path('users') }}">
+              <span class="menu-icon">
+                <i class="mdi mdi-speedometer"></i>
+              </span>
+                    <span class="menu-title">Users</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+                    <span class="menu-title">Commande</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{path("commandelist")}}">Liste des Commandes</a></li>
+
+
+                    </ul>
+                </div>
+
+            </li>
+            <li class="nav-item menu-items">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+                <span class="menu-title">games</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ path('gameslist') }}">games</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ path('gamescatlist') }}">games cat</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ path('promoslist') }}">Promos</a></li>
+
+                </ul>
+            </div>
             </li>
             <li class="nav-item menu-items">
                 <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">

@@ -23,7 +23,8 @@ class CoachController extends AbstractController
      */
     public function indexback(): Response
     {
-
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         return $this->render('coach/index.html.twig', [
             'controller_name' => 'CoachController'
         ]);
@@ -34,6 +35,8 @@ class CoachController extends AbstractController
      */
     public function list(CoachRepository $C, Request $request ,PaginatorInterface $paginator )
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $list= $paginator->paginate($C->findAll(), $request->query->getInt('page', 1),4) ;
         $formSearch=$this->createForm(SearchType::class);
         $formSearch->handleRequest($request);
@@ -49,6 +52,8 @@ class CoachController extends AbstractController
      * @Route("/addcoach",name="addcoach")
      */
     public function add(Request$request ,  FlashyNotifier $flash ){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $coach= new Coach();
         $form= $this->createForm(CoachType::class,$coach);
         $form->handleRequest($request);
@@ -66,6 +71,8 @@ class CoachController extends AbstractController
      * @Route("/removecoach/{id}",name="removecoach")
      */
     public function delete($id){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $coach= $this->getDoctrine()->getRepository(Coach::class)->find($id);
         $em= $this->getDoctrine()->getManager();
         $em->remove($coach);
@@ -77,6 +84,8 @@ class CoachController extends AbstractController
      * @Route("/modifycoach/{id}",name="modifycoach")
      */
     public function update(Request $request,$id){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $coach= $this->getDoctrine()->getRepository(Coach::class)->find($id);
         $form= $this->createForm(CoachType::class,$coach);
         $form->handleRequest($request);

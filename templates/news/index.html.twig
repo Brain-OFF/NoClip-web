@@ -3,7 +3,19 @@
 {% block title %}News index{% endblock %}
 
 {% block body %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
     <h1>Liste News</h1>
+    <p style="100px" > <input  id="myInput"  type="text" placeholder="search">
 
     <table class="table">
 
@@ -22,7 +34,7 @@
                 <th>Image</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
         {% for news in news %}
             <tr>
 

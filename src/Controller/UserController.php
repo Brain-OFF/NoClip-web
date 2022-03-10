@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\Promos;
+use App\Entity\Rating;
 use App\Entity\User;
 use App\Form\EmailPassForgottenType;
 use App\Form\ModifyuserType;
@@ -235,24 +236,27 @@ class UserController extends AbstractController
 
     }
     /**
-     * @Route("/listgamesbyuser/{id}", name="listgamesbyuser")
+     * @Route("/backend/", name="backend")
      */
-    public function listgamesbyuser(GamesRepository   $repository,$id)
+    public function backend(GamesRepository   $repository)
     {
-        $games=$repository->listgamebyuser($id);
-        $promos= $this->getDoctrine()->
-        getRepository(Promos::class)->findAll();
-        return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos));
+        if ($this->getUser()->getStatus()=="admin")
+        return $this->render("dashboard.html.twig");
+        else return $this->redirectToRoute("home");
+
     }
     /**
-     * @Route("/listcommandeuser/{id}", name="listgamesbyuser")
+     * @Route("/listgamesfav/", name="listgamesbyuser")
      */
-    public function listcommandeuser(CommandeRepository   $repository,$id)
+    public function listcommandeuser(GamesRepository   $repository)
     {
-        $games=$repository->listCommande($id);
+        if (!$this->getUser())
+           return $this->redirectToRoute("home");
+        $rating=$this->getDoctrine()->getRepository(Rating::class)->findAll();
+        $games=$repository->listgamebyuser($this->getUser()->getId());
         $promos= $this->getDoctrine()->
         getRepository(Promos::class)->findAll();
-        return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos));
+        return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos,'rating'=>$rating));
     }
 
 

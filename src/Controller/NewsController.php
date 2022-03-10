@@ -79,7 +79,8 @@ class NewsController extends AbstractController
         getRepository(news::class)->findAll();
 
         return $this->render("news/show.html.twig",
-            ['news'=>$news,'liked'=>$this->getUser()->getLikes()]);
+            ['news'=>$news,'liked'=>$this->getDoctrine()->
+            getRepository(Like::class)->findAll()]);
     }
     /**
      * @Route("/like/{id}", name="like", )

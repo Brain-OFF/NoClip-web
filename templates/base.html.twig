@@ -122,14 +122,6 @@
             </div>
             <div class="nk-contacts-right">
                 <ul class="nk-contacts-icons">
-
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#modalSearch">
-                            <span class="fa fa-search"></span>
-                        </a>
-                    </li>
-
-
                     <li>
                         <a href="#" data-toggle="modal" data-target="#modalLogin">
                             <span class="fa fa-user"></span>
@@ -139,38 +131,15 @@
 
                     <li>
                     <span class="nk-cart-toggle">
-                        <span class="fa fa-shopping-cart"></span>
-                        <span class="nk-badge">27</span>
+                        <span class="fa fa-shopping-cart" href="{{ path('panier') }}"></span>
                     </span>
                         <div class="nk-cart-dropdown">
-
-                            <div class="nk-widget-post">
-                                <a href="store-product.html" class="nk-post-image">
-                                    <img src="{{asset('images/product-5-xs.jpg')}}" alt="In all revolutions of">
-                                </a>
-                                <h3 class="nk-post-title">
-                                    <a href="#" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
-                                    <a href="store-product.html">In all revolutions of</a>
-                                </h3>
-                                <div class="nk-gap-1"></div>
-                                <div class="nk-product-price">€ 23.00</div>
-                            </div>
-
-                            <div class="nk-widget-post">
-                                <a href="store-product.html" class="nk-post-image">
-                                    <img src="{{asset('images/product-7-xs.jpg')}}" alt="With what mingled joy">
-                                </a>
-                                <h3 class="nk-post-title">
-                                    <a href="#" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
-                                    <a href="store-product.html">With what mingled joy</a>
-                                </h3>
-                                <div class="nk-gap-1"></div>
-                                <div class="nk-product-price">€ 14.00</div>
-                            </div>
-
-                            <div class="nk-gap-2"></div>
                             <div class="text-center">
-                                <a href="store-checkout.html" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
+                                {% if app.user %}
+                                <a  href="{{ path('panier')}}" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Consulter Les Produits</a>
+                                {% else %}
+                                <a  href="{{ path('app_login')}}" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Connectez Vous</a>
+                                {% endif %}
                             </div>
                         </div>
                     </li>
@@ -240,14 +209,30 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="gallery.html">
-                            Gallery
+                    <li class=" nk-drop-item">
+                        <a href="{{ path('gameslistF') }}">
+                            games
 
-                        </a>
+                        </a><ul class="dropdown">
+
+                            <li>
+                                <a href="{{ path('gamescatlistF')}}">
+                                    cat
+
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('listgamesbyuser')}}">
+                                    favoris
+
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
                     </li>
                     <li class=" nk-drop-item">
-                        <a href="{{ path('tournoi')}}
-">
+                        <a href="{{ path('tournoi')}}">
                             Tournaments
 
                         </a><ul class="dropdown">
@@ -1872,28 +1857,6 @@
 
 
 
-<!-- START: Search Modal -->
-<div class="nk-modal modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span class="ion-android-close"></span>
-                </button>
-
-                <h4 class="mb-0">Search</h4>
-
-                <div class="nk-gap-1"></div>
-                <form action="#" class="nk-form nk-form-style-1">
-                    <input type="text" value="" name="search" class="form-control" placeholder="Type something and press Enter" autofocus>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END: Search Modal -->
-
-
 
 <!-- START: Login Modal -->
 <div class="nk-modal modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1922,7 +1885,10 @@
                         <br>
                         <br>
                         <div class="col-md-6">
-                            <a href="{{ path('home') }}" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-block">Profile</a>
+                            <a href="{{ path('Profile') }}" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-block">Profile</a>
+                            {% if (app.user.status=='admin') %}
+                            <a href="{{ path('backend') }}" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-block">Admin Space</a>
+                            {% endif %}
                         </div>
                         <div class="col-md-6">
                             <div class="mnt-5">

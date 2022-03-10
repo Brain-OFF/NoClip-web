@@ -7,7 +7,10 @@ namespace App\Controller;
 use App\Entity\Gamescat;
 
 use App\Entity\Promos;
+use App\Entity\Rating;
 use App\Form\GamesCatType;
+use App\Form\SearchCommandeType;
+use App\Repository\CommandeRepository;
 use App\Repository\GamescatRepository;
 use App\Repository\GamesRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -46,6 +49,8 @@ class GamescatController extends AbstractController
      */
     public function list(Request $request, PaginatorInterface $paginator)
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $donnees = $this->getDoctrine()->getRepository(Gamescat :: class)->findAll();
         $articles = $paginator->paginate($donnees,$request->query->getInt('page', 1),4
 
@@ -64,7 +69,6 @@ class GamescatController extends AbstractController
     public function listF()
     {
 
-
         $classroom= $this->getDoctrine()->
         getRepository(Gamescat::class)->findAll();
         return $this->render("gamescat/indexF.html.twig",
@@ -75,6 +79,8 @@ class GamescatController extends AbstractController
      * @Route("/addgamescat",name="addgamescat")
      */
     public function add(Request$request ){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $gamescat= new gamescat();
         $form= $this->createForm(GamesCatType::class,$gamescat);
 
@@ -92,6 +98,8 @@ class GamescatController extends AbstractController
      * @Route("/removegamescat/{id}",name="removegamescat")
      */
     public function delete($id){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $gamescat= $this->getDoctrine()->getRepository(Gamescat::class)->find($id);
         $em= $this->getDoctrine()->getManager();
         $em->remove($gamescat);
@@ -102,6 +110,8 @@ class GamescatController extends AbstractController
      * @Route("/modifygamescat/{id}",name="modifygamescat")
      */
     public function update(Request $request,$id){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $gamescat= $this->getDoctrine()->getRepository(Gamescat::class)->find($id);
         $form= $this->createForm(GamesCatType::class,$gamescat);
         $form->handleRequest($request);
@@ -117,10 +127,12 @@ class GamescatController extends AbstractController
      */
     public function listgamesbycat(GamesRepository   $repository,$id)
     {
+        $rating=$this->getDoctrine()->getRepository(Rating::class)->findAll();
         $games=$repository->listgamebycat($id);
         $promos= $this->getDoctrine()->
         getRepository(Promos::class)->findAll();
-        return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos));
+        return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos,'rating'=>$rating));
     }
+
 
 }

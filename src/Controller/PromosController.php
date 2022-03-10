@@ -20,24 +20,35 @@ class PromosController extends AbstractController
      */
     public function index(): Response
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         return $this->render('promos/index.html.twig', [
             'controller_name' => 'PromosController',
         ]);
     }
+
+
     /**
      * @Route("/promoslist",name="promoslist")
      */
     public function list()
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $classrooms= $this->getDoctrine()->
         getRepository(Promos::class)->findAll();
         return $this->render("promos/index.html.twig",
             array('promos'=>$classrooms));
     }
+
+
+
     /**
      * @Route("/addpromos",name="addpromos")
      */
     public function add(Request$request ){
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $games= new Promos();
         $form= $this->createForm(PromosType::class,$games);
 
@@ -55,6 +66,8 @@ class PromosController extends AbstractController
      * @Route("/countdown/{date1}",name="countdown")
      */
     public function countdown( $date1) {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $date2=strlen($date1);
         $remaining = strtotime($date2) -time();
         $days_remaining = floor($remaining / 86400);
@@ -68,10 +81,12 @@ class PromosController extends AbstractController
             array('days_remaining'=>$days_remaining));
     }
     /**
-     * @Route("/showTr",name="showTr")
+     * @Route("/showTrPromos",name="showTrPromos")
      */
     public function showTr(PromosRepository  $T)
     {
+        if ($this->getUser()->getStatus()!="admin")
+            return $this->redirectToRoute("home");
         $TriDate =$T->orderByDate();
         return $this->render("promos/AffichTri.html.twig", array("TriDate"=>$TriDate));
     }
