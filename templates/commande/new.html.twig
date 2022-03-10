@@ -1,0 +1,63 @@
+{% block body %}
+    {{ include('commande/_form.html.twig') }}
+    <section class="bg p-4">
+        <h3 align="center p-">Votre Panier</h3>
+    </section>
+    <table class="table">
+        <thead>
+        <tr style="color: beige">
+            <th>Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+            <th>QR</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for element in panierwithData %}
+            <tr style="color: beige">
+                <td>{{ element.product.name }}</td>
+                <td class="text-end">{{ element.product.prix }} €</td>
+                <td>{{ element.quantity }}</td>
+                <td class="text-end">{{ element.quantity * element.product.prix }} €</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Votre panier est vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr style="color: beige">
+            <td colspan="3">Total</td>
+            <td class="text-end">{{ total }} €</td>
+            <td>
+                <img src="{{ qr_code_path('le prix totale de votre commande est :'~total ) }}" />
+
+            </td>
+        </tr>
+        <td>
+            <a href="{{path("gameslistF")}}" class="btn btn-warning">
+                POURSUIVRE VOS ACHATS<i class="bi bi-cart-x"></i>
+            </a>
+        </td>
+        <td>
+            <a href="{{path("panier")}}" class="btn btn-danger">
+                Annuler<i class="bi bi-cart-"></i>
+            </a>
+        </td>
+
+        </tfoot>
+    </table>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+
+
+
+
+

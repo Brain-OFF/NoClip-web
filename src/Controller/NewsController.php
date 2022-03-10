@@ -172,17 +172,15 @@ class NewsController extends AbstractController
     }
 //
     /**
-    // * @Route("/{id}", name="news_delete")
+     * @Route("deleteuser/{id}", name="news_delete")
      */
-
-
-    //  public function delete($id){
-        //       //    $news= $this->getDoctrine()->getRepository(News::class)->find($id);
-        //  $em= $this->getDoctrine()->getManager();
-        //  $em->remove($news);
-        //  $em->flush();
-        //    return $this->redirectToRoute("news_show");
-   // }
+      public function delete($id){
+           $news= $this->getDoctrine()->getRepository(News::class)->find($id);
+          $em= $this->getDoctrine()->getManager();
+          $em->remove($news);
+         $em->flush();
+          return $this->redirectToRoute("news_show");
+    }
 
     /**
      * @Route("/TrierParDateDESC", name="TrierParDateDESC")

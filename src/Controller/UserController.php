@@ -9,6 +9,7 @@ use App\Form\ModifyuserType;
 use App\Form\PassType;
 use App\Form\SignupType;
 use App\Form\UpdateUserType;
+use App\Repository\CommandeRepository;
 use App\Repository\GamesRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -239,6 +240,16 @@ class UserController extends AbstractController
     public function listgamesbyuser(GamesRepository   $repository,$id)
     {
         $games=$repository->listgamebyuser($id);
+        $promos= $this->getDoctrine()->
+        getRepository(Promos::class)->findAll();
+        return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos));
+    }
+    /**
+     * @Route("/listcommandeuser/{id}", name="listgamesbyuser")
+     */
+    public function listcommandeuser(CommandeRepository   $repository,$id)
+    {
+        $games=$repository->listCommande($id);
         $promos= $this->getDoctrine()->
         getRepository(Promos::class)->findAll();
         return $this->render("games/indexF.html.twig",array("games"=>$games,'promos'=>$promos));
