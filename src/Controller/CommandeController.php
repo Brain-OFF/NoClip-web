@@ -206,8 +206,9 @@ class CommandeController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', ' Commande Anuuler !!');
         }
-
+        if ($this->getUser()->getStatus()=="admin")
         return $this->redirectToRoute('commandelist');
+        else return $this->redirectToRoute('profile');
     }
     /**
      * @Route("/TrierParDateDESCCommandes", name="TrierParDateDESCCommandes")

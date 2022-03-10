@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <td>Picture : </td>
-            <td><img src="{{users.image}} " ></td>
+            <td><img width="90" height="90" src="{{users.image}} " ></td>
         </tr>
         <tr>
             <td>Points : </td>
@@ -38,6 +38,42 @@
         </thead>
         <tbody>
         </tbody>
+    </table>
+    <h1>Commandes</h1>
+    <table border="2">
+    {% for command in commandes %}
+
+        <tr>
+
+
+            <td>{{ command.nom}}</td>
+            <td>{{ command.prenom }}</td>
+            <td>{{ command.email }}</td>
+
+            <td>{{ command.numtelephone }}</td>
+            <td>{{ command.adresse }}</td>
+
+
+            <td>
+                {% set foo = '' %}
+                {% for p in command.listP %}
+                    {{   p.name ~ ':' ~ command.Quantite[loop.index-1]  ~ foo ~'/' }}
+                {% endfor %}
+
+            </td>
+            <td>{{ command.totalCost }}</td>
+
+            <td></td>
+
+            <td>
+                {{ include('commande/_delete_form.html.twig') }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="9">no records found</td>
+        </tr>
+    {% endfor %}
     </table>
 
 

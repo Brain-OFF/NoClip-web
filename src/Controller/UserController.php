@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Client;
+use App\Entity\Commande;
 use App\Entity\Promos;
 use App\Entity\Rating;
 use App\Entity\User;
@@ -79,8 +80,9 @@ class UserController extends AbstractController
             return $this->redirectToRoute("home");
         $Users= $this->getDoctrine()->
         getRepository(User::class)->find($this->getUser()->getId());
+        $commandes=$this->getDoctrine()->getRepository(Commande::class)->listgamebyuser($this->getUser());
         return $this->render("user/profile.html.twig",
-            array('users'=>$Users));
+            array('users'=>$Users,'commandes'=>$commandes));
     }
     /**
      * @Route("/editprofile", name="editprofile")

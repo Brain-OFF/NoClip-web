@@ -39,7 +39,7 @@ class CommandeRepository extends ServiceEntityRepository
     public function listgamebyuser($id)
     {
         return $this->createQueryBuilder('c')
-            ->where('c.user=:id')
+            ->where('c.User =:id')
             ->setParameter('id',$id)
             ->getQuery()
             ->getResult();
