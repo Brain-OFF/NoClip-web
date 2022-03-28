@@ -25,7 +25,7 @@ class TournoiType extends AbstractType
                     'MMORPG' => 'MMORPG',
                     'MOBA' => 'MOBA',
                     'RTS' =>'RTS',
-                    'Battle Royale' => 'Battle Royale',
+                        'Battle Royale' => 'Battle Royale',
                     'Beat Them All ' =>'Beat Them All',
                     'survival Horror'=>'survival Horror'
                 ],

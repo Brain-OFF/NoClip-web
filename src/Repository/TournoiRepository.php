@@ -53,7 +53,7 @@ class TournoiRepository extends ServiceEntityRepository
     public function orderByDate()
     {
         return $this->createQueryBuilder('s')
-            ->orderBy('s.Date', 'DESC')
+            ->orderBy('s.Date', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -64,6 +64,13 @@ class TournoiRepository extends ServiceEntityRepository
             ->setParameter('nom', '%'.$nom.'%')
             ->getQuery()
             ->execute();
+    }
+    public function searchbyname($nom){
+        $qb=$this->createQueryBuilder('e')
+            ->where('e.nom = :nom')
+            ->setParameter('nom',$nom)
+            ->getQuery();
+        return $qb->execute();
     }
 
 }

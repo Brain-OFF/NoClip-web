@@ -58,7 +58,6 @@ class Tournoi
 
     /**
      * @ORM\OneToMany(targetEntity=inscriptionT::class, mappedBy="tournoi", orphanRemoval=true,cascade={"remove"})
-     * @Groups("post:read")
      */
     private $inscriptions;
 

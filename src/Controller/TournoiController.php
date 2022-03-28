@@ -97,7 +97,7 @@ class TournoiController extends AbstractController
      */
     public function showTr(TournoiRepository $T)
     {
-        $TriDate = $T->orderByDate();
+            $TriDate = $T->orderByDate();
         return $this->render("tournoi/AffichTri.html.twig", array("TriDate" => $TriDate));
     }
 
