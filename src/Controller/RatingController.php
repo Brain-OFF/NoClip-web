@@ -60,7 +60,7 @@ class RatingController extends AbstractController
     public function adda($id ){
         $games= new rating();
         $games->setIduser($this->getUser());
-        $games->setIdgame($id);
+        $games->setIdgame($this->getDoctrine()->getRepository(Games::class)->find($id));
         $games->setNote(2);
 
 
@@ -77,7 +77,7 @@ class RatingController extends AbstractController
     public function addb($id ){
         $games= new rating();
         $games->setIduser($this->getUser());
-        $games->setIdgame($id);
+        $games->setIdgame($this->getDoctrine()->getRepository(Games::class)->find($id));
         $games->setNote(3);
 
 
@@ -94,7 +94,7 @@ class RatingController extends AbstractController
     public function addc($id ){
         $games= new rating();
         $games->setIduser($this->getUser());
-        $games->setIdgame($id);
+        $games->setIdgame($this->getDoctrine()->getRepository(Games::class)->find($id));
         $games->setNote(4);
 
 
@@ -112,7 +112,7 @@ class RatingController extends AbstractController
     {
         $games = new rating();
         $games->setIduser($this->getUser());
-        $games->setIdgame($id);
+        $games->setIdgame($this->getDoctrine()->getRepository(Games::class)->find($id));
         $games->setNote(5);
 
 

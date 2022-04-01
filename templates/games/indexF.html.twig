@@ -29,7 +29,7 @@
                                     <a href="{{ path('addrating5', {'id': i.id}) }}"> <i class="far fa-star" ></i></a>
             {% else %}
                             {% for k in rating  %}
-                           {% if i.id==k.idgame.id %}
+                           {% if i.id==k.idgame %}
                                {% for d in k.note  %}
 
                             <i class="fa fa-star"></i>

@@ -40,7 +40,7 @@ class MobileController extends AbstractController
      */
     public function getgamesbycat(Request $request,NormalizerInterface $normalizer):Response
     {
-		$cat=$this->getDoctrine()->getRepository(Gamescat::class)->find($request->get("cat"));
+		$cat=$this->getDoctrine()->getRepository(Gamescat::class)->find($request->get("cat"))
 		
         $gamm=$this->getDoctrine()->getRepository(Games::class)->listgamebycat($cat);
       
