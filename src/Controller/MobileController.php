@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\News;
 use App\Repository\NewsRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class MobileController extends AbstractController
 {
@@ -29,7 +31,7 @@ class MobileController extends AbstractController
     {
         $repository=$this->getDoctrine()->getRepository(News::class);
         $new=$repository->findAll();
-        $jsonContent = $normalizer->normalize($new,'json',['groups'=>'news']);
+        $jsonContent = $normalizer->normalize($new,'jason',['groups'=>'read']);
         return new Response(json_encode($jsonContent));
     }
 
@@ -39,6 +41,7 @@ class MobileController extends AbstractController
 
     public function addnews(Request   $request, NormalizableInterface  $normalizer)
     {
+        $em = $this->getDoctrine()->getManager();
 
         $new = new News();
         $new->setTitre($request->get("Titre"));
@@ -53,5 +56,29 @@ class MobileController extends AbstractController
         $jsonContent = $normalizer->normalize($new,'json',['groups'=>'new']);
         return new Response(json_encode($jsonContent));
     }
+
+
+    /**
+     * @Route("/addcategorie",name="addcateg")
+     */
+    public function categorienew(Request $request,NormalizerInterface $normalizer)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $equipement = new Categorie();
+
+        $equipement->setNom($request->get('nom'));
+
+
+
+        $em->persist($equipement);
+        $em->flush();
+        $jasonContent = $normalizer->normalize($equipement,'jason',['groups'=>'read']);
+        return new Response(json_encode($jasonContent));
+
+    }
+
+
 
 }

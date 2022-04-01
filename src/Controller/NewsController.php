@@ -13,6 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\DocLexer;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+
+
+use Doctrine\DBAL\Types\DateTimeType;
+
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/news")
@@ -27,6 +33,92 @@ class NewsController extends AbstractController
         return $this->render('news/index.html.twig', [
             'news' => $newsRepository->findAll(),
         ]);
+    }
+    /**
+     * @Route("/add_jason",name="addproduit_jason")
+     */
+    public function add_jason(Request $request,NormalizerInterface $normalizer)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $equipement = new News();
+
+        $equipement->setTitre($request->get('Titre'));
+        $equipement->setText($request->get("Text"));
+        $equipement->setjeu($request->get("jeu"));
+
+
+
+        $em->persist($equipement);
+        $em->flush();
+        $jasonContent = $normalizer->normalize($equipement,'jason',['groups'=>'read']);
+        return new Response(json_encode($jasonContent));
+
+    }
+    /**
+     * @Route("/updatemobile",name="updatenewsmobile")
+     */
+    public function update(Request $request,NormalizerInterface $normalizer)
+    {
+        $id = $request->get("id");
+        $T = $this->getDoctrine()->getRepository(News::class)->find($id);
+        $T->setTitre($request->get("Titre"));
+        $T->setText($request->get("Text"));
+        $T->setJeu($request->get("Jeu"));
+        $T->setCathegorie($request->get("cathegorie"));
+        $T->setDate(new \DateTime($request->get("date")));
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        $jsonContent = $normalizer->normalize($T, 'json', ['groups' => 'post:read']);
+
+        return new Response(json_encode($jsonContent));
+
+}
+    /**
+     * @Route("/deleteMobiled", name="deleteT")
+     */
+    public function delT(Request $request,NormalizerInterface $normalizer):Response
+    {
+        $id = $request->get("id");
+        $em= $this->getDoctrine()->getManager();
+        $T=$em->getRepository(News::class)->find($id);
+        $em->remove($T);
+        $em->flush();
+        $jsonContent = $normalizer->normalize($T,'json',['groups'=>'post:read']);
+        return new Response("News deleted Successfully ".json_encode($jsonContent));
+    }
+
+        /**
+     * @Route("/listnewsmobile", name="listnewsmobile")
+     */
+    public function getallnews(NormalizerInterface $normalizer): Response
+    {
+        $repository=$this->getDoctrine()->getRepository(News::class);
+        $tournois=$repository->findAll();
+        $jsonContent = $normalizer->normalize($tournois,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @Route("/addnewsmobile", name="addnewsmobile")
+     */
+
+    public function addnews(Request   $request, NormalizableInterface  $normalizer)
+    {
+
+
+        $new = new News();
+        $new->setTitre($request->get("Titre"));
+        $new->setText($request->get("Text"));
+        $new->setjeu($request->get("jeu"));
+        $new->setCategorie($request->get("categorie"));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($new);
+        $em->flush();
+
+        $jsonContent = $normalizer->normalize($new,'jason',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
     }
 
     /**
