@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/categorie")
@@ -98,5 +99,51 @@ class CategorieController extends AbstractController
         }
 
         return $this->redirectToRoute('categorie_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/updatemobilecategorie",name="updatemobile")
+     */
+    public function update(Request $request,NormalizerInterface $normalizer)
+    {
+        $id = $request->get("id");
+        $T = $this->getDoctrine()->getRepository(Categorie::class)->find($id);
+        $T->setTitre($request->get("nom"));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        $jsonContent = $normalizer->normalize($T, 'json', ['groups' => 'post:read']);
+
+        return new Response(json_encode($jsonContent));
+
+    }
+    /**
+     * @Route("/addcategorie",name="addcateg")
+     */
+    public function categorienew(Request $request,NormalizerInterface $normalizer)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $equipement = new Categorie();
+
+        $equipement->setNom($request->get('nom'));
+
+
+
+        $em->persist($equipement);
+        $em->flush();
+        $jasonContent = $normalizer->normalize($equipement,'jason',['groups'=>'read']);
+        return new Response(json_encode($jasonContent));
+
+    }
+    /**
+     * @Route("/listcategoriemobile", name="listcategoriesmobile")
+     */
+    public function getallcategorie(NormalizerInterface $normalizer): Response
+    {
+        $repository=$this->getDoctrine()->getRepository(Categorie::class);
+        $tournois=$repository->findAll();
+        $jsonContent = $normalizer->normalize($tournois,'json',['groups'=>'read']);
+        return new Response(json_encode($jsonContent));
     }
 }

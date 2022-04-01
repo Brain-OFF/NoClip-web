@@ -31,7 +31,7 @@ class AppExtension1 extends AbstractExtension
 
                 }
             }
-            return $R/$C;
+            return $R;
         }
         return 0;
     }

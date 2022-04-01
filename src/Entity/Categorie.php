@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategorieRepository::class)
@@ -17,19 +18,22 @@ class Categorie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     *
+     * @Groups ("post:read")
+     * @Groups ("read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * * @Assert\NotBlank(message="Titre is required")
+     * @Assert\NotBlank(message="Titre is required")
+     * @Groups ("post:read")
+     * @Groups ("read")
      */
     private $nom;
 
     /**
      * @ORM\OneToMany(targetEntity=News::class, mappedBy="Categorie")
-     * * @Assert\NotBlank(message="Titre is required")
+     * @Assert\NotBlank(message="Titre is required")
      */
     private $idnews;
 

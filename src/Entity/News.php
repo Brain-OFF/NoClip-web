@@ -17,6 +17,7 @@ class News
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups ("read")
      * @Groups ("post:read")
 
      */
@@ -25,6 +26,7 @@ class News
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="Titre is required")
+     * @Groups ("read")
      * @Groups ("post:read")
 
      */
@@ -33,6 +35,7 @@ class News
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="Text is required")
+     * @Groups ("read")
      * @Groups ("post:read")
 
      */
@@ -41,6 +44,7 @@ class News
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="jeu is required")
+     * @Groups ("read")
      * @Groups ("post:read")
 
      */
@@ -49,6 +53,7 @@ class News
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Assert\NotBlank(message="Date is required")
+     * @Groups ("read")
      * @Groups ("post:read")
 
      */
@@ -58,12 +63,14 @@ class News
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="idnews")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank(message="Categorie is required")
+     * @Groups ("read")
      * @Groups ("post:read")
      */
     private $Categorie;
 
     /**
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="news", cascade={"persist"})
+     * @Groups ("post:read")
      */
     private $image;
 

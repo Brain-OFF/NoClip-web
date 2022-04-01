@@ -17,6 +17,7 @@ class Reservation
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups("coach")
+     * @Groups("reservation")
      */
     private $id;
 
@@ -28,6 +29,7 @@ class Reservation
      * @Assert\DateTime(message = "The date '{{ YYYY-MM-DD hh-mm-ss }}' is not a valid")
      * @Assert\GreaterThan("+2 hours ")
      * @Assert\Expression("this.getTempsstart() < this.getTempsend()",message="La date fin ne doit pas être antérieure à la date début")
+     * @Groups("reservation")
      */
     private $tempsstart;
 
@@ -37,22 +39,26 @@ class Reservation
      * @Assert\DateTime(message = "The date '{{ YYYY-MM-DD hh-mm-ss }}' is not a valid")
      * @Assert\GreaterThan("+3 hours")
      * @Assert\Expression("this.getTempsstart() < this.getTempsend()",message="La date fin ne doit pas être antérieure à la date début")
+     * @Groups("reservation")
      */
     private $tempsend;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups("reservation")
      */
     private $dispo;
 
     /**
      * @ORM\ManyToOne(targetEntity=Coach::class, inversedBy="reservations")
      * @Assert\NotBlank(message="coach is required")
+     * @Groups("reservation")
      */
     private $coach;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     * @Groups("reservation")
      */
     private $user;
 

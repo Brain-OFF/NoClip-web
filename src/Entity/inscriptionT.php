@@ -27,6 +27,7 @@ class inscriptionT
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank( message="write name")
+     * @Groups("post:read")
      */
     private $user_name;
 
@@ -36,17 +37,20 @@ class inscriptionT
      *  * @Assert\Email(
      *     message = "The email '{{ value }}' is not a valid email."
      * )
+     * @Groups("post:read")
      */
     private $email;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank(message="You need to agree on all terms")
+     * @Groups("post:read")
      */
     private $etat;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Groups("post:read")
      */
     private $Rank;
 

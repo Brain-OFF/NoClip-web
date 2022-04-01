@@ -27,6 +27,19 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route ("/mobile_login", name="mobile_login" , methods={"POST"})
+     */
+    public function mobile_login ()
+    {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->json([
+                'error' => 'Invalid login request: check that the Content-Type header is "application/json".'
+            ], 400);
+        }
+        return $this->json(['user'=>$this->getUser() ? $this->getUser()->getId() : null,]);
+    }
+
+    /**
      * @Route("/logout", name="app_logout")
      */
     public function logout(): void

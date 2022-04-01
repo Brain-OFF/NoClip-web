@@ -20,6 +20,7 @@ class Coach
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups("coach")
+     * @Groups("reservation")
      */
     private $id;
 

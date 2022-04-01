@@ -116,6 +116,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
+     * @Groups ("post:read")
      */
     private $Status;
 
@@ -135,6 +136,10 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function setId(int $id)
+    {
+         $this->id=$id;
     }
 
     /**

@@ -197,6 +197,27 @@ class Games
 
         return $this;
     }
+    public function verify_fav(User $favori)
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+            return false;
+        }
+        return true;
+
+    }
+    public function addFavorielse(User $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+        }
+        else
+            $this->removeFavori( $favori);
+
+
+        return $this;
+    }
+
 
     public function removeFavori(User $favori): self
     {
