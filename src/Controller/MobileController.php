@@ -779,6 +779,49 @@ public function addCommande(Request $request, NormalizerInterface $normalizer)
     $jsonContent = $normalizer->normalize($user,'json',['groups'=>'post:read']);
     return new Response(json_encode($jsonContent));
 }
+    /**
+     * @Route("/encrypt_pass", name="encrypt_pass")
+     */
+    public function encrypt_pass(Request $request, NormalizerInterface $normalizer,UserPasswordEncoderInterface $userPasswordEncoder)
+    {
+        $user=new User();
+        $user->setUsername($request->get("username"));
+        $user->setEmail($request->get("email"));
+        $pass=$userPasswordEncoder->encodePassword(
+            $user,
+            $request->get("password")
+        );
+        $jsonContent = $normalizer->normalize($pass);
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/loginjava", name="loginjava")
+     */
+    public function loginjava(Request $request,NormalizerInterface $normalizer,UserPasswordEncoderInterface $userPasswordEncoder):Response
+    {
+        $user=new User();
+        $Un = $request->get('username');
+        $pwd = $request->get('password');
+        $repository=$this->getDoctrine()->getRepository(User::class);
+        $user=$repository->findOneBy(['username' => $Un]);
+        if (!$user)
+        {
+            $jsonContent = $normalizer->normalize(-1);
+            return new Response(json_encode($jsonContent));
+        }
+        if($userPasswordEncoder->isPasswordValid($user,$pwd))
+        {
+            $jsonContent = $normalizer->normalize($user->getId());
+            return new Response(json_encode($jsonContent));
+        }
+        else
+        {
+            $jsonContent = $normalizer->normalize((-1));
+            return new Response(json_encode($jsonContent));
+        }
+
+    }
 
 
 

@@ -125,12 +125,18 @@ class User implements UserInterface
      */
     private $commandes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Ban::class, mappedBy="id_user")
+     */
+    private $bans;
+
     public function __construct()
     {
         $this->inscriptionTs = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->bans = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -444,6 +450,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($commande->getUser() === $this) {
                 $commande->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ban[]
+     */
+    public function getBans(): Collection
+    {
+        return $this->bans;
+    }
+
+    public function addBan(Ban $ban): self
+    {
+        if (!$this->bans->contains($ban)) {
+            $this->bans[] = $ban;
+            $ban->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBan(Ban $ban): self
+    {
+        if ($this->bans->removeElement($ban)) {
+            // set the owning side to null (unless already changed)
+            if ($ban->getIdUser() === $this) {
+                $ban->setIdUser(null);
             }
         }
 
