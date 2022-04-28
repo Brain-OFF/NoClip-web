@@ -17,15 +17,18 @@ use App\Form\UpdateUserType;
 use App\Repository\GamesRepository;
 use App\Repository\NewsRepository;
 use App\Repository\TournoiRepository;
+use App\Repository\UserRepository;
 use App\Security\EmailVerifier as EmailVerifierAlias;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -820,6 +823,40 @@ public function addCommande(Request $request, NormalizerInterface $normalizer)
             $jsonContent = $normalizer->normalize((-1));
             return new Response(json_encode($jsonContent));
         }
+
+    }
+    /**
+     * @Route("/forgottenjava", name="forgottenjava")
+     */
+    public function forgottenjava(Request $request,NormalizerInterface $normalizer,UserPasswordEncoderInterface $userPasswordEncoder,
+                                        UserRepository $userRepo, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator)
+    {
+        $donnees =$request->get('email');
+        $user=$this->getDoctrine()->getRepository(User::class)->findOneByEmail($donnees);
+        if(!$user){
+            $jsonContent = $normalizer->normalize((-1));
+            return new Response(json_encode($jsonContent));
+            }
+        $token= $tokenGenerator->generateToken();
+        try {
+            $user->setResetToken($token);
+            $entityManager =$this->getDoctrine()->getManager();
+            $entityManager->flush();
+        }catch (\Exception $e){
+            $jsonContent = $normalizer->normalize((-1));
+            return new Response(json_encode($jsonContent));
+        }
+        $url = $this->generateUrl('app_reset_password', ['token' => $token]);
+        $message = (new TemplatedEmail())
+            ->from('svnoclip11@gmail.com')
+            ->to($user->getEmail())
+            ->html(
+                "<p> bonjour ,</p><p></p> une demande de reintilation de mot de passe a ete effectué pour le le site gamepad.fr.
+                            veuillez cliquer sur le lien suivant: 127.0.0.1:8000" .$url ."</p>");
+
+        $mailer->send($message);
+        $jsonContent = $normalizer->normalize((1));
+        return new Response(json_encode($jsonContent));
 
     }
 
