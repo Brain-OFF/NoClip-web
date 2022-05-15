@@ -67,8 +67,8 @@ class TournoiRepository extends ServiceEntityRepository
     }
     public function searchbyname($nom){
         $qb=$this->createQueryBuilder('e')
-            ->where('e.nom = :nom')
-            ->setParameter('nom',$nom)
+            ->where('e.nom like :nom')
+            ->setParameter('nom','%'.$nom.'%')
             ->getQuery();
         return $qb->execute();
     }

@@ -206,7 +206,7 @@ class MobileController extends AbstractController
         return new Response(json_encode($jsonContent));
     }
     /**
-     * @Route("/createT",name="createT")
+     * @Route("/createT1",name="createT1")
      */
     public function add(Request $request,NormalizerInterface $normalizer)
     {
@@ -240,7 +240,7 @@ class MobileController extends AbstractController
 
     }
     /**
-     * @Route("/deleteT", name="deleteT")
+     * @Route("/deletetour", name="deletetour")
      */
     public function delT(Request $request,NormalizerInterface $normalizer):Response
     {
@@ -364,7 +364,7 @@ class MobileController extends AbstractController
     }
 
     /**
-     * @Route("/searchM", name="search")
+     * @Route("/searchM", name="searchM")
      */
     public function searchM(NormalizerInterface $normalizer,Request $request,TournoiRepository $rep): Response
     {        $nom = $request->get("nom");
