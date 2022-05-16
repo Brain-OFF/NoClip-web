@@ -119,6 +119,7 @@ class MobileController extends AbstractController
     {
         $user= $this->getDoctrine()->getManager();
         $user = new User();
+        $user->setStatus("user");
         $user->setPoints(0);
         $user->setBio("");
         $user->setEmail($request->get("email"));
@@ -858,6 +859,16 @@ public function addCommande(Request $request, NormalizerInterface $normalizer)
         $jsonContent = $normalizer->normalize((1));
         return new Response(json_encode($jsonContent));
 
+    }
+    /**
+     * @Route("/removegamesmob/{id}",name="removegamesmob")
+     */
+    public function delete($id){
+        $games= $this->getDoctrine()->getRepository(Games::class)->find($id);
+        $em= $this->getDoctrine()->getManager();
+        $em->remove($games);
+        $em->flush();
+        return $this->redirectToRoute("gameslist");
     }
 
 

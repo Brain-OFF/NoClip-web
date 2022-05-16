@@ -103,7 +103,7 @@ class TournoiController extends AbstractController
 
 
     /**
-     * @Route("/remove/{id}",name="removeT")
+     * @Route("/removeTour/{id}",name="removeT")
      */
     public function delete($id)
     {
@@ -116,7 +116,7 @@ class TournoiController extends AbstractController
     }
 
     /**
-     * @Route("/update/{id}",name="update")
+     * @Route("/updateTour/{id}",name="updateTour")
      */
     public function update(Request $request, $id)
     {

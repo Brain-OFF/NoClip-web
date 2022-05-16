@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\Images;
 use App\Entity\Like;
 use App\Entity\News;
@@ -44,7 +45,8 @@ class NewsController extends AbstractController
         $equipement->setTitre($request->get('Titre'));
         $equipement->setText($request->get("Text"));
         $equipement->setjeu($request->get("jeu"));
-
+        $equipement->setDate(new \DateTime('@'.strtotime('now')));
+        $equipement->setCategorie($this->getDoctrine()->getRepository(Categorie::class)->find($request->get("cat")));
 
 
         $em->persist($equipement);

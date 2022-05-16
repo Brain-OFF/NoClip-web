@@ -219,7 +219,7 @@ class ReservationController extends AbstractController
 
 
     /**
-     * @Route("/showpdf",name="showpdf")
+     * @Route("/showpdfReser",name="showpdfReser")
      */
     public function showpdf(ReservationRepository $R)
     {
@@ -244,7 +244,7 @@ class ReservationController extends AbstractController
         $dompdf->render();
 
         // Output the generated PDF to Browser (force download)
-        $dompdf->stream("mypdf.pdf", [
+        $dompdf->stream("reservationPdf.pdf", [
             "Attachment" => true
         ]);
 
@@ -280,7 +280,7 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/export",  name="export")
+     * @Route("/exportExcelReser",  name="exportExcelReser")
      */
     public function export()
     {
@@ -303,7 +303,7 @@ class ReservationController extends AbstractController
 
         $writer = new Xlsx($spreadsheet);
 
-        $writer->save('helloworld.xlsx');
+        $writer->save('reservations.xlsx');
 
         $this->addFlash('info4','excel file is in public !');
         return $this->redirectToRoute("reservationlist");
